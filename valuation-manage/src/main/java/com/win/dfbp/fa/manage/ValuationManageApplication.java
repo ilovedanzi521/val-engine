@@ -13,7 +13,6 @@ package com.win.dfbp.fa.manage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -27,8 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"com.win"})
-@EnableFeignClients(basePackages = {"com.win"})
+@ComponentScan(basePackages = {"com.win.dfbp"})
 @EnableTransactionManagement
 public class ValuationManageApplication {
     public static void main(String[] args) {
