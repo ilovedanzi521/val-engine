@@ -2,7 +2,7 @@ server:
   port: 11030 #本地开发环境时用，生产部署时，应该设置为0，系统随机创建端口
 spring:
   application:
-    name: dfbp-fa-manage #服务名
+    name: dfbp-val-manage #服务名
   profiles:
     active: dev
   datasource:
@@ -32,6 +32,9 @@ eureka:
     RegistryFetchIntervalSeconds: 10 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
     service-url:
       defaultZone: http://192.168.0.60:10010/eureka/ #配置服务注册中心 多个用逗号分隔
+mybatis:
+  mapper-locations: classpath*:com/**/dao/**/*.xml
+  type-aliases-package: com.win.dfbp.val.manage.entity
 #PageHelper配置
 pagehelper:
   helperDialect: mysql

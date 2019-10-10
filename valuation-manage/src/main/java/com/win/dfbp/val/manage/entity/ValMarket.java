@@ -9,7 +9,7 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.fa.manage.entity;
+package com.win.dfbp.val.manage.entity;
 
 import com.win.dfas.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 包名称：com.win.dfbp.basicparameter.entity
+ * 包名称：com.win.dfbp.val.manage.entity
  * 类名称：ValMarket
  * 类描述：行情数据实体类
  * 创建人：@author zoujian
@@ -62,4 +62,7 @@ public class ValMarket extends BaseEntity implements Cloneable{
 
     @ApiModelProperty(value = "文件时间戳")
     private String fileTimestamp;
+
+    @ApiModelProperty(value = "交易市场")
+    private String marketCode;
 }

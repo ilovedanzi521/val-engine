@@ -9,17 +9,19 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.fa.manage.service.impl;
+package com.win.dfbp.val.manage.service.impl;
 
-import com.win.dfbp.fa.manage.service.MarketDataService;
-import com.win.dfbp.fa.manage.util.ReadFileUtil;
+import com.win.dfbp.val.manage.dao.MarketDataMapper;
+import com.win.dfbp.val.manage.service.MarketDataService;
+import com.win.dfbp.val.manage.util.ReadFileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
 
 /**
- * 包名称：com.win.dfbp.fa.manage.service.impl
+ * 包名称：com.win.dfbp.val.manage.service.impl
  * 类名称：MarketDataServiceImpl
  * 类描述：行情数据service
  * 创建人：@author zoujian
@@ -27,6 +29,10 @@ import java.util.List;
  */
 @Service
 public class MarketDataServiceImpl implements MarketDataService {
+
+    @Autowired
+    private MarketDataMapper marketDataMapper;
+
     private String marketFilePath = "marketFile";
     public static void main(String[] args) {
         MarketDataServiceImpl service = new MarketDataServiceImpl();
@@ -41,6 +47,7 @@ public class MarketDataServiceImpl implements MarketDataService {
         if(file.isDirectory()){
             File[] tempList = file.listFiles();
             for (int i = 0; i < tempList.length; i++) {
+                // 解析中证行情数据txt文件
                 if (tempList[i].isFile() && tempList[i].getName().endsWith(".txt")) {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
@@ -49,13 +56,18 @@ public class MarketDataServiceImpl implements MarketDataService {
                     int insertLength = list.size();
                     int k = 0;
                     while (insertLength > 2000) {
-                        // dao.insertList(list.subList(i, i + 600));
+                        marketDataMapper.insertList(list.subList(k, k + 2000));
                         k = k + 2000;
                         insertLength = insertLength - 2000;
                     }
                     if (insertLength > 0) {
-                        // dao.insertList(list.subList(i, i + insertLength));
+                        marketDataMapper.insertList(list.subList(k, k + insertLength));
                     }
+                }
+                // 解析中债行情数据dbf文件
+                if (tempList[i].isFile() && tempList[i].getName().endsWith(".dbf")) {
+                    //文件名，不包含路径
+                    String fileName = tempList[i].getName();
                 }
             }
         }

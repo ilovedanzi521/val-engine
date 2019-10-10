@@ -9,9 +9,9 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.fa.manage.util;
+package com.win.dfbp.val.manage.util;
 
-import com.win.dfbp.fa.manage.entity.ValMarket;
+import com.win.dfbp.val.manage.entity.ValMarket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

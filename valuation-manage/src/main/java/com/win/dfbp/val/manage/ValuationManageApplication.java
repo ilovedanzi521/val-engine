@@ -9,7 +9,7 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.fa.manage;
+package com.win.dfbp.val.manage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"com.win.dfbp"})
+@ComponentScan(basePackages = {"com.win.dfbp.val"})
 @EnableTransactionManagement
 public class ValuationManageApplication {
     public static void main(String[] args) {
