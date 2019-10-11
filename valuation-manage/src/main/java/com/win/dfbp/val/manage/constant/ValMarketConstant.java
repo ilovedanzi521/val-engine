@@ -26,11 +26,11 @@ public class ValMarketConstant {
     /**
      * 估值净价
      */
-    public static final String FULL_PRICE = "gjjj";
+    public static final String  NET_PRICE= "gjjj";
     /**
      * 估值全价
      */
-    public static final String NET_PRICE = "gjqj";
+    public static final String FULL_PRICE = "gjqj";
     /**
      * 证券名称简称
      */

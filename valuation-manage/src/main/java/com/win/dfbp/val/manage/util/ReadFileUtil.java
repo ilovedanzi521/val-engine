@@ -15,6 +15,7 @@ import com.linuxense.javadbf.DBFField;
 import com.linuxense.javadbf.DBFReader;
 import com.win.dfbp.val.manage.constant.ValMarketConstant;
 import com.win.dfbp.val.manage.constant.ValMarketIntegratedConstant;
+import com.win.dfbp.val.manage.constant.ValMarketZWConstant;
 import com.win.dfbp.val.manage.entity.ValMarket;
 import com.win.dfbp.val.manage.enumeration.DicEnum;
 import org.slf4j.Logger;
@@ -55,6 +56,8 @@ public class ReadFileUtil {
                 String lineTxt = null;
                 boolean isBegin = false;
                 String beginStr = "==========";
+                Map<String, Integer> fieldMap = new HashMap();
+                int i = 0;
                 while ((lineTxt = br.readLine()) != null) {
                     ValMarket valMarket =  ValMarket.getValMarket();
                     // 从==========开始，正式读取有效数据
@@ -66,42 +69,51 @@ public class ReadFileUtil {
                         }
                         valMarket.setDataSource("zw");
                         // 日期
-                        valMarket.setValuationDate(arrStrings[0]);
+                        valMarket.setValuationDate(arrStrings[fieldMap.get(ValMarketZWConstant.VALUATION_DATE)].trim());
                         // 全价
-                        valMarket.setFullPrice(arrStrings[4]);
+                        valMarket.setFullPrice(arrStrings[fieldMap.get(ValMarketZWConstant.FULL_PRICE)].trim());
                         // 净价
-                        valMarket.setNetPrice(arrStrings[8]);
+                        valMarket.setNetPrice(arrStrings[fieldMap.get(ValMarketZWConstant.NET_PRICE)].trim());
                         valMarket.setFileTimestamp(new Date());
                         // 上交所证券代码
-                        if(arrStrings[1] != null && !"".equals(arrStrings[1].trim())){
+                        if(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SH)] != null && !"".equals(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SH)].trim())){
                             valMarket.setMarketCode("SH");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
-                            valMarket1.setSecurityCode(arrStrings[1]);
+                            valMarket1.setSecurityCode(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SH)].trim());
                             marketList.add(valMarket1);
                         }
                         // 深交所证券代码
-                        if(arrStrings[2] != null && !"".equals(arrStrings[2].trim())){
+                        if(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SZ)] != null && !"".equals(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SZ)].trim())){
                             valMarket.setMarketCode("SZ");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
-                            valMarket1.setSecurityCode(arrStrings[2]);
+                            valMarket1.setSecurityCode(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_SZ)].trim());
                             marketList.add(valMarket1);
                         }
                         // 银行间债券代码
-                        if(arrStrings[3] != null && !"".equals(arrStrings[3].trim())){
+                        if(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_YH)] != null && !"".equals(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_YH)].trim())){
                             valMarket.setMarketCode("YH");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
-                            valMarket1.setSecurityCode(arrStrings[3]);
+                            valMarket1.setSecurityCode(arrStrings[fieldMap.get(ValMarketZWConstant.SECURITY_CODE_YH)].trim());
                             marketList.add(valMarket1);
                         }
+                    }else{
+                        // 排除==========这行的数据
+                        if(!beginStr.equals(lineTxt)){
+                            String[] arrStrings = lineTxt.split("=");
+                            if(arrStrings.length == 2){
+                                String code  = arrStrings[1].trim();
+                                fieldMap.put(code,i);
+                            }
+                        }
+                        i++;
                     }
-                    if(beginStr.equals(lineTxt)){
+                    if(beginStr.equals(lineTxt.trim())){
                         isBegin = true;
                     }
                 }
-
             }
         }catch (Exception e) {
             LOGGER.info("文件读取错误！");

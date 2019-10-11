@@ -32,27 +32,21 @@ public class MarketDataServiceImpl implements MarketDataService {
 
     @Autowired
     private MarketDataMapper marketDataMapper;
-
-    private final String marketFilePath = "marketFile";
-
-    private final String integratedFilePathe = "integrated";
     /**
      * 每次循环插入数据的条数
      */
     private final Integer loopLength = 2000;
-    public static void main(String[] args) {
-        MarketDataServiceImpl service = new MarketDataServiceImpl();
-        service.updateValMarket();
-    }
-
 
     @Override
     public void updateValMarket() {
+        String marketFilePath = "marketFile";
+        String integratedFilePathe = "integrated";
         String filePath = this.getClass().getResource("/").getPath();
         // 解析marketFile目录下的文件
         File file = new File(filePath + marketFilePath);
         if(file.isDirectory()){
             File[] tempList = file.listFiles();
+
             for (int i = 0; i < tempList.length; i++) {
                 List list;
                 // 解析中证行情数据txt文件
