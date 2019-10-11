@@ -12,11 +12,10 @@
 
 package com.win.dfbp.engine;
 
-import com.win.dfbp.engine.service.KafkaProducer;
+import com.win.dfbp.engine.service.kafka.KafkaProducer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
 public class ValEngineApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ValEngineApplication.class, args);
-
+        //模拟测试
         KafkaProducer kafkaProducer = context.getBean(KafkaProducer.class);
         for (int i = 0; i < 3; i++) {
             kafkaProducer.send("watchval","{\n" +
