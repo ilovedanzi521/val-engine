@@ -33,7 +33,13 @@ public class MarketDataServiceImpl implements MarketDataService {
     @Autowired
     private MarketDataMapper marketDataMapper;
 
-    private String marketFilePath = "marketFile";
+    private final String marketFilePath = "marketFile";
+
+    private final String integratedFilePathe = "integrated";
+    /**
+     * 每次循环插入数据的条数
+     */
+    private final Integer loopLength = 2000;
     public static void main(String[] args) {
         MarketDataServiceImpl service = new MarketDataServiceImpl();
         service.updateValMarket();
@@ -43,32 +49,67 @@ public class MarketDataServiceImpl implements MarketDataService {
     @Override
     public void updateValMarket() {
         String filePath = this.getClass().getResource("/").getPath();
+        // 解析marketFile目录下的文件
         File file = new File(filePath + marketFilePath);
         if(file.isDirectory()){
             File[] tempList = file.listFiles();
             for (int i = 0; i < tempList.length; i++) {
+                List list;
                 // 解析中证行情数据txt文件
                 if (tempList[i].isFile() && tempList[i].getName().endsWith(".txt")) {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
-                    List list = ReadFileUtil.readTxt(filePath + marketFilePath + "/" + fileName);
-                    // 分批插入数据
-                    int insertLength = list.size();
-                    int k = 0;
-                    while (insertLength > 2000) {
-                        marketDataMapper.insertList(list.subList(k, k + 2000));
-                        k = k + 2000;
-                        insertLength = insertLength - 2000;
-                    }
-                    if (insertLength > 0) {
-                        marketDataMapper.insertList(list.subList(k, k + insertLength));
-                    }
+                    list = ReadFileUtil.readTxt(filePath + marketFilePath + "/" + fileName);
+                    insertBatches(list);
+
                 }
                 // 解析中债行情数据dbf文件
                 if (tempList[i].isFile() && tempList[i].getName().endsWith(".dbf")) {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
+                    list = ReadFileUtil.readDbf(file.getPath() + "/" + fileName,false);
+                    insertBatches(list);
                 }
+            }
+        }
+        // 解析integrated目录下的文件
+        File file2 = new File(filePath + marketFilePath + "/"+ integratedFilePathe);
+        if(file2.isDirectory()) {
+            File[] tempList = file2.listFiles();
+            for (int i = 0; i < tempList.length; i++) {
+                List list;
+                // 解析中债行情数据dbf文件
+                if (tempList[i].isFile() && tempList[i].getName().endsWith(".dbf")) {
+                    //文件名，不包含路径
+                    String fileName = tempList[i].getName();
+                    list = ReadFileUtil.readDbf(file2.getPath() + "/" + fileName,true);
+                    insertBatches(list);
+                }
+            }
+        }
+    }
+
+    /**
+     * 分批数据插入
+     * @Title: insertBatches
+     * @param list
+     * @return: void
+     * @throws
+     * @author: zoujian
+     * @Date:  2019-10-11/13:31
+     */
+    private void insertBatches(List list) {
+        // 分批插入行情数据
+        if(list != null){
+            int insertLength = list.size();
+            int k = 0;
+            while (insertLength > loopLength) {
+                marketDataMapper.insertList(list.subList(k, k + loopLength));
+                k = k + loopLength;
+                insertLength = insertLength - loopLength;
+            }
+            if (insertLength > 0) {
+                marketDataMapper.insertList(list.subList(k, k + insertLength));
             }
         }
     }

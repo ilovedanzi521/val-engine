@@ -16,6 +16,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
+
 /**
  * 包名称：com.win.dfbp.val.manage.entity
  * 类名称：ValMarket
@@ -61,8 +64,11 @@ public class ValMarket extends BaseEntity implements Cloneable{
     private String dataSource;
 
     @ApiModelProperty(value = "文件时间戳")
-    private String fileTimestamp;
+    private Date fileTimestamp;
 
     @ApiModelProperty(value = "交易市场")
     private String marketCode;
+
+    @ApiModelProperty(value = "是否推荐")
+    private String recommend;
 }

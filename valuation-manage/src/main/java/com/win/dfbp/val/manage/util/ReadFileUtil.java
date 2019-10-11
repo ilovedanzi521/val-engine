@@ -11,17 +11,18 @@
  ********************************************************/
 package com.win.dfbp.val.manage.util;
 
+import com.linuxense.javadbf.DBFField;
+import com.linuxense.javadbf.DBFReader;
+import com.win.dfbp.val.manage.constant.ValMarketConstant;
+import com.win.dfbp.val.manage.constant.ValMarketIntegratedConstant;
 import com.win.dfbp.val.manage.entity.ValMarket;
+import com.win.dfbp.val.manage.enumeration.DicEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * 包名称：com.win.dfbp.fa.manage.util
@@ -70,8 +71,10 @@ public class ReadFileUtil {
                         valMarket.setFullPrice(arrStrings[4]);
                         // 净价
                         valMarket.setNetPrice(arrStrings[8]);
+                        valMarket.setFileTimestamp(new Date());
                         // 上交所证券代码
                         if(arrStrings[1] != null && !"".equals(arrStrings[1].trim())){
+                            valMarket.setMarketCode("SH");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
                             valMarket1.setSecurityCode(arrStrings[1]);
@@ -79,6 +82,7 @@ public class ReadFileUtil {
                         }
                         // 深交所证券代码
                         if(arrStrings[2] != null && !"".equals(arrStrings[2].trim())){
+                            valMarket.setMarketCode("SZ");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
                             valMarket1.setSecurityCode(arrStrings[2]);
@@ -86,6 +90,7 @@ public class ReadFileUtil {
                         }
                         // 银行间债券代码
                         if(arrStrings[3] != null && !"".equals(arrStrings[3].trim())){
+                            valMarket.setMarketCode("YH");
                             ValMarket valMarket1 =  ValMarket.getValMarket();
                             BeanUtils.copyProperties(valMarket,valMarket1);
                             valMarket1.setSecurityCode(arrStrings[3]);
@@ -102,5 +107,114 @@ public class ReadFileUtil {
             LOGGER.info("文件读取错误！");
         }
         return marketList;
+    }
+
+    /**
+     * 读取dbf行情文件
+     * @Title: readDbf
+     * @param filePath
+     * @return: java.util.List<com.win.dfbp.val.manage.entity.ValMarket>
+     * @throws
+     * @author: zoujian
+     * @Date:  2019-10-10/16:30
+     */
+    public static  List<ValMarket> readDbf(String filePath,boolean isIntegratedData) {
+        // 行情数据数组
+        List<ValMarket> marketList = new ArrayList<>();
+        InputStream fis = null;
+        try {
+            // 读取文件的输入流
+            fis = new FileInputStream(filePath);
+            // 根据输入流初始化一个DBFReader实例，用来读取DBF文件信息
+            DBFReader reader = new DBFReader(fis);
+            reader.setCharactersetName("GBK");
+            // 调用DBFReader对实例方法得到path文件中字段的个数
+            int fieldsCount = reader.getFieldCount();
+            // 取出字段信息
+            Map fieldMap = new HashMap<Integer,String>(50);
+            for (int i = 0; i < fieldsCount; i++) {
+                DBFField field = reader.getField(i);
+                fieldMap.put(i, field.getName());
+            }
+            Object[] rowValues;
+            // 一条条取出path文件中记录
+            while ((rowValues = reader.nextRecord()) != null) {
+                ValMarket valMarket =  ValMarket.getValMarket();
+                for (int i = 0; i < rowValues.length; i++) {
+                    if(isIntegratedData){
+                        if(ValMarketIntegratedConstant.SECURITY_CODE.equals(fieldMap.get(i))){
+                            valMarket.setSecurityCode(rowValues[i].toString());
+                        }
+                        if(ValMarketIntegratedConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
+                            valMarket.setSecurityShortName(rowValues[i].toString());
+                        }
+                        if(ValMarketIntegratedConstant.VALUATION_DATE.equals(fieldMap.get(i))){
+                            valMarket.setValuationDate(rowValues[i].toString());
+                        }
+                        if(ValMarketIntegratedConstant.FULL_PRICE.equals(fieldMap.get(i))){
+                            valMarket.setFullPrice(rowValues[i].toString());
+                        }
+                        if(ValMarketIntegratedConstant.NET_PRICE.equals(fieldMap.get(i))){
+                            valMarket.setNetPrice(rowValues[i].toString());
+                        }
+                        if(ValMarketIntegratedConstant.MARKET_CODE.equals(fieldMap.get(i))){
+                            valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));
+                        }
+                        if(ValMarketIntegratedConstant.RECOMMEND.equals(fieldMap.get(i))){
+                            valMarket.setRecommend(DicEnum.RecommendEnum.getCode(rowValues[i].toString().trim()));
+                        }
+                    }else{
+                        if(ValMarketConstant.SECURITY_CODE.equals(fieldMap.get(i))){
+                            valMarket.setSecurityCode(rowValues[i].toString());
+                        }
+                        if(ValMarketConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
+                            valMarket.setSecurityShortName(rowValues[i].toString());
+                        }
+                        if(ValMarketConstant.VALUATION_DATE.equals(fieldMap.get(i))){
+                            valMarket.setValuationDate(rowValues[i].toString());
+                        }
+                        if(ValMarketConstant.FULL_PRICE.equals(fieldMap.get(i))){
+                            valMarket.setFullPrice(rowValues[i].toString());
+                        }
+                        if(ValMarketConstant.NET_PRICE.equals(fieldMap.get(i))){
+                            valMarket.setNetPrice(rowValues[i].toString());
+                        }
+                        if(ValMarketConstant.MARKET_CODE.equals(fieldMap.get(i))){
+                            valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));
+                        }
+                        if(ValMarketConstant.RECOMMEND.equals(fieldMap.get(i))){
+                            valMarket.setRecommend(DicEnum.RecommendEnum.getCode(rowValues[i].toString().trim()));
+                        }
+                    }
+                    valMarket.setDataSource("ZG");
+                    valMarket.setFileTimestamp(new Date());
+                }
+                // 排除交易市场为柜台和其他的数据
+                if(valMarket.getSecurityCode() != null && !"".equals(valMarket.getSecurityCode().trim())
+                        && !"GT".equals(valMarket.getMarketCode()) && !"QT".equals(valMarket.getMarketCode())){
+                    marketList.add(valMarket);
+                }
+            }
+            fis.close();
+            // 去除同一证券代码中有多条数据  取推荐的数据
+            if(marketList != null && marketList.size() > 1){
+                for(int i = marketList.size() - 1 ; i > 0 ; i--){
+                    // 如果存在同一证券代码 同一交易市场的数据 去推荐的数据
+                    if(marketList.get(i).getSecurityCode() != null && marketList.get(i).getSecurityCode().equals(marketList.get(i-1).getSecurityCode())
+                            && marketList.get(i).getMarketCode() != null && marketList.get(i).getMarketCode().equals( marketList.get(i-1).getMarketCode())){
+                        String recommend = marketList.get(i).getRecommend();
+                        if("Y".equals(recommend)){
+                            marketList.remove(marketList.get(i-1));
+                        }else{
+                            marketList.remove(marketList.get(i));
+                        }
+                    }
+                }
+            }
+            return  marketList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
