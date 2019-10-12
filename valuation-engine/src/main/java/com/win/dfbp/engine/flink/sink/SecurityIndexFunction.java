@@ -58,11 +58,12 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         } else {
             // count 累加
 //            lastState
-//            out.collect(new WordCount(in.getWord(), lastState.getCount()));
+//
+            //TODO 计算模块
             // 更新state
             indexState.update(lastState);
             //持仓信息,不持仓,按条件清理
-            boolean hold = false;
+            boolean hold = true;
             if(!hold){
                 indexState.clear();
             }

@@ -21,20 +21,20 @@ public class KafkaConfig {
     private String valueDeserializer;
     private String topic;
 
-//    @Bean(name ="properties")
-//    private Properties kafkaProperties(){
-//        Properties properties = new Properties();
-//        properties.setProperty("bootstrap.servers", getBootstrapServers());
-//        properties.setProperty("group.id", getGroupId());
-//        properties.setProperty("enable.auto.commit", getEnableAutoCommit());
-//        properties.setProperty("auto.commit.interval.ms", getAutoCommitIntervalMs());
-//        properties.setProperty("auto.offset.reset", getAutoOffsetReset());
-//        properties.setProperty("session.timeout.ms", getSessionTimeoutMs());
-//        properties.setProperty("key.deserializer", getKeyDeserializer());
-//        properties.setProperty("value.deserializer", getValueDeserializer());
-//        properties.setProperty("topic", KafkaUtils.createTopic(getBootstrapServers(),getTopic()));
-//        return properties;
-//    }
+    @Bean(name ="kproperties")
+    private Properties kafkaProperties(){
+        Properties properties = new Properties();
+        properties.setProperty("bootstrap.servers", getBootstrapServers());
+        properties.setProperty("group.id", getGroupId());
+        properties.setProperty("enable.auto.commit", getEnableAutoCommit());
+        properties.setProperty("auto.commit.interval.ms", getAutoCommitIntervalMs());
+        properties.setProperty("auto.offset.reset", getAutoOffsetReset());
+        properties.setProperty("session.timeout.ms", getSessionTimeoutMs());
+        properties.setProperty("key.deserializer", getKeyDeserializer());
+        properties.setProperty("value.deserializer", getValueDeserializer());
+        properties.setProperty("topic", KafkaUtils.createTopic(getBootstrapServers(),getTopic()));
+        return properties;
+    }
     public String getBootstrapServers() {
         return bootstrapServers;
     }
