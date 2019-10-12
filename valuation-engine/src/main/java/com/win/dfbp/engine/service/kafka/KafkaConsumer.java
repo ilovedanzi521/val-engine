@@ -25,7 +25,6 @@ import java.util.Optional;
  * 创建人：@author wanglei
  * 创建时间：2019/10/11/15:16
  */
-@Component
 public class KafkaConsumer {
     @KafkaListener(topics = {"${kafka.topic}"})
     public void listener(ConsumerRecord record) {

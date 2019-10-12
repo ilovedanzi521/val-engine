@@ -13,13 +13,17 @@
 package com.win.dfbp.engine.flink;
 
 import com.win.dfbp.engine.flink.sink.SecurityIndexFunction;
+import com.win.dfbp.engine.util.SpringContextUtil;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer09;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -32,21 +36,29 @@ import java.util.Properties;
  * 创建人：@author wanglei
  * 创建时间：2019/10/11/16:54
  */
+@Component
 public class FlinkMain {
+    @Async(value = "kafkaConsumerThread")
     public void run() {
-            StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-            Properties properties = new Properties();
-            properties.setProperty("bootstrap.servers", "");
-            properties.setProperty("group.id", "flink_consumer");
+        KafkaProperties kafkaProperties = SpringContextUtil.getBean(KafkaProperties.class);
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.enableCheckpointing(5000);
+        Properties properties = new Properties();
+        properties.setProperty("bootstrap.servers", kafkaProperties.getBootstrapServers().get(0));
+        properties.setProperty("group.id", kafkaProperties.getConsumer().getGroupId());
 
-            DataStream<String> stream = env.addSource(new FlinkKafkaConsumer09<>(
-                    "flink-demo", new SimpleStringSchema(), properties));
+        DataStream<String> stream = env.addSource(new FlinkKafkaConsumer<>(
+                "watchval", new SimpleStringSchema(), properties));
+        stream.print();
 
-//            stream.rebalance().map(new SecurityIndexFunction());
+
+//        stream.writeAsText( this.getClass().getResource("/").getPath());
+//            stream.rebalance().flatMap(new SecurityIndexFunction());
         try {
             env.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

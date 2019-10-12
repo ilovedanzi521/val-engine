@@ -6,7 +6,7 @@ spring:
     consumer:
       auto-offset-reset: earliest
       enable-auto-commit: true
-      group-id: test-consumer-group
+      group-id: watchval
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
