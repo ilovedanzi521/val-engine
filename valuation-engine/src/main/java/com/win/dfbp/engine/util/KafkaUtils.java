@@ -18,13 +18,13 @@ import java.util.concurrent.ExecutionException;
 
 public class KafkaUtils {
 
-    public static String createTopic(KafkaProperties kafkaProperties , String topic){
+    public static String createTopic(String bootstrapServers , String topic){
         AdminClient adminClient = null;
         try {
             Properties properties = new Properties();
-            properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+            properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
             adminClient = AdminClient.create(properties);
-            if(!topicExists(kafkaProperties,topic)){
+            if(!topicExists(bootstrapServers,topic)){
                 NewTopic newTopic = new NewTopic(topic,4, (short) 1);
                 Collection<NewTopic> newTopicList = new ArrayList<>();
                 newTopicList.add(newTopic);
@@ -36,11 +36,11 @@ public class KafkaUtils {
         return topic;
     }
 
-    public static boolean topicExists(KafkaProperties kafkaProperties , String topic) {
+    public static boolean topicExists(String bootstrapServers  , String topic) {
         AdminClient adminClient = null;
         try {
             Properties properties = new Properties();
-            properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+            properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
             adminClient = AdminClient.create(properties);
             ListTopicsResult result = adminClient.listTopics();
             if(result != null){
@@ -73,13 +73,5 @@ public class KafkaUtils {
         producer.send(record);
         //System.out.println("发送数据: " + data);
         producer.flush();
-    }
-
-    public static void main(String[] args) throws Exception {
-        KafkaProperties kafkaProperties = new KafkaProperties();
-        List server = new ArrayList<>();
-        server.add("192.168.6.71:9092");
-        kafkaProperties.setBootstrapServers(server);
-        createTopic(kafkaProperties,"topic-test627002");
     }
 }

@@ -12,7 +12,8 @@
 
 package com.win.dfbp.engine.init;
 
-import com.win.dfbp.engine.flink.FlinkMain;
+import com.win.dfbp.engine.flink.FlinkKafKaConsumerTask;
+import com.win.dfbp.engine.flink.FlinkKafKaProducerTask;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +35,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ValInitializer implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
-    private FlinkMain flinkMain;
+    private FlinkKafKaConsumerTask consumerTask;
+    @Autowired
+    private FlinkKafKaProducerTask producerTask;
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
-            flinkMain.run();
+            consumerTask.run();
         }
+        producerTask.run();
     }
 }

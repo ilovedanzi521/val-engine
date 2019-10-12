@@ -27,7 +27,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  * 创建人：@author wanglei
  * 创建时间：2019/10/11/15:15
  */
-@Component
 @Slf4j
 public class KafkaProducer {
     @Autowired

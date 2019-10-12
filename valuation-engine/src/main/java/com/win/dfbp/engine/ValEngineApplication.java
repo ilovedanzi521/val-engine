@@ -36,37 +36,5 @@ public class ValEngineApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ValEngineApplication.class, args);
         //模拟测试
-
-        KafkaProducer kafkaProducer = context.getBean(KafkaProducer.class);
-        for (int i = 0; i < 3; i++) {
-            kafkaProducer.send("watchval","{\n" +
-                    "  \"fund_no\": \"GHP01\",\n" +
-                    "  \"fund_character\": \"001\",\n" +
-                    "  \"portf_no\": \"123456\",\n" +
-                    "  \"security_code\": \"337001\",\n" +
-                    "  \"market_code\": \"SH\",\n" +
-                    "  \"platform_code\": \"123\",\n" +
-                    "  \"security_character\": \"123\",\n" +
-                    "  \"invest_flag\": \"1\",\n" +
-                    "  \"cash_settle_balance\": \"1222\",\n" +
-                    "  \"stock_settle_amount\": \"456612\",\n" +
-                    "  \"trade_direction\": \"1\"\n" +
-                    "}");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-//        for (int i = 0; i < 3; i++) {
-//            //调用消息发送类中的消息发送方法
-//
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 }
