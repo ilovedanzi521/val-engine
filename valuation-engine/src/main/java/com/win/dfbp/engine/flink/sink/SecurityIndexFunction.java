@@ -12,8 +12,8 @@
 
 package com.win.dfbp.engine.flink.sink;
 
-import com.win.dfbp.engine.flink.state.SecurityIndex;
 import com.win.dfbp.engine.flink.state.SecurityIndexState;
+import com.win.dfbp.entity.SecurityIndex;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
@@ -49,7 +49,7 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         // 第一次进入计算,更新state,输入原样返回
         if (lastState == null) {
             // 初始化state
-            lastState = in.clone();
+            lastState = lastState.clone(in);
 
             // 进来的数据原样返回
             out.collect(in);

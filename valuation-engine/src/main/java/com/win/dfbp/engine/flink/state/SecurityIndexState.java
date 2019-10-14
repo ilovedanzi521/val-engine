@@ -12,6 +12,8 @@
 
 package com.win.dfbp.engine.flink.state;
 
+import com.win.dfbp.entity.SecurityIndex;
+import com.win.dfbp.entity.SecurityIndexVO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -61,4 +63,25 @@ public class SecurityIndexState implements Serializable {
      * 指标
      */
     private SecurityIndexVO indexVO;
+
+    public SecurityIndexState clone(SecurityIndex securityIndex){
+        SecurityIndexState indexState = new SecurityIndexState();
+        indexState.setFundCharacter(securityIndex.getFundCharacter());
+        indexState.setFundNo(securityIndex.getFundNo());
+        indexState.setInvestFlag(securityIndex.getInvestFlag());
+        indexState.setMarketCode(securityIndex.getMarketCode());
+        indexState.setPlatformCode(securityIndex.getPlatformCode());
+        indexState.setPortfNo(securityIndex.getPortfNo());
+        indexState.setSecurityCharacter(securityIndex.getSecurityCharacter());
+        indexState.setSecurityCode(securityIndex.getSecurityCode());
+        SecurityIndexVO indexVO = new SecurityIndexVO();
+        indexVO.setCostPrice(securityIndex.getIndexVO().getCostPrice());
+        indexVO.setFairPrice(securityIndex.getIndexVO().getFairPrice());
+        indexVO.setFloatingPL(securityIndex.getIndexVO().getFloatingPL());
+        indexVO.setPositionCost(securityIndex.getIndexVO().getPositionCost());
+        indexVO.setPositionMarketValue(securityIndex.getIndexVO().getPositionMarketValue());
+        indexVO.setInterestRateOfHundred(securityIndex.getIndexVO().getInterestRateOfHundred());
+        indexState.setIndexVO(indexVO);
+        return indexState;
+    }
 }

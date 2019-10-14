@@ -10,7 +10,7 @@
  *
  ********************************************************/
 
-package com.win.dfbp.engine.flink.state;
+package com.win.dfbp.entity;
 
 import lombok.Data;
 
@@ -60,25 +60,4 @@ public class SecurityIndex {
      */
     private SecurityIndexVO indexVO;
 
-    @Override
-    public SecurityIndexState clone(){
-        SecurityIndexState indexState = new SecurityIndexState();
-        indexState.setFundCharacter(this.fundCharacter);
-        indexState.setFundNo(this.fundNo);
-        indexState.setInvestFlag(this.investFlag);
-        indexState.setMarketCode(this.marketCode);
-        indexState.setPlatformCode(this.platformCode);
-        indexState.setPortfNo(this.portfNo);
-        indexState.setSecurityCharacter(this.securityCharacter);
-        indexState.setSecurityCode(this.securityCode);
-        SecurityIndexVO indexVO = new SecurityIndexVO();
-        indexVO.setCostPrice(this.getIndexVO().getCostPrice());
-        indexVO.setFairPrice(this.getIndexVO().getFairPrice());
-        indexVO.setFloatingPL(this.getIndexVO().getFloatingPL());
-        indexVO.setPositionCost(this.getIndexVO().getPositionCost());
-        indexVO.setPositionMarketValue(this.getIndexVO().getPositionMarketValue());
-        indexVO.setInterestRateOfHundred(this.getIndexVO().getInterestRateOfHundred());
-        indexState.setIndexVO(indexVO);
-        return indexState;
-    }
 }

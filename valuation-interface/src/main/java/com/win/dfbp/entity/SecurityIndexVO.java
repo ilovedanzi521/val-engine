@@ -10,7 +10,7 @@
  *
  ********************************************************/
 
-package com.win.dfbp.engine.flink.state;
+package com.win.dfbp.entity;
 
 import lombok.Data;
 
