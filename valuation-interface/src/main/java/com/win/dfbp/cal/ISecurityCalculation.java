@@ -36,7 +36,25 @@ public interface ISecurityCalculation {
      * @Date 2019/10/14/10:17
      */
     boolean isAlgorithmSupported(String algorithm);
-    BigDecimal calculateStockPosPrice(BigDecimal stockPosNum, SecurityIndex securityIndex);
+    /**
+     * @Title: calculateSecurityIndex
+     * @Description  计算证券指标
+     * @param securityIndex
+     * @return com.win.dfbp.entity.SecurityIndex
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/14/10:33
+     */
+    SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex);
 
-    List<Map<String, Object>> toCalculateStockPosPrice(List<SecurityIndex> securityIndexList, Map context);
+    /**
+     * @Title: initSecurityIndex
+     * @Description 初始化指标
+     * @param securityIndex
+     * @return com.win.dfbp.entity.SecurityIndex
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/14/10:57
+     */
+    SecurityIndex initSecurityIndex(SecurityIndex securityIndex);
 }
