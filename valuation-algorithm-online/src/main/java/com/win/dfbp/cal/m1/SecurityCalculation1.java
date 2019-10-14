@@ -33,13 +33,30 @@ public class SecurityCalculation1 implements ISecurityCalculation {
     @Override
     public SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex) {
         //todo
+        SecurityIndexVO indexVO = new SecurityIndexVO();
+        //内存获取
+        indexVO.setCostPrice("110.00");
+        indexVO.setFairPrice("110.00");
+        indexVO.setFloatingPL("23.00");
+        indexVO.setInterestRateOfHundred("0.79");
+        indexVO.setPositionCost("110.00");
+        indexVO.setPositionMarketValue("111.00");
+        securityIndex.setIndexVO(indexVO);
         return securityIndex;
     }
 
     @Override
     public SecurityIndex initSecurityIndex(SecurityIndex securityIndex) {
         //todo
-        SecurityIndexVO index = securityIndex.getIndexVO();
+        SecurityIndexVO indexVO = new SecurityIndexVO();
+        //内存获取
+        indexVO.setCostPrice("110.00");
+        indexVO.setFairPrice("110.00");
+        indexVO.setFloatingPL("23.00");
+        indexVO.setInterestRateOfHundred("0.79");
+        indexVO.setPositionCost("110.00");
+        indexVO.setPositionMarketValue("111.00");
+        securityIndex.setIndexVO(indexVO);
         return securityIndex;
     }
 }

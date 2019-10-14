@@ -17,6 +17,7 @@ import com.win.dfbp.engine.factory.SpiFactory;
 import com.win.dfbp.engine.flink.state.SecurityIndexState;
 import com.win.dfbp.entity.SecurityIndex;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
+import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
@@ -59,6 +60,7 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                 // 初始化state
                 SecurityIndexState state = new SecurityIndexState();
 //                stockList
+                out.collect(stockList);
                 // 更新state
                 indexState.update(state.clone(stockList));
             }
@@ -70,6 +72,7 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                 if (stockList != null) {
                     lastState = lastState.clone(stockList);
                 }
+                out.collect(stockList);
                 indexState.update(lastState);
                 //持仓信息,不持仓,按条件清理
                 boolean hold = true;
@@ -96,4 +99,5 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                         }));
         indexState = getRuntimeContext().getState(descriptor);
     }
+
 }
