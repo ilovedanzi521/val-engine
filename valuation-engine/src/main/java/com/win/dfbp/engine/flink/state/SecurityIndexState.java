@@ -84,4 +84,25 @@ public class SecurityIndexState implements Serializable {
         indexState.setIndexVO(indexVO);
         return indexState;
     }
+
+    public SecurityIndex parse(){
+        SecurityIndex index = new SecurityIndex();
+        index.setFundCharacter(this.getFundCharacter());
+        index.setFundNo(this.getFundNo());
+        index.setInvestFlag(this.getInvestFlag());
+        index.setMarketCode(this.getMarketCode());
+        index.setPlatformCode(this.getPlatformCode());
+        index.setPortfNo(this.getPortfNo());
+        index.setSecurityCharacter(this.getSecurityCharacter());
+        index.setSecurityCode(this.getSecurityCode());
+        SecurityIndexVO indexVO = new SecurityIndexVO();
+        indexVO.setCostPrice(this.getIndexVO().getCostPrice());
+        indexVO.setFairPrice(this.getIndexVO().getFairPrice());
+        indexVO.setFloatingPL(this.getIndexVO().getFloatingPL());
+        indexVO.setPositionCost(this.getIndexVO().getPositionCost());
+        indexVO.setPositionMarketValue(this.getIndexVO().getPositionMarketValue());
+        indexVO.setInterestRateOfHundred(this.getIndexVO().getInterestRateOfHundred());
+        index.setIndexVO(indexVO);
+        return index;
+    }
 }

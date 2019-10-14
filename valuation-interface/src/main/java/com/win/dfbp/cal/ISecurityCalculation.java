@@ -45,7 +45,7 @@ public interface ISecurityCalculation {
      * @author wanglei
      * @Date 2019/10/14/10:33
      */
-    SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex);
+    SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex);
 
     /**
      * @Title: initSecurityIndex

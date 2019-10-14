@@ -78,7 +78,7 @@ public class FlinkKafKaProducerTask {
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
             while(running) {
-//                Thread.sleep(10*1000);
+                Thread.sleep(10*1000);
                 ctx.collect(prouderJson());
             }
         }
