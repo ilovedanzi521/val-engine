@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author zoujian    
+ * 创建人: @author zoujian
  * 创建时间: 2019-10-9/15:40
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValuationManageApplication.java
@@ -13,6 +13,7 @@ package com.win.dfbp.val.manage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -26,7 +27,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = {"com.win.dfbp.val"})
+@ComponentScan(basePackages = {"com.win"})
+@EnableFeignClients(basePackages = {"com.win"})
 @EnableTransactionManagement
 public class ValuationManageApplication {
     public static void main(String[] args) {
