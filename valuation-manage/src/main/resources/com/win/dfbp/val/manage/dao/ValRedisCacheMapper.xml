@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.win.dfbp.basicparameter.dao.SysRedisCacheMapper">
+    
+    <resultMap id="SysRedisCacheMap" type="com.win.dfas.common.entity.SysRedisCache">
+    	<id property="id" column="id" />
+    	<result property="cacheType" column="cache_type" />
+        <result property="cacheName" column="cache_name" />
+    	<result property="cacheKeyField" column="cache_key_field" />
+        <result property="cacheResult" column="cache_result"/>
+        <result property="cacheTime" column="cache_time"/>
+        <result property="cacheRow" column="cache_row"/>
+        <result property="cacheCostTime" column="cache_cost_time"/>
+    	<result property="cacheSql" column="cache_sql" />
+    </resultMap>
+    
+    <select id="list" resultMap="SysRedisCacheMap" parameterType="com.win.dfas.common.vo.SysRedisCacheReqVO">
+        SELECT 
+            id, cache_type,cache_name,cache_key_field,cache_result,DATE_FORMAT(`cache_time` ,'%Y-%m-%d %h:%i:%s') cache_time,cache_row,cache_cost_time, cache_sql
+        FROM
+        sys_redis_cache
+        <where>
+            delete_flag = 0
+            <if test="cacheType != null and cacheType.length() > 0">
+				AND cache_type = #{cacheType} 
+       		</if>
+       		<if test="cacheTypeList != null and cacheTypeList.size > 0">
+       			AND cache_type IN
+	       		<foreach collection="cacheTypeList" index="index" item="item" open="(" separator="," close=")">
+			        #{item}
+			    </foreach>
+       		</if>
+       		<if test="key != null">
+                and (cache_type like concat('%',#{key},'%') or cache_name like concat('%',#{key},'%'))
+            </if>
+        </where>
+    </select>
+    
+    <select id="loadDataByCacheSql" resultType="java.util.HashMap">
+    	${cacheSql}
+    </select>
+
+
+
+    <update id="update" parameterType="com.win.dfas.common.entity.SysRedisCache">
+        update sys_redis_cache
+        <set>
+            <if test="cacheResult != null">
+                cache_result = #{cacheResult,jdbcType=BIT},
+            </if>
+            <if test="cacheTime != null">
+                cache_time = #{cacheTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cacheRow != null">
+                cache_row = #{cacheRow,jdbcType=INTEGER},
+            </if>
+            <if test="cacheCostTime != null">
+                cache_cost_time = #{cacheCostTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+</mapper>
