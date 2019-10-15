@@ -80,5 +80,12 @@ public class RedisKeyPrefix {
      * 产品配置
      */
     public static final String FUND_CONFIG = "FUND_CONFIG";
-
+    /**
+     * 产品参数方案
+     */
+    public static final String FUND_VAL_SCHEME = "FUND_VAL_SCHEME";
+    /**
+     * 百元汇率
+     */
+    public static final String VAL_INTEREST = "VAL_INTEREST";
 }
