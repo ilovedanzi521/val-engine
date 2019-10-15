@@ -12,6 +12,7 @@
 
 package com.win.dfbp.engine.init;
 
+import com.win.dfbp.engine.flink.FlinkFileReadTask;
 import com.win.dfbp.engine.flink.FlinkKafKaConsumerTask;
 import com.win.dfbp.engine.flink.FlinkKafKaProducerTask;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +39,11 @@ public class ValInitializer implements ApplicationListener<ContextRefreshedEvent
     private FlinkKafKaConsumerTask consumerTask;
     @Autowired
     private FlinkKafKaProducerTask producerTask;
+    @Autowired
+    private FlinkFileReadTask flinkFileReadTask;
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        flinkFileReadTask.run();
         if (event.getApplicationContext().getParent() == null) {
             consumerTask.run();
         }
