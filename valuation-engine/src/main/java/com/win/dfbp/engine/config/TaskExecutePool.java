@@ -27,6 +27,19 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 public class TaskExecutePool {
+    @Bean(name = "flinkFileReadThread")
+    public ThreadPoolTaskExecutor fileReadTaskAsyncPool() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(4);
+        executor.setMaxPoolSize(8);
+        executor.setQueueCapacity(100);
+        executor.setKeepAliveSeconds(60);
+        executor.setThreadNamePrefix("flinkFile_Read_Thread");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
+
     @Bean(name = "kafkaConsumerThread")
     public ThreadPoolTaskExecutor kafkaConsumerTaskAsyncPool() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
