@@ -15,6 +15,7 @@ package com.win.dfbp.cal.m1;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.cal.ISecurityCalculation;
+import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
 
@@ -54,7 +55,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
         //获取证券性质
         securityIndex.getSecurityCharacter();
 
-        RedisUtil.get(CommonConstants.HORIZONTAL_LINE);
+        RedisUtil.get(RedisKeyPrefix.CommonConstants.HORIZONTAL_LINE);
 
         SecurityIndexVO indexVO = new SecurityIndexVO();
         //内存获取
