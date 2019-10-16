@@ -10,7 +10,7 @@
  *
  ********************************************************/
 
-package com.win.dfbp.val.manage.constant;
+package com.win.dfbp.constant;
 
 /**
  * 包名称：com.win.dfbp.val.manage.constant

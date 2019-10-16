@@ -12,6 +12,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.win.dfas</groupId>
+			<artifactId>dfas-common-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<packaging>pom</packaging>
 
