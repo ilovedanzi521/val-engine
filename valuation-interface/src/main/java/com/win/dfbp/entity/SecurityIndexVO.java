@@ -14,6 +14,8 @@ package com.win.dfbp.entity;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * 包名称：com.win.wl
  * 类名称：SecurityIndexVO
@@ -26,25 +28,25 @@ public class SecurityIndexVO {
     /**
      * 持仓成本
      */
-    private String positionCost;
+    private BigDecimal positionCost;
     /**
      * 持仓市值
      */
-    private String positionMarketValue;
+    private BigDecimal positionMarketValue;
     /**
      * 百元利率
      */
-    private String interestRateOfHundred;
+    private BigDecimal interestRateOfHundred;
     /**
      * 公允价格
      */
-    private String fairPrice;
+    private BigDecimal fairPrice;
     /**
      * 成本价
      */
-    private String costPrice;
+    private BigDecimal costPrice;
     /**
      * 浮动盈亏
      */
-    private String floatingPL;
+    private BigDecimal floatingPL;
 }
