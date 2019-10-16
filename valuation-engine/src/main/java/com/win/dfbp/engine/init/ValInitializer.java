@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -34,19 +35,17 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Slf4j
-public class ValInitializer implements ApplicationListener<ContextRefreshedEvent> {
+public class ValInitializer implements CommandLineRunner {
     @Autowired
     private FlinkKafKaConsumerTask consumerTask;
     @Autowired
     private FlinkKafKaProducerTask producerTask;
     @Autowired
     private FlinkFileReadTask flinkFileReadTask;
+
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void run(String... args) throws Exception {
         flinkFileReadTask.run();
-        if (event.getApplicationContext().getParent() == null) {
-            consumerTask.run();
-        }
-        producerTask.run();
+        consumerTask.run();
     }
 }

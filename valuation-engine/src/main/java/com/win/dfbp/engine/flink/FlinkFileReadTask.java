@@ -12,19 +12,15 @@
 
 package com.win.dfbp.engine.flink;
 
+import com.win.dfbp.engine.flink.sink.ValMarketFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
 import com.win.dfbp.entity.ValMarket;
-import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.operators.DataSource;
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.util.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,19 +37,14 @@ public class FlinkFileReadTask {
 
     @Async(value = "flinkFileReadThread")
     public void run() {
-        // 1、解析文件读取到List集合中
-        // 2、将List集合数据塞入Flink中
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+        // 解析获取行情文件数据
         List<ValMarket> list = marketDataService.getValMarketData();
         try {
+            // 1、解析文件读取到List集合中
             DataSource<ValMarket> dataSource = env.fromCollection(list);
-            dataSource.flatMap(new FlatMapFunction() {
-                @Override
-                public void flatMap(Object o, Collector collector) throws Exception {
-                    return;
-                }
-            });
-            dataSource.print();
+            // 2、将List集合数据塞入Flink中
+            dataSource.flatMap(new ValMarketFunction()).print();
         } catch (Exception e) {
             e.printStackTrace();
         }

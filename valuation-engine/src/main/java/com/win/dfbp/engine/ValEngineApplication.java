@@ -12,14 +12,19 @@
 
 package com.win.dfbp.engine;
 
+import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.engine.service.kafka.KafkaProducer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 包名称：com.win.dfbp.engine
@@ -28,10 +33,11 @@ import org.springframework.context.annotation.Configuration;
  * 创建人：@author wanglei
  * 创建时间：2019/10/11/9:50
  */
-@EnableAutoConfiguration
-@Configuration
-@ComponentScan({"com.win.*"})
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EnableSwagger2
+@ComponentScan(basePackages = {"com.win"})
+@EnableFeignClients(basePackages = {"com.win"})
+@EnableTransactionManagement
 public class ValEngineApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ValEngineApplication.class, args);
