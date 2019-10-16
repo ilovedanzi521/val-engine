@@ -156,19 +156,19 @@ public class ReadFileUtil {
                 for (int i = 0; i < rowValues.length; i++) {
                     if(isIntegratedData){
                         if(ValMarketIntegratedConstant.SECURITY_CODE.equals(fieldMap.get(i))){
-                            valMarket.setSecurityCode(rowValues[i].toString());
+                            valMarket.setSecurityCode(rowValues[i].toString().trim());
                         }
                         if(ValMarketIntegratedConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
-                            valMarket.setSecurityShortName(rowValues[i].toString());
+                            valMarket.setSecurityShortName(rowValues[i].toString().trim());
                         }
                         if(ValMarketIntegratedConstant.VALUATION_DATE.equals(fieldMap.get(i))){
-                            valMarket.setValuationDate(rowValues[i].toString());
+                            valMarket.setValuationDate(rowValues[i].toString().trim());
                         }
                         if(ValMarketIntegratedConstant.FULL_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setFullPrice(rowValues[i].toString());
+                            valMarket.setFullPrice(rowValues[i].toString().trim());
                         }
                         if(ValMarketIntegratedConstant.NET_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setNetPrice(rowValues[i].toString());
+                            valMarket.setNetPrice(rowValues[i].toString().trim());
                         }
                         if(ValMarketIntegratedConstant.MARKET_CODE.equals(fieldMap.get(i))){
                             valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));
@@ -178,19 +178,19 @@ public class ReadFileUtil {
                         }
                     }else{
                         if(ValMarketConstant.SECURITY_CODE.equals(fieldMap.get(i))){
-                            valMarket.setSecurityCode(rowValues[i].toString());
+                            valMarket.setSecurityCode(rowValues[i].toString().trim());
                         }
                         if(ValMarketConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
-                            valMarket.setSecurityShortName(rowValues[i].toString());
+                            valMarket.setSecurityShortName(rowValues[i].toString().trim());
                         }
                         if(ValMarketConstant.VALUATION_DATE.equals(fieldMap.get(i))){
-                            valMarket.setValuationDate(rowValues[i].toString());
+                            valMarket.setValuationDate(rowValues[i].toString().trim());
                         }
                         if(ValMarketConstant.FULL_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setFullPrice(rowValues[i].toString());
+                            valMarket.setFullPrice(rowValues[i].toString().trim());
                         }
                         if(ValMarketConstant.NET_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setNetPrice(rowValues[i].toString());
+                            valMarket.setNetPrice(rowValues[i].toString().trim());
                         }
                         if(ValMarketConstant.MARKET_CODE.equals(fieldMap.get(i))){
                             valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));

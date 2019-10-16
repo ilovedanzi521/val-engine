@@ -88,4 +88,6 @@ public class RedisKeyPrefix {
      * 百元汇率
      */
     public static final String VAL_INTEREST = "VAL_INTEREST";
+
+    public static final String VAL_SECURITY_INFO = "VAL_SECURITY_INFO";
 }
