@@ -55,7 +55,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
         //获取证券性质
         securityIndex.getSecurityCharacter();
 
-        RedisUtil.get(RedisKeyPrefix.CommonConstants.HORIZONTAL_LINE);
+        RedisUtil.get(CommonConstants.HORIZONTAL_LINE);
 
         SecurityIndexVO indexVO = new SecurityIndexVO();
         //内存获取
