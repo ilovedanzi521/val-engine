@@ -29,25 +29,24 @@ import java.util.Map;
  * 创建时间：2019/10/16/9:17
  */
 @Component
+
 public class StrategyFactory {
     @Autowired
-    private static BondTradeStrategy bondTradeStrategy;
+    private  BondTradeStrategy bondTradeStrategy;
     @Autowired
-    private static RepoTradeStrategy repoTradeStrategy;
+    private  RepoTradeStrategy repoTradeStrategy;
     @Autowired
-    private static BankTradeStrategy bankTradeStrategy;
+    private  BankTradeStrategy bankTradeStrategy;
 
     private static Map<String,BaseStrategy> STRATEGY_MAP = new HashMap<String, BaseStrategy>();
-    static {
-        //债券策略
+
+    public StrategyFactory(){
         STRATEGY_MAP.put(SecurityCharacter.BOND,bondTradeStrategy);
         //回购策略
         STRATEGY_MAP.put(SecurityCharacter.PEPO,repoTradeStrategy);
         //银行间策略
         STRATEGY_MAP.put(SecurityCharacter.BANK_BUSI,bankTradeStrategy);
     }
-
-    private StrategyFactory(){}
 
     public static BaseStrategy getPromotionStrategy(String promotionKey){
         return STRATEGY_MAP.get(promotionKey);
