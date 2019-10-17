@@ -15,6 +15,7 @@ package com.win.dfbp.strategy.impl;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
 import com.win.dfbp.strategy.BaseStrategy;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class RepoTradeStrategy extends BaseStrategy {
     }
 
     @Override
-    public SecurityIndexVO calPositionIndex() {
+    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex) {
         return null;
     }
 }

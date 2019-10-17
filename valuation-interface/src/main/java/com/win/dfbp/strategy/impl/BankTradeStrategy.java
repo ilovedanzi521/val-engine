@@ -12,6 +12,7 @@
 
 package com.win.dfbp.strategy.impl;
 
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
 import com.win.dfbp.strategy.BaseStrategy;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankTradeStrategy extends BaseStrategy {
 
-
     @Override
     public SecurityIndexVO calInitIndex() {
         return null;
     }
 
     @Override
-    public SecurityIndexVO calPositionIndex() {
+    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex) {
         return null;
     }
 }

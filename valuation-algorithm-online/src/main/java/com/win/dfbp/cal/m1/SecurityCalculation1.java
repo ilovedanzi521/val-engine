@@ -18,6 +18,8 @@ import com.win.dfbp.cal.ISecurityCalculation;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.strategy.BaseStrategy;
+import com.win.dfbp.strategy.StrategyFactory;
 
 /**
  * 包名称：com.win.dfbp.cal.m1
@@ -27,45 +29,28 @@ import com.win.dfbp.entity.SecurityIndexVO;
  * 创建时间：2019/10/14/11:44
  */
 public class SecurityCalculation1 implements ISecurityCalculation {
+    //判断计算模型
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
-        //todo
         return true;
     }
 
     @Override
     public SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex) {
-        //todo
-        SecurityIndexVO indexVO = new SecurityIndexVO();
-        //内存获取
-        indexVO.setCostPrice("110.00");
-        indexVO.setFairPrice("110.00");
-        indexVO.setFloatingPL("23.00");
-        indexVO.setInterestRateOfHundred("0.79");
-        indexVO.setPositionCost("110.00");
-        indexVO.setPositionMarketValue("111.00");
-        securityIndex.setIndexVO(indexVO);
+        String securityCharacter = securityIndex.getSecurityCharacter();
+        BaseStrategy strategy = StrategyFactory.getPromotionStrategy(securityCharacter);
+        strategy.setSecurityIndex(securityIndex);
+        strategy.calPositionIndex(oldIndex);
         return securityIndex;
     }
 
     @Override
     public SecurityIndex initSecurityIndex(SecurityIndex securityIndex) {
-        //todo
-        securityIndex.getFundNo();
         //获取证券性质
-        securityIndex.getSecurityCharacter();
-
-        RedisUtil.get(CommonConstants.HORIZONTAL_LINE);
-
-        SecurityIndexVO indexVO = new SecurityIndexVO();
-        //内存获取
-        indexVO.setCostPrice("110.00");
-        indexVO.setFairPrice("110.00");
-        indexVO.setFloatingPL("23.00");
-        indexVO.setInterestRateOfHundred("0.79");
-        indexVO.setPositionCost("110.00");
-        indexVO.setPositionMarketValue("111.00");
-        securityIndex.setIndexVO(indexVO);
+        String securityCharacter = securityIndex.getSecurityCharacter();
+        BaseStrategy strategy = StrategyFactory.getPromotionStrategy(securityCharacter);
+        strategy.setSecurityIndex(securityIndex);
+        strategy.calInitIndex();
         return securityIndex;
     }
 }

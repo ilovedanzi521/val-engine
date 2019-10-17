@@ -25,6 +25,15 @@ import java.math.BigDecimal;
  * 创建时间：2019/10/16/10:01
  */
 public abstract class BaseStrategy {
+    protected SecurityIndex securityIndex;
+
+    public SecurityIndex getSecurityIndex() {
+        return securityIndex;
+    }
+
+    public void setSecurityIndex(SecurityIndex securityIndex) {
+        this.securityIndex = securityIndex;
+    }
     /**
      * @Title: calInitIndex
      * @Description 计算初始指标
@@ -44,5 +53,5 @@ public abstract class BaseStrategy {
      * @author wanglei
      * @Date 2019/10/16/10:20
      */
-    public abstract SecurityIndexVO calPositionIndex();
+    public abstract SecurityIndexVO calPositionIndex(SecurityIndex oldIndex);
 }
