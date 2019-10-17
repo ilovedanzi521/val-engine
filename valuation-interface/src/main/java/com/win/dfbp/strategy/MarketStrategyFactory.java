@@ -12,15 +12,11 @@
 
 package com.win.dfbp.strategy;
 
-import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.constant.AssetTypeConstant;
 import com.win.dfbp.strategy.impl.BondMarketStrategy;
 import com.win.dfbp.strategy.impl.RepoMarketStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 包名称：com.win.dfbp.strategy

@@ -98,4 +98,8 @@ public class RedisKeyPrefix {
      */
     public static final String VAL_POSITION = "VAL_POSITION";
 
+    /**
+     * 估值标准方案明细
+     */
+    public static final String VAL_CRITERIA_SCHEME_DETAIL = "VAL_CRITERIA_SCHEME_DETAIL";
 }
