@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.win.dfbp.val.manage.dao.ValFundCharacterMapper">
+
+    <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValFundCharacter">
+        <result column="fund_character_code" property="FundCharacterCode" />
+        <result column="fund_character_name" property="FundCharacterName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        fund_character_code, fund_character_name
+    </sql>
+
+    <select id="getFundCharacterList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include>
+		from val_fund_character
+    </select>
+</mapper>
