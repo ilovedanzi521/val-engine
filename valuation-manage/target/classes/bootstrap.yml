@@ -1,0 +1,58 @@
+server:
+  port: 11030 #本地开发环境时用，生产部署时，应该设置为0，系统随机创建端口
+spring:
+  redis:
+    database: 0
+    host: 192.168.0.107
+    password: #默认为空
+    port: 6380
+    #      max-idle: 8 #最大空闲连接
+    #      min-idle: 0 #最小空闲连接
+    #      max-active: 8 #连接池最大连接数（使用负值表示没有限制）
+    jedis:
+      pool:
+        max-idle: 8 #最大空闲连接
+        min-idle: 0 #最小空闲连接
+        max-active: 8 #连接池最大连接数（使用负值表示没有限制）
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: dfbp-val-manage #服务名
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.107:3307/testdb?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10 # 续约更新时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 30 #服务失效时间。默认是90秒，也就是如果Eureka Server在90秒内没有接收到来自ServiceProvider的Renew操作，就会把Service Provider剔除
+    instance-id: ${spring.cloud.client.hostname}:${spring.cloud.client.ipAddress}:${random.int} #设置实例名
+    prefer-ip-address: true #使用IP地址来做注册中心地址
+  client:
+    InitialInstanceInfoReplicationIntervalSeconds: 1 #最初复制实例信息到eureka服务器所需的时间（s），默认为40秒
+    InstanceInfoReplicationIntervalSeconds: 10 #复制实例变化信息到eureka服务器所需要的时间间隔（s），默认为30秒
+    RegistryFetchIntervalSeconds: 10 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+    service-url:
+      defaultZone: http://192.168.0.60:10010/eureka/ #配置服务注册中心 多个用逗号分隔
+mybatis:
+  mapper-locations: classpath*:com/**/dao/**/*.xml
+  type-aliases-package: com.win.dfbp.val.manage.entity
+#PageHelper配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
