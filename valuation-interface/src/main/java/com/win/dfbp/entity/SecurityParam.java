@@ -45,6 +45,7 @@ public class SecurityParam {
      *入参：证券代码
      */
     private String securityCode;
+
     /**
      *入参：是否贴现
      */
@@ -58,7 +59,11 @@ public class SecurityParam {
      */
     private String decimalAccuracy;
 
-    private  String pk;
+    /**
+     * 来源
+     */
+    private String source;
+
 
     public String levelKey(int level){
         switch (level){
