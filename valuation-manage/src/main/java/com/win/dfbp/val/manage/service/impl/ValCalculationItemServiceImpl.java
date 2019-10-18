@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人：     @author huhe    
+ * 创建人：     @author huhe
  * 创建时间: 2019年10月16日/下午1:45:03
  * 项目名称：  valuation-manage
  * 文件名称: ValCalculationItemServiceImpl.java
@@ -7,7 +7,7 @@
  *
  * All rights Reserved, Designed By 投资交易团队
  * @Copyright:2016-2019
- * 
+ *
  ********************************************************/
 
 package com.win.dfbp.val.manage.service.impl;
@@ -15,7 +15,6 @@ package com.win.dfbp.val.manage.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,22 +29,22 @@ import com.win.dfbp.val.manage.service.ValCalculationItemService;
 import com.win.dfbp.val.manage.vo.query.ValCalculationItemQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationItemRepVO;
 
-/**   
- * 包名称： com.win.dfbp.val.manage.service.impl 
- * 类名称：ValCalculationItemServiceImpl 
+/**
+ * 包名称： com.win.dfbp.val.manage.service.impl
+ * 类名称：ValCalculationItemServiceImpl
  * 类描述：TODO
- * 创建人：@author huhe 
+ * 创建人：@author huhe
  * 创建时间：2019年10月16日/下午1:45:03
- *     
+ *
  */
 @Service
 public class ValCalculationItemServiceImpl implements ValCalculationItemService {
-	
+
 	@Autowired
 	private ValCalculationItemMapper valCalculationItemMapper;
 	@Autowired
 	private ValItemMapper valItemMapper;
-	
+
 	@Override
 	public PageInfo<ValCalculationItemRepVO> getValCalculationItems(ValCalculationItemQueryVO reqVO) {
 		PageHelper.startPage(reqVO.getReqPageNum(), reqVO.getReqPageSize());
@@ -58,7 +57,7 @@ public class ValCalculationItemServiceImpl implements ValCalculationItemService 
 		PageInfo<ValCalculationItemRepVO> pageInfo = new PageInfo<>(list);
 		return ObjectUtils.copyPageInfo(pageInfo, ValCalculationItemRepVO.class, true);
 	}
-	
+
 	public String translateCalFormula(String calFormula) {
 		List<ValItem> valItems = valItemMapper.getValItems();
 		for (ValItem valItem : valItems) {
@@ -68,5 +67,5 @@ public class ValCalculationItemServiceImpl implements ValCalculationItemService 
 		}
 		return calFormula;
 	}
-	
+
 }

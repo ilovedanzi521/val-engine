@@ -59,7 +59,9 @@ public class BondTradeStrategy extends BaseStrategy {
                         securityIndex.getFundNo(),
                 TradeRuleConstant.VAL_PARAM_DIC_FP001,"methodCode");
         //1计算持仓成本
-        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityIndex);
+        //初次持仓，交易金额=持仓成本
+        securityParam.setPositionCost(securityIndex.getCashSettleBalance());
+        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityParam);
         //成本价格=持仓成本/持仓数量
         indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
         indexVO.setPositionCost(positionCost);
@@ -69,12 +71,14 @@ public class BondTradeStrategy extends BaseStrategy {
         securityParam.setPositionAmount(securityIndex.getCashSettleBalance());
         securityParam.setPositionCost(securityIndex.getStockSettleAmount());
         BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityParam);
+        //返回设置公允价格
         indexVO.setFairPrice(fairPrice);
-
+        //证券信息设置公允价格
+        securityParam.setFairPrice(fairPrice);
         //3.获取投资标志
         String investFlag= securityIndex.getInvestFlag();
         //计算持仓市值
-        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityIndex);
+        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityParam);
         indexVO.setPositionMarketValue(positionMarketValue);
         //浮动盈亏=持仓市值-持仓成本
         indexVO.setFloatingPL(positionMarketValue.subtract(positionCost));
@@ -86,7 +90,9 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         SecurityIndexVO indexVO = new SecurityIndexVO();
         //持仓数量
-        indexVO.setPositionAmount(securityIndex.getIndexVO().getPositionAmount().add(oldIndex.getIndexVO().getPositionAmount()));
+        securityParam.setPositionAmount(securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionAmount()));
+        //持仓成本
+        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
         //计算公允价格
         BigDecimal fairPrice = oldIndex.getIndexVO().getFairPrice();
         indexVO.setFairPrice(fairPrice);
@@ -96,12 +102,12 @@ public class BondTradeStrategy extends BaseStrategy {
                         securityIndex.getFundNo(),
                 TradeRuleConstant.VAL_PARAM_DIC_FP001,"methodCode");
         //计算持仓成本
-        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityIndex);
+        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityParam);
         indexVO.setPositionCost(positionCost);
         //3.获取投资标志
         String investFlag= securityIndex.getInvestFlag();
         //计算持仓市值
-        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityIndex);
+        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityParam);
         indexVO.setPositionMarketValue(positionMarketValue);
         //持仓成本/持仓数量
         indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));

@@ -52,13 +52,6 @@ public abstract class BaseStrategy {
      * @author wanglei
      * @Date 2019/10/16/10:19
      */
-    public SecurityIndexVO initIndex(String securityCode){
-        SecurityParam securityParam = querySecurityBasciInfo(securityCode);
-        if(securityParam==null){
-            throw new WinException("没有存在证券基础信息");
-        }
-        return calInitIndex(securityParam.setSecurityParam());
-    }
     public abstract SecurityIndexVO calInitIndex(SecurityParam securityParam);
     /**
      * @Title: calPositionIndex
@@ -69,34 +62,7 @@ public abstract class BaseStrategy {
      * @author wanglei
      * @Date 2019/10/16/10:20
      */
-    public SecurityIndexVO positionIndex(SecurityIndex oldIndex){
-        SecurityParam securityParam = querySecurityBasciInfo(oldIndex.getSecurityCode());
-        if(securityParam==null){
-            throw new WinException("没有存在证券基础信息");
-        }
-        return calPositionIndex(oldIndex,securityParam.setSecurityParam());
-    }
     public abstract SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam);
 
-    /**
-     * @Title: querySecurityBasciInfo
-     * @Description 判断证券信息
-     * @param securityCode
-     * @return com.win.dfbp.entity.SecurityParam
-     * @throws
-     * @author wanglei
-     * @Date 2019/10/18/10:45
-     */
-    public SecurityParam querySecurityBasciInfo(String securityCode){
-        //缓存中获取证券信息
-        Object securityInfo = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO+ CommonConstants.HORIZONTAL_LINE+securityCode);
-        SecurityParam securityParam = null;
-        if(ObjectUtil.isEmpty(securityInfo)){
-            log.error("证券基础信息没有加载缓存！");
-        }else{
-            //1 . json转object 获取证券内码对用的证券基础信息
-            securityParam = JSON.parseObject((String)securityInfo,SecurityParam.class);
-        }
-        return securityParam;
-    }
+
 }

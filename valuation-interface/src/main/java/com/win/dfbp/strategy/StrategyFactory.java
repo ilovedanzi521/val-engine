@@ -29,7 +29,6 @@ import java.util.Map;
  * 创建时间：2019/10/16/9:17
  */
 @Component
-
 public class StrategyFactory {
     @Autowired
     private  BondTradeStrategy bondTradeStrategy;

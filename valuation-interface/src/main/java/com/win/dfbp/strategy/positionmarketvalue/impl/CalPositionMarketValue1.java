@@ -15,6 +15,7 @@ package com.win.dfbp.strategy.positionmarketvalue.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.strategy.positionmarketvalue.ICalPositionMarketValue;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +31,12 @@ import java.math.BigDecimal;
 @Service
 public class CalPositionMarketValue1 implements ICalPositionMarketValue {
     @Override
-    public BigDecimal cal(SecurityIndex securityIndex) {
+    public BigDecimal cal(SecurityParam securityParam) {
         //持仓市值 = round（iff（公允价<>” ”,持仓数量  * 公允价 , 持仓成本）  ，2）
-        SecurityIndexVO indexVO = securityIndex.getIndexVO();
-        if(ObjectUtil.isEmpty(indexVO.getFairPrice())){
-            return indexVO.getPositionCost();
+        if(ObjectUtil.isEmpty(securityParam.getFairPrice())){
+            return securityParam.getPositionCost();
         }else{
-            return indexVO.getPositionAmount().multiply(indexVO.getFairPrice());
+            return securityParam.getPositionAmount().multiply(securityParam.getFairPrice());
         }
     }
 }

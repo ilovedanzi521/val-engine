@@ -103,6 +103,10 @@ public class SecurityParam {
      * 持仓成本';
      */
     private BigDecimal positionCost;
+    /**
+     * 公允价
+     */
+    private BigDecimal fairPrice;
 
     public String levelKey(int level){
         switch (level){
