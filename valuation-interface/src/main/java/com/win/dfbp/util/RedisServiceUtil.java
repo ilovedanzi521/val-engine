@@ -47,7 +47,7 @@ public class RedisServiceUtil {
     public static String getRedisJsonFieldValue(String redisKeyPrefix, String key, String field) {
         Object fundValSchemeJson = RedisUtil.get(redisKeyPrefix+ CommonConstants.HORIZONTAL_LINE + key);
         if(ObjectUtil.isNotEmpty(fundValSchemeJson)){
-            Object rtnObject = JSON.parseObject((String) fundValSchemeJson, Map.class).get(field);
+            Object rtnObject = JSON.parseObject(JSON.toJSONString(fundValSchemeJson), Map.class).get(field);
             if(ObjectUtil.isEmpty(rtnObject)){
                 log.error("估值参数缓存中,valCriteria is null！");
             }else{

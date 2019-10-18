@@ -147,7 +147,7 @@ public class SecurityParam {
         if(ObjectUtil.isEmpty(price)){
             throw new WinException("无法获取行情的净价全价信息");
         }else{
-            SecurityParam tmpParam = JSON.parseObject((String)price,SecurityParam.class);
+            SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(price),SecurityParam.class);
             this.setFullPrice(tmpParam.getFullPrice());
             this.setNetPrice(tmpParam.getNetPrice());
             return this;
@@ -169,7 +169,7 @@ public class SecurityParam {
         if(ObjectUtil.isEmpty(interest)){
             throw new WinException("无法获取百元利息信息");
         }else{
-            SecurityParam tmpParam = JSON.parseObject((String)interest,SecurityParam.class);
+            SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(interest),SecurityParam.class);
             this.setPretaxInterest(tmpParam.getPretaxInterest());
             this.setAftertaxInterest(tmpParam.getAftertaxInterest());
             return this;
@@ -195,7 +195,7 @@ public class SecurityParam {
         if(ObjectUtil.isNotEmpty(list)){
             for (Object rt : list) {
                 if(rt!=null){
-                    SecurityParam tmpParam = JSON.parseObject((String)rt,SecurityParam.class);
+                    SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(rt),SecurityParam.class);
                     this.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
                     this.setValCriteria(tmpParam.getValCriteria());
                     this.setSource(tmpParam.getSource());

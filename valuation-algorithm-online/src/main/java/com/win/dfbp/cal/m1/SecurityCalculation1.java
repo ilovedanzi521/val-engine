@@ -99,7 +99,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
            log.error("无法获取证券信息缓存,key={}",RedisKeyPrefix.VAL_SECURITY_INFO+ CommonConstants.HORIZONTAL_LINE+securityCode);
         }else{
             //1 . json转object 获取证券内码对用的证券基础信息
-            securityParam = JSON.parseObject((String)securityInfo,SecurityParam.class);
+            securityParam = JSON.parseObject(JSON.toJSONString(securityInfo),SecurityParam.class);
         }
         return securityParam;
     }

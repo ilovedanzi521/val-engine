@@ -62,9 +62,12 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                 // 初始化state
                 SecurityIndexState state = new SecurityIndexState();
 //                stockList
-                out.collect(stockList);
-                // 更新state
-                indexState.update(state.clone(stockList));
+
+                if(state.getIndexVO()!=null){
+                    out.collect(stockList);
+                    // 更新state
+                    indexState.update(state.clone(stockList));
+                }
             }
         } else {
             //非第一次进入，进行计算
