@@ -41,7 +41,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
 
         BaseStrategy strategy = new StrategyFactory().getPromotionStrategy(securityCharacter);
         strategy.setSecurityIndex(securityIndex);
-        strategy.calPositionIndex(oldIndex);
+        strategy.positionIndex(oldIndex);
         return securityIndex;
     }
 
@@ -52,7 +52,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
         String securityCharacter = securityIndex.getSecurityCharacter();
         BaseStrategy strategy = new StrategyFactory().getPromotionStrategy(securityCharacter);
         strategy.setSecurityIndex(securityIndex);
-        strategy.calInitIndex();
+        strategy.initIndex(securityIndex.getSecurityCode());
         return securityIndex;
     }
 }

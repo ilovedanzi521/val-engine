@@ -17,6 +17,7 @@ import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.strategy.BaseStrategy;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +31,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RepoTradeStrategy extends BaseStrategy {
     @Override
-    public SecurityIndexVO calInitIndex() {
+    public SecurityIndexVO calInitIndex(SecurityParam securityParam) {
         return null;
     }
 
     @Override
-    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex) {
+    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         return null;
     }
 }

@@ -20,6 +20,7 @@ import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.strategy.BaseStrategy;
 import com.win.dfbp.strategy.fairprice.FairPriceFactory;
 import com.win.dfbp.strategy.positioncost.PositionCostFactory;
@@ -52,14 +53,13 @@ public class BondTradeStrategy extends BaseStrategy {
     ;
 
     @Override
-    public SecurityIndexVO calInitIndex() {
+    public SecurityIndexVO calInitIndex(SecurityParam securityParam) {
 
         SecurityIndexVO indexVO = new SecurityIndexVO();
         //1.获取估值参数
-        String valCriteria = RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_VAL_SCHEME,
-                securityIndex.getFundNo(),"valCriteria");
+        String valCriteria = securityParam.getValCriteria();
         //计算公允价格
-        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).cal(securityIndex);
+        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityIndex,securityParam);
         //2.获取成本转结方式
         String costAccount= RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_CONFIG+
                         CommonConstants.HORIZONTAL_LINE+
@@ -85,7 +85,7 @@ public class BondTradeStrategy extends BaseStrategy {
     }
 
     @Override
-    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex) {
+    public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         SecurityIndexVO indexVO = new SecurityIndexVO();
 
         //计算公允价格

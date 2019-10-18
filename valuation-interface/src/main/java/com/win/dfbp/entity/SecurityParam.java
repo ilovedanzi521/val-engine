@@ -12,7 +12,16 @@
 
 package com.win.dfbp.entity;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSON;
+import com.win.dfas.common.constant.CommonConstants;
+import com.win.dfas.common.exception.WinException;
+import com.win.dfas.common.util.RedisUtil;
+import com.win.dfbp.constant.RedisKeyPrefix;
 import lombok.Data;
+import org.apache.poi.hpsf.Decimal;
+
+import java.math.BigDecimal;
 
 /**
  * 包名称：com.win.wl
@@ -57,13 +66,31 @@ public class SecurityParam {
     /**
      * 、保留位数
      */
-    private String decimalAccuracy;
+    private int decimalAccuracy;
 
     /**
      * 来源
      */
     private String source;
 
+    /**
+     * 来源获取净价
+     */
+    private BigDecimal netPrice;
+
+    /**
+     * 来源获取全价
+     */
+    private BigDecimal fullPrice;
+    /**
+     *税前计息每百元利息';
+     */
+    private BigDecimal pretaxInterest;
+
+    /**
+     * 税后计息每百元利息';
+     */
+    private BigDecimal aftertaxInterest;
 
     public String levelKey(int level){
         switch (level){
@@ -88,5 +115,48 @@ public class SecurityParam {
         }
         return "";
     }
-
+    /**
+     * @Title: calFairPrice
+     * @Description 计算净价全价
+     * @param
+     * @return java.math.BigDecimal
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/18/11:49
+     */
+    public SecurityParam calPrice(){
+        //根据证券代码+交易市场+来源获取净价全价
+        Object price = RedisUtil.get(RedisKeyPrefix.VAL_MARKET+ CommonConstants.HORIZONTAL_LINE+
+                this.getSecurityCode()+this.getMarketCode()+this.getSource());
+        if(ObjectUtil.isEmpty(price)){
+            throw new WinException("无法获取行情的净价全价信息");
+        }else{
+            SecurityParam tmpParam = JSON.parseObject((String)price,SecurityParam.class);
+            this.setFullPrice(tmpParam.getFullPrice());
+            this.setNetPrice(tmpParam.getNetPrice());
+            return this;
+        }
+    }
+    /**
+     * @Title: BigDecimal
+     * @Description 获取百元利率
+     * @param
+     * @return
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/18/11:49
+     */
+    public SecurityParam calInterest (){
+        //根据证券代码+交易市场+来源获取净价全价
+        Object interest = RedisUtil.get(RedisKeyPrefix.VAL_INTEREST+ CommonConstants.HORIZONTAL_LINE+
+                this.getSecurityCode()+this.getMarketCode());
+        if(ObjectUtil.isEmpty(interest)){
+            throw new WinException("无法获取百元利息信息");
+        }else{
+            SecurityParam tmpParam = JSON.parseObject((String)interest,SecurityParam.class);
+            this.setPretaxInterest(tmpParam.getPretaxInterest());
+            this.setAftertaxInterest(tmpParam.getAftertaxInterest());
+            return this;
+        }
+    }
 }

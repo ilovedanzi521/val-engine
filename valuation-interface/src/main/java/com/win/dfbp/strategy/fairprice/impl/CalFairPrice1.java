@@ -13,10 +13,12 @@
 package com.win.dfbp.strategy.fairprice.impl;
 
 import com.win.dfbp.entity.SecurityIndex;
-import com.win.dfbp.strategy.fairprice.ICalFairPrice;
+import com.win.dfbp.entity.SecurityParam;
+import com.win.dfbp.strategy.fairprice.AbsCalFairPrice;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 包名称：com.win.dfbp.strategy.fairprice.impl
@@ -27,10 +29,10 @@ import java.math.BigDecimal;
  */
 
 @Service
-public class CalFairPrice1 implements ICalFairPrice {
+public class CalFairPrice1 extends AbsCalFairPrice {
     @Override
-    public BigDecimal cal(SecurityIndex securityIndex) {
-        //HUO
-        return null;
+    public BigDecimal cal(SecurityIndex securityIndex,SecurityParam securityParam) {
+        //公允价= round（公共行情[估值净价]，N）
+        return securityParam.getNetPrice().setScale(securityParam.getDecimalAccuracy(), RoundingMode.HALF_EVEN);
     }
 }

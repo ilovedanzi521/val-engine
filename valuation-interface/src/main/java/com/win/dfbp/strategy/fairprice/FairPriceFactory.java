@@ -47,7 +47,7 @@ public class FairPriceFactory {
     @Autowired
     private CalFairPrice6 calFairPrice6;
 
-    public ICalFairPrice getInstance(String type){
+    public AbsCalFairPrice getInstance(String type){
         switch (type){
             case TradeRuleConstant.VAL_CRITERIA_P001:
                 return calFairPrice1;
