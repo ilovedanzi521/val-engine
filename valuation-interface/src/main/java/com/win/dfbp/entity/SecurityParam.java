@@ -181,7 +181,7 @@ public class SecurityParam {
      * @author wanglei
      * @Date 2019/10/18/10:17
      */
-    public SecurityParam getSecurityParam() {
+    public SecurityParam setSecurityParam() {
         TreeSet<String> keys =new TreeSet<>();
         for (int i =1;i<=6;i++){
             keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+levelKey(i));

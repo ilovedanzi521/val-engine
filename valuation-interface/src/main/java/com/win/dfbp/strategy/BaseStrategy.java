@@ -57,7 +57,7 @@ public abstract class BaseStrategy {
         if(securityParam==null){
             throw new WinException("没有存在证券基础信息");
         }
-        return calInitIndex(securityParam);
+        return calInitIndex(securityParam.setSecurityParam());
     }
     public abstract SecurityIndexVO calInitIndex(SecurityParam securityParam);
     /**
@@ -74,7 +74,7 @@ public abstract class BaseStrategy {
         if(securityParam==null){
             throw new WinException("没有存在证券基础信息");
         }
-        return calInitIndex(securityParam.getSecurityParam());
+        return calInitIndex(securityParam.setSecurityParam());
     }
     public abstract SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam);
 
