@@ -49,6 +49,8 @@ public class BondTradeStrategy extends BaseStrategy {
     @Autowired
     private FairPriceFactory fairPriceFactory;
 
+    ;
+
     @Override
     public SecurityIndexVO calInitIndex() {
 
@@ -57,7 +59,7 @@ public class BondTradeStrategy extends BaseStrategy {
         String valCriteria = RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_VAL_SCHEME,
                 securityIndex.getFundNo(),"valCriteria");
         //计算公允价格
-        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).cal();
+        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).cal(securityIndex);
         //2.获取成本转结方式
         String costAccount= RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_CONFIG+
                         CommonConstants.HORIZONTAL_LINE+
@@ -73,6 +75,11 @@ public class BondTradeStrategy extends BaseStrategy {
         indexVO.setFairPrice(fairPrice);
         indexVO.setPositionCost(positionCost);
         indexVO.setPositionMarketValue(positionMarketValue);
+        //持仓成本/持仓数量
+        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
+        //浮动盈亏=持仓市值-持仓成本
+        indexVO.setFloatingPL(positionMarketValue.subtract(positionCost));
+
         securityIndex.setIndexVO(indexVO);
         return indexVO;
     }
@@ -94,10 +101,13 @@ public class BondTradeStrategy extends BaseStrategy {
         String investFlag= securityIndex.getInvestFlag();
         //计算持仓市值
         BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal();
-
         indexVO.setFairPrice(fairPrice);
         indexVO.setPositionCost(positionCost);
         indexVO.setPositionMarketValue(positionMarketValue);
+        //持仓成本/持仓数量
+        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
+        //浮动盈亏=持仓市值-持仓成本
+        indexVO.setFloatingPL(positionMarketValue.subtract(positionCost));
         securityIndex.setIndexVO(indexVO);
         return indexVO;
     }

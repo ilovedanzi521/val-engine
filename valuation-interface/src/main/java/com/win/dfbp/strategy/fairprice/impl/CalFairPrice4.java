@@ -12,6 +12,7 @@
 
 package com.win.dfbp.strategy.fairprice.impl;
 
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.strategy.fairprice.ICalFairPrice;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
 @Service
 public class CalFairPrice4 implements ICalFairPrice {
     @Override
-    public BigDecimal cal() {
+    public BigDecimal cal(SecurityIndex securityIndex) {
         return null;
     }
 }

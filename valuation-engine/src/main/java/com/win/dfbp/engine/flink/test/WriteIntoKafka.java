@@ -72,9 +72,9 @@ public class WriteIntoKafka {
 
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
-            while(running) {
+//            while(running) {
                 ctx.collect(prouderJson());
-            }
+//            }
         }
 
         private String prouderJson() {
@@ -85,7 +85,7 @@ public class WriteIntoKafka {
                     "  \"security_code\": \"337001\",\n" +
                     "  \"market_code\": \"SH\",\n" +
                     "  \"platform_code\": \"123\",\n" +
-                    "  \"security_character\": \"123\",\n" +
+                    "  \"security_character\": \"bond\",\n" +
                     "  \"invest_flag\": \"1\",\n" +
                     "  \"cash_settle_balance\": \"1222\",\n" +
                     "  \"stock_settle_amount\": \"456612\",\n" +

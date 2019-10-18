@@ -102,4 +102,9 @@ public class RedisKeyPrefix {
      * 估值标准方案明细
      */
     public static final String VAL_CRITERIA_SCHEME_DETAIL = "VAL_CRITERIA_SCHEME_DETAIL";
+
+    /**
+     * 最新行情信息
+     */
+    public static final String VAL_MARKET = "VAL_MARKET";
 }

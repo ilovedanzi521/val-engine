@@ -12,7 +12,6 @@
 
 package com.win.dfbp.engine.flink;
 
-import com.win.dfbp.engine.flink.sink.ValMarketFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
 import com.win.dfbp.entity.ValMarket;
 import org.apache.flink.api.java.ExecutionEnvironment;
@@ -44,7 +43,7 @@ public class FlinkFileReadTask {
             // 1、解析文件读取到List集合中
             DataSource<ValMarket> dataSource = env.fromCollection(list);
             // 2、将List集合数据塞入Flink中
-            dataSource.flatMap(new ValMarketFunction()).print();
+//            dataSource.flatMap(new ValMarketFunction()).print();
         } catch (Exception e) {
             e.printStackTrace();
         }

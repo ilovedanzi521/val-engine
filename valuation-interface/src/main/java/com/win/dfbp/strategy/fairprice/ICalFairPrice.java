@@ -12,6 +12,7 @@
 
 package com.win.dfbp.strategy.fairprice;
 
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityIndexVO;
 
 import java.math.BigDecimal;
@@ -24,5 +25,5 @@ import java.math.BigDecimal;
  * 创建时间：2019/10/16/11:24
  */
 public interface ICalFairPrice {
-    public BigDecimal cal();
+    public BigDecimal cal(SecurityIndex securityIndex);
 }

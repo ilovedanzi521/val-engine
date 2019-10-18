@@ -26,6 +26,10 @@ import java.math.BigDecimal;
 @Data
 public class SecurityIndexVO {
     /**
+     * 持仓数量
+     */
+    private BigDecimal positionAmount;
+    /**
      * 持仓成本
      */
     private BigDecimal positionCost;

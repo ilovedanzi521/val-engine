@@ -54,6 +54,8 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         String algorithm = "";
         ISecurityCalculation securityCalculation = SpiFactory.getStockMarketAlgorithm(algorithm);
         // 第一次进入计算,更新state,init state
+        //获取数据库或redis缓存中是否存在持仓
+        //TODO
         if (lastState == null) {
             if (securityCalculation != null) {
                 SecurityIndex stockList = securityCalculation.initSecurityIndex(in);

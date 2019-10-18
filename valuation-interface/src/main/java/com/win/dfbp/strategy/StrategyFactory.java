@@ -37,23 +37,21 @@ public class StrategyFactory {
     private  RepoTradeStrategy repoTradeStrategy;
     @Autowired
     private  BankTradeStrategy bankTradeStrategy;
-
-    private static Map<String,BaseStrategy> STRATEGY_MAP = new HashMap<String, BaseStrategy>();
-
-    public StrategyFactory(){
-        STRATEGY_MAP.put(SecurityCharacter.BOND,bondTradeStrategy);
-        //回购策略
-        STRATEGY_MAP.put(SecurityCharacter.PEPO,repoTradeStrategy);
-        //银行间策略
-        STRATEGY_MAP.put(SecurityCharacter.BANK_BUSI,bankTradeStrategy);
-    }
-
-    public static BaseStrategy getPromotionStrategy(String promotionKey){
-        return STRATEGY_MAP.get(promotionKey);
+    public BaseStrategy getPromotionStrategy(String promotionKey){
+       switch (promotionKey){
+           case SecurityCharacter.BOND:{
+               return bondTradeStrategy;
+           }
+           case SecurityCharacter.PEPO:{
+               return repoTradeStrategy;
+           }
+           default:{
+               return repoTradeStrategy;
+           }
+        }
     }
     public interface SecurityCharacter{
         String BOND = "bond";
         String PEPO = "repo";
-        String BANK_BUSI = "bankbusi";
     }
 }

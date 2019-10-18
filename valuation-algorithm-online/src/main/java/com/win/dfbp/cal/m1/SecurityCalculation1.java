@@ -38,7 +38,8 @@ public class SecurityCalculation1 implements ISecurityCalculation {
     @Override
     public SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex) {
         String securityCharacter = securityIndex.getSecurityCharacter();
-        BaseStrategy strategy = StrategyFactory.getPromotionStrategy(securityCharacter);
+
+        BaseStrategy strategy = new StrategyFactory().getPromotionStrategy(securityCharacter);
         strategy.setSecurityIndex(securityIndex);
         strategy.calPositionIndex(oldIndex);
         return securityIndex;
@@ -47,8 +48,9 @@ public class SecurityCalculation1 implements ISecurityCalculation {
     @Override
     public SecurityIndex initSecurityIndex(SecurityIndex securityIndex) {
         //获取证券性质
+
         String securityCharacter = securityIndex.getSecurityCharacter();
-        BaseStrategy strategy = StrategyFactory.getPromotionStrategy(securityCharacter);
+        BaseStrategy strategy = new StrategyFactory().getPromotionStrategy(securityCharacter);
         strategy.setSecurityIndex(securityIndex);
         strategy.calInitIndex();
         return securityIndex;

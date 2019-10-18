@@ -17,10 +17,13 @@ import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
+import com.win.dfbp.entity.SecurityParam;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * 包名称：com.win.dfbp.util
@@ -55,5 +58,27 @@ public class RedisServiceUtil {
         }
 
         return null;
+    }
+
+    public static SecurityParam getSecurityParam(SecurityParam securityParam) {
+        TreeSet<String> keys =new TreeSet<>();
+        for (int i =1;i<=6;i++){
+            keys.add(RedisKeyPrefix.FUND_VAL_SCHEME+ CommonConstants.HORIZONTAL_LINE+securityParam.levelKey(i));
+        }
+        //批量获取keys
+        List list = RedisUtil.multiGet(keys);
+        if(ObjectUtil.isNotEmpty(list)){
+            for (Object rt : list) {
+                if(rt!=null){
+                    SecurityParam tmpParam = JSON.parseObject((String)rt,SecurityParam.class);
+                    securityParam.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
+                    securityParam.setValCriteria(tmpParam.getValCriteria());
+                    return securityParam;
+                }
+            }
+        }else{
+            log.error("估值参数没有加载缓存！");
+        }
+        return securityParam;
     }
 }
