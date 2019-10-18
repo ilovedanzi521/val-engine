@@ -12,6 +12,8 @@
 
 package com.win.dfbp.strategy.positionmarketvalue;
 
+import com.win.dfbp.entity.SecurityIndex;
+
 import java.math.BigDecimal;
 
 /**
@@ -22,5 +24,5 @@ import java.math.BigDecimal;
  * 创建时间：2019/10/16/11:01
  */
 public interface ICalPositionMarketValue {
-    public BigDecimal cal();
+    public BigDecimal cal(SecurityIndex securityIndex);
 }

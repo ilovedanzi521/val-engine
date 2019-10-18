@@ -12,6 +12,7 @@
 
 package com.win.dfbp.strategy.positionmarketvalue.impl;
 
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.strategy.positionmarketvalue.ICalPositionMarketValue;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
 @Service
 public class CalPositionMarketValue2 implements ICalPositionMarketValue {
     @Override
-    public BigDecimal cal() {
-        return null;
+    public BigDecimal cal(SecurityIndex securityIndex) {
+        return securityIndex.getIndexVO().getPositionCost();
     }
 }

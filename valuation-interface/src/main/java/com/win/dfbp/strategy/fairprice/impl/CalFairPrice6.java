@@ -31,6 +31,6 @@ public class CalFairPrice6 extends AbsCalFairPrice {
     @Override
     public BigDecimal cal(SecurityIndex securityIndex,SecurityParam securityParam) {
         //公允价=持仓数量/持仓成本
-        return securityIndex.getIndexVO().getPositionAmount().divide(securityIndex.getIndexVO().getPositionCost());
+        return securityIndex.getIndexVO().getCostPrice();
     }
 }

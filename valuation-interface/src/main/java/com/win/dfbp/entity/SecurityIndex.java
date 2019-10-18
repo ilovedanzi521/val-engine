@@ -14,6 +14,8 @@ package com.win.dfbp.entity;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * 包名称：com.win.wl
  * 类名称：SecurityIndex
@@ -55,6 +57,14 @@ public class SecurityIndex {
      * 投资标志
      */
     private String investFlag;
+    /**
+     * 交易数量
+     */
+    private BigDecimal cashSettleBalance;
+    /**
+     * 交易金额
+     */
+    private BigDecimal stockSettleAmount;
     /**
      * 指标
      */

@@ -12,10 +12,7 @@
 
 package com.win.dfbp.strategy.impl;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
-import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.entity.SecurityIndex;
@@ -31,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * 包名称：com.win.dfbp.strategy.impl
@@ -56,30 +52,30 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calInitIndex(SecurityParam securityParam) {
 
         SecurityIndexVO indexVO = new SecurityIndexVO();
-        //1.获取估值参数
-        String valCriteria = securityParam.getValCriteria();
-        //计算公允价格
-        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityIndex,securityParam);
+
         //2.获取成本转结方式
         String costAccount= RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_CONFIG+
                         CommonConstants.HORIZONTAL_LINE+
-                securityIndex.getFundNo(),
+                        securityIndex.getFundNo(),
                 TradeRuleConstant.VAL_PARAM_DIC_FP001,"methodCode");
-        //计算持仓成本
-        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal();
+        //1计算持仓成本
+        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityIndex);
+        //成本价格=持仓成本/持仓数量
+        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
+        indexVO.setPositionCost(positionCost);
+        //2.获取估值参数
+        String valCriteria = securityParam.getValCriteria();
+        //计算公允价格
+        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityIndex,securityParam);
+        indexVO.setFairPrice(fairPrice);
+
         //3.获取投资标志
         String investFlag= securityIndex.getInvestFlag();
         //计算持仓市值
-        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal();
-
-        indexVO.setFairPrice(fairPrice);
-        indexVO.setPositionCost(positionCost);
+        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityIndex);
         indexVO.setPositionMarketValue(positionMarketValue);
-        //持仓成本/持仓数量
-        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
         //浮动盈亏=持仓市值-持仓成本
         indexVO.setFloatingPL(positionMarketValue.subtract(positionCost));
-
         securityIndex.setIndexVO(indexVO);
         return indexVO;
     }
@@ -87,22 +83,23 @@ public class BondTradeStrategy extends BaseStrategy {
     @Override
     public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         SecurityIndexVO indexVO = new SecurityIndexVO();
-
+        //持仓数量
+        indexVO.setPositionAmount(securityIndex.getIndexVO().getPositionAmount().add(oldIndex.getIndexVO().getPositionAmount()));
         //计算公允价格
         BigDecimal fairPrice = oldIndex.getIndexVO().getFairPrice();
+        indexVO.setFairPrice(fairPrice);
         //2.获取成本转结方式
         String costAccount= RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_CONFIG+
                         CommonConstants.HORIZONTAL_LINE+
                         securityIndex.getFundNo(),
                 TradeRuleConstant.VAL_PARAM_DIC_FP001,"methodCode");
         //计算持仓成本
-        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal();
+        BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityIndex);
+        indexVO.setPositionCost(positionCost);
         //3.获取投资标志
         String investFlag= securityIndex.getInvestFlag();
         //计算持仓市值
-        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal();
-        indexVO.setFairPrice(fairPrice);
-        indexVO.setPositionCost(positionCost);
+        BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityIndex);
         indexVO.setPositionMarketValue(positionMarketValue);
         //持仓成本/持仓数量
         indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));

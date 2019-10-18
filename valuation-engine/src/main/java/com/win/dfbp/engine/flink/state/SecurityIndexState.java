@@ -17,6 +17,7 @@ import com.win.dfbp.entity.SecurityIndexVO;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 包名称：com.win.wl
@@ -60,6 +61,14 @@ public class SecurityIndexState implements Serializable {
      */
     private String investFlag;
     /**
+     * 交易数量
+     */
+    private BigDecimal cashSettleBalance;
+    /**
+     * 交易金额
+     */
+    private BigDecimal stockSettleAmount;
+    /**
      * 指标
      */
     private SecurityIndexVO indexVO;
@@ -74,6 +83,8 @@ public class SecurityIndexState implements Serializable {
         indexState.setPortfNo(securityIndex.getPortfNo());
         indexState.setSecurityCharacter(securityIndex.getSecurityCharacter());
         indexState.setSecurityCode(securityIndex.getSecurityCode());
+        indexState.setCashSettleBalance(securityIndex.getCashSettleBalance());
+        indexState.setStockSettleAmount(securityIndex.getStockSettleAmount());
         SecurityIndexVO indexVO = new SecurityIndexVO();
         indexVO.setCostPrice(securityIndex.getIndexVO().getCostPrice());
         indexVO.setFairPrice(securityIndex.getIndexVO().getFairPrice());
@@ -95,6 +106,8 @@ public class SecurityIndexState implements Serializable {
         index.setPortfNo(this.getPortfNo());
         index.setSecurityCharacter(this.getSecurityCharacter());
         index.setSecurityCode(this.getSecurityCode());
+        index.setCashSettleBalance(this.getCashSettleBalance());
+        index.setStockSettleAmount(this.getStockSettleAmount());
         SecurityIndexVO indexVO = new SecurityIndexVO();
         indexVO.setCostPrice(this.getIndexVO().getCostPrice());
         indexVO.setFairPrice(this.getIndexVO().getFairPrice());

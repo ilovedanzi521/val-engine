@@ -12,7 +12,7 @@
 
 package com.win.dfbp.strategy;
 
-import com.win.dfbp.strategy.impl.BankTradeStrategy;
+import com.win.dfbp.constant.AssetTypeConstant;
 import com.win.dfbp.strategy.impl.BondTradeStrategy;
 import com.win.dfbp.strategy.impl.RepoTradeStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,23 +35,17 @@ public class StrategyFactory {
     private  BondTradeStrategy bondTradeStrategy;
     @Autowired
     private  RepoTradeStrategy repoTradeStrategy;
-    @Autowired
-    private  BankTradeStrategy bankTradeStrategy;
     public BaseStrategy getPromotionStrategy(String promotionKey){
        switch (promotionKey){
-           case SecurityCharacter.BOND:{
+           case AssetTypeConstant.BOND:{
                return bondTradeStrategy;
            }
-           case SecurityCharacter.PEPO:{
+           case AssetTypeConstant.REPO:{
                return repoTradeStrategy;
            }
            default:{
                return repoTradeStrategy;
            }
         }
-    }
-    public interface SecurityCharacter{
-        String BOND = "bond";
-        String PEPO = "repo";
     }
 }

@@ -79,17 +79,17 @@ public class WriteIntoKafka {
 
         private String prouderJson() {
             return "{\n" +
-                    "  \"fund_no\": \"GHP01\",\n" +
-                    "  \"fund_character\": \"001\",\n" +
-                    "  \"portf_no\": \"123456\",\n" +
-                    "  \"security_code\": \"337001\",\n" +
-                    "  \"market_code\": \"SH\",\n" +
-                    "  \"platform_code\": \"123\",\n" +
-                    "  \"security_character\": \"bond\",\n" +
-                    "  \"invest_flag\": \"1\",\n" +
-                    "  \"cash_settle_balance\": \"1222\",\n" +
-                    "  \"stock_settle_amount\": \"456612\",\n" +
-                    "  \"trade_direction\": \"1\"\n" +
+                    "  \"fundNo\": \"GHP01\",\n" +
+                    "  \"fundCharacter\": \"001\",\n" +
+                    "  \"portfNo\": \"123456\",\n" +
+                    "  \"securityCode\": \"337001\",\n" +
+                    "  \"marketCode\": \"SH\",\n" +
+                    "  \"platformCode\": \"123\",\n" +
+                    "  \"securityCharacter\": \"bond\",\n" +
+                    "  \"investFlag\": \"1\",\n" +
+                    "  \"cashSettleBalance\": \"1222\",\n" +
+                    "  \"stockSettleAmount\": \"456612\",\n" +
+                    "  \"tradeDirection\": \"1\"\n" +
                     "}";
         }
 
