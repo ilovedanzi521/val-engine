@@ -63,7 +63,7 @@ public class RedisServiceUtil {
     public static SecurityParam getSecurityParam(SecurityParam securityParam) {
         TreeSet<String> keys =new TreeSet<>();
         for (int i =1;i<=6;i++){
-            keys.add(RedisKeyPrefix.FUND_VAL_SCHEME+ CommonConstants.HORIZONTAL_LINE+securityParam.levelKey(i));
+            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+securityParam.levelKey(i));
         }
         //批量获取keys
         List list = RedisUtil.multiGet(keys);
