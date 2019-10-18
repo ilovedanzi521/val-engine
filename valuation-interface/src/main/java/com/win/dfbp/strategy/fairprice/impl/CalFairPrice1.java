@@ -31,7 +31,7 @@ import java.math.RoundingMode;
 @Service
 public class CalFairPrice1 extends AbsCalFairPrice {
     @Override
-    public BigDecimal cal(SecurityIndex securityIndex,SecurityParam securityParam) {
+    public BigDecimal cal(SecurityParam securityParam) {
         //公允价= round（公共行情[估值净价]，N）
         return securityParam.getNetPrice().setScale(securityParam.getDecimalAccuracy(), RoundingMode.HALF_EVEN);
     }

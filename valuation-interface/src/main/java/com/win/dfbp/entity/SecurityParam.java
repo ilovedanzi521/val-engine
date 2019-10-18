@@ -22,6 +22,8 @@ import lombok.Data;
 import org.apache.poi.hpsf.Decimal;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * 包名称：com.win.wl
@@ -92,6 +94,16 @@ public class SecurityParam {
      */
     private BigDecimal aftertaxInterest;
 
+    /**
+     *持仓数量';
+     */
+    private BigDecimal positionAmount;
+
+    /**
+     * 持仓成本';
+     */
+    private BigDecimal positionCost;
+
     public String levelKey(int level){
         switch (level){
             case 1:{
@@ -158,5 +170,37 @@ public class SecurityParam {
             this.setAftertaxInterest(tmpParam.getAftertaxInterest());
             return this;
         }
+    }
+
+    /**
+     * @Title: getSecurityParam
+     * @Description 获取证券信息，
+     * @param
+     * @return com.win.dfbp.entity.SecurityParam
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/18/10:17
+     */
+    public SecurityParam getSecurityParam() {
+        TreeSet<String> keys =new TreeSet<>();
+        for (int i =1;i<=6;i++){
+            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+levelKey(i));
+        }
+        //批量获取keys
+        List list = RedisUtil.multiGet(keys);
+        if(ObjectUtil.isNotEmpty(list)){
+            for (Object rt : list) {
+                if(rt!=null){
+                    SecurityParam tmpParam = JSON.parseObject((String)rt,SecurityParam.class);
+                    this.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
+                    this.setValCriteria(tmpParam.getValCriteria());
+                    this.setSource(tmpParam.getSource());
+                    return this;
+                }
+            }
+        }else{
+            throw new WinException("无法获取估值参数信息");
+        }
+        return this;
     }
 }

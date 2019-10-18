@@ -66,7 +66,9 @@ public class BondTradeStrategy extends BaseStrategy {
         //2.获取估值参数
         String valCriteria = securityParam.getValCriteria();
         //计算公允价格
-        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityIndex,securityParam);
+        securityParam.setPositionAmount(securityIndex.getCashSettleBalance());
+        securityParam.setPositionCost(securityIndex.getStockSettleAmount());
+        BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityParam);
         indexVO.setFairPrice(fairPrice);
 
         //3.获取投资标志

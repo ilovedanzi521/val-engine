@@ -41,9 +41,9 @@ public abstract class AbsCalFairPrice {
      * @author wanglei
      * @Date 2019/10/18/11:50
      */
-    public abstract BigDecimal cal(SecurityIndex securityIndex,SecurityParam securityParam);
+    public abstract BigDecimal cal(SecurityParam securityParam);
 
-    public BigDecimal calFairPrice(SecurityIndex securityIndex,SecurityParam securityParam){
-        return cal(securityIndex,securityParam.calPrice().calInterest());
+    public BigDecimal calFairPrice(SecurityParam securityParam){
+        return cal(securityParam.calPrice().calInterest());
     }
 }

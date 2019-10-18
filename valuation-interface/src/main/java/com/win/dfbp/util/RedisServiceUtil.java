@@ -59,35 +59,5 @@ public class RedisServiceUtil {
 
         return null;
     }
-    /**
-     * @Title: getSecurityParam
-     * @Description 获取证券信息，
-     * @param
-     * @return com.win.dfbp.entity.SecurityParam
-     * @throws
-     * @author wanglei
-     * @Date 2019/10/18/10:17
-     */
-    public static SecurityParam getSecurityParam(SecurityParam securityParam) {
-        TreeSet<String> keys =new TreeSet<>();
-        for (int i =1;i<=6;i++){
-            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+securityParam.levelKey(i));
-        }
-        //批量获取keys
-        List list = RedisUtil.multiGet(keys);
-        if(ObjectUtil.isNotEmpty(list)){
-            for (Object rt : list) {
-                if(rt!=null){
-                    SecurityParam tmpParam = JSON.parseObject((String)rt,SecurityParam.class);
-                    securityParam.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
-                    securityParam.setValCriteria(tmpParam.getValCriteria());
-                    securityParam.setSource(tmpParam.getSource());
-                    return securityParam;
-                }
-            }
-        }else{
-            log.error("估值参数没有加载缓存！");
-        }
-        return securityParam;
-    }
+
 }
