@@ -13,7 +13,6 @@
 package com.win.dfbp.strategy.positioncost;
 
 import com.win.dfbp.constant.TradeRuleConstant;
-import com.win.dfbp.strategy.fairprice.ICalFairPrice;
 import com.win.dfbp.strategy.fairprice.impl.*;
 import com.win.dfbp.strategy.positioncost.impl.CalPositionCost1;
 import com.win.dfbp.strategy.positioncost.impl.CalPositionCost2;
