@@ -52,7 +52,7 @@ public abstract class BaseStrategy {
      * @author wanglei
      * @Date 2019/10/16/10:19
      */
-    public SecurityIndexVO initIndex(SecurityIndex securityIndex,String securityCode){
+    public SecurityIndexVO initIndex(String securityCode){
         SecurityParam securityParam = querySecurityBasciInfo(securityCode);
         if(securityParam==null){
             throw new WinException("没有存在证券基础信息");
