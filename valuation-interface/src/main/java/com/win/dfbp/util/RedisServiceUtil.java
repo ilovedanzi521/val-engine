@@ -91,6 +91,7 @@ public class RedisServiceUtil {
                     SecurityParam tmpParam = JSON.parseObject((String)rt,SecurityParam.class);
                     securityParam.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
                     securityParam.setValCriteria(tmpParam.getValCriteria());
+                    securityParam.setSource(tmpParam.getSource());
                     return securityParam;
                 }
             }
