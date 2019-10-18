@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.win.dfbp.val.manage.dao.ValParamConfigureMapper">
+
+    <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValParamConfigure">
+        <result column="param_code" property="paramCode" />
+        <result column="method_code" property="methodCode" />
+        <result column="fund_configure_id" property="fundConfigureId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        param_code, method_code, fund_configure_id
+    </sql>
+
+    <select id="getParamByFundId" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include>
+		from val_param_configure where fund_configure_id=#{fundConfigureId}
+    </select>
+</mapper>

@@ -37,10 +37,5 @@ public class ValCalculationItemQueryVO extends BaseQryReqVO {
 	 */
 	@ApiModelProperty(value = "计算项编码")
 	private String valItem;
-	/**
-	 * 编辑时传的参
-	 */
-	@ApiModelProperty(value = "id")
-	private Integer id;
 
 }
