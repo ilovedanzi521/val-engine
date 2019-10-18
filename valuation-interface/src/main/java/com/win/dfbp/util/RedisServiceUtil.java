@@ -59,8 +59,26 @@ public class RedisServiceUtil {
 
         return null;
     }
+    /**
+     * @Title: getSecurityParam
+     * @Description 获取证券信息，
+     * @param
+     * @return com.win.dfbp.entity.SecurityParam
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/18/10:17
+     */
+    public static SecurityParam getSecurityParam(String securityCode) {
+        //缓存中获取证券信息
+        Object securityInfo = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO+CommonConstants.HORIZONTAL_LINE+securityCode);
+        SecurityParam securityParam = null;
+        if(ObjectUtil.isEmpty(securityInfo)){
+            log.error("证券基础信息没有加载缓存！");
+        }else{
+            //1 . json转object 获取证券内码对用的证券基础信息
+            securityParam = JSON.parseObject((String)securityInfo,SecurityParam.class);
+        }
 
-    public static SecurityParam getSecurityParam(SecurityParam securityParam) {
         TreeSet<String> keys =new TreeSet<>();
         for (int i =1;i<=6;i++){
             keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+securityParam.levelKey(i));
