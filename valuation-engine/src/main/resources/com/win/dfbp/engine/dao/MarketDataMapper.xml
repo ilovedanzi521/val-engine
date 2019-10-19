@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.win.dfbp.engine.dao.MarketDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.win.dfbp.entity.ValMarket">
+        <result column="security_code" property="securityCode" />
+        <result column="full_price" property="fullPrice" />
+        <result column="net_price" property="netPrice" />
+        <result column="market_code" property="marketCode" />
+        <result column="security_short_name" property="securityShortName" />
+        <result column="valuation_date" property="valuationDate" />
+        <result column="data_source" property="dataSource" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_time" property="updateTime" />
+        <result column="file_timestamp" property="fileTimestamp" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        security_code, full_price, net_price, market_code, security_short_name, valuation_date, data_source, create_user_id, create_time, file_timestamp
+    </sql>
+
+    <!-- 批量新增 -->
+    <insert id="insertList" parameterType="java.util.List">
+        insert into val_market
+               (security_code,
+                full_price,
+                net_price,
+                market_code,
+                security_short_name,
+                valuation_date,
+                data_source,
+                create_user_id,
+                create_time,
+                file_timestamp) values
+        <foreach collection="list" item="item" index="index" separator=",">
+               (#{item.securityCode},
+                #{item.fullPrice},
+                #{item.netPrice},
+                #{item.marketCode},
+                #{item.securityShortName},
+                #{item.valuationDate},
+                #{item.dataSource},
+                #{item.createUserId},
+                #{item.createTime},
+                #{item.fileTimestamp})
+        </foreach>
+    </insert>
+</mapper>
