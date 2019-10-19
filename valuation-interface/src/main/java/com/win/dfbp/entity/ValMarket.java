@@ -11,6 +11,7 @@
  ********************************************************/
 package com.win.dfbp.entity;
 
+import com.win.dfas.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 
 /**
- * 包名称：com.win.dfbp.val.manage.entity
+ * 包名称：com.win.dfbp.entity
  * 类名称：ValMarket
  * 类描述：行情数据实体类
  * 创建人：@author zoujian
@@ -27,7 +28,7 @@ import java.util.Date;
  */
 @ApiModel(value = "行情数据实体类")
 @Data
-public class ValMarket implements Cloneable{
+public class ValMarket extends BaseEntity implements Cloneable {
     private static final long serialVersionUID = 1L;
 
     private static ValMarket valMarket = new ValMarket();

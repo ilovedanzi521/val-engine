@@ -13,6 +13,7 @@ package com.win.dfbp.strategy;
 
 import com.win.dfbp.entity.SecurityBasicInfo;
 import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValMarket;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +32,11 @@ public abstract class BaseMarketStrategy {
      * 计算持仓指标
      * @Title: calPositionIndex
      * @param valMarket 行情数据
-     * @param securityMap  证券信息
+     * @param securityParam  证券信息
      * @return: com.win.dfbp.entity.SecurityIndexVO
      * @throws
      * @author: zoujian
      * @Date:  2019-10-17/16:43
      */
-    public abstract SecurityIndexVO calPositionIndex(ValMarket valMarket, LinkedHashMap securityMap);
+    public abstract SecurityParam calPositionIndex(ValMarket valMarket, SecurityParam securityParam);
 }

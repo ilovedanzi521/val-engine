@@ -9,7 +9,7 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.engine.constant;
+package com.win.dfbp.constant;
 
 /**
  * 类名称：SecurityBasicInfoConstant
@@ -42,4 +42,9 @@ public class SecurityBasicInfoConstant {
      * 资产类别
      */
     public static final String ASSET_TYPE = "assetType";
+
+    /**
+     *入参：是否贴现
+     */
+    public static final String IS_DISCOUNT = "isDiscount";
 }

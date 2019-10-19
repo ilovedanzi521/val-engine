@@ -108,6 +108,15 @@ public class SecurityParam {
      */
     private BigDecimal fairPrice;
 
+    /**
+     * 持仓市值
+     */
+    private BigDecimal positionMarketValue;
+    /**
+     * 浮动盈亏
+     */
+    private BigDecimal floatingPL;
+
     public String levelKey(int level){
         switch (level){
             case 1:{

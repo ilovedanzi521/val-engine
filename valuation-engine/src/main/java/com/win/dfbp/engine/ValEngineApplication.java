@@ -14,6 +14,7 @@ package com.win.dfbp.engine;
 
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.engine.service.kafka.KafkaProducer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,9 +34,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * 创建人：@author wanglei
  * 创建时间：2019/10/11/9:50
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 @EnableSwagger2
 @ComponentScan(basePackages = {"com.win"})
+@MapperScan(value = "com.win.dfbp.engine.dao")
 @EnableFeignClients(basePackages = {"com.win"})
 @EnableTransactionManagement
 public class ValEngineApplication {

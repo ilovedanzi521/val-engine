@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.win.dfbp.val.manage.dao.MarketDataMapper">
+<mapper namespace="com.win.dfbp.engine.dao.ValPositionMapper">
 
-    <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValMarket">
+    <resultMap id="BaseResultMap" type="com.win.dfbp.entity.SecurityParam">
         <result column="security_code" property="securityCode" />
         <result column="full_price" property="fullPrice" />
         <result column="net_price" property="netPrice" />

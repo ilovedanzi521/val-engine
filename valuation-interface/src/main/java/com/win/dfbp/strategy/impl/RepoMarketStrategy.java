@@ -11,12 +11,10 @@
  ********************************************************/
 package com.win.dfbp.strategy.impl;
 
-import com.win.dfbp.entity.SecurityIndexVO;
+import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValMarket;
 import com.win.dfbp.strategy.BaseMarketStrategy;
 import org.springframework.stereotype.Service;
-
-import java.util.LinkedHashMap;
 
 /**
  * 包名称：com.win.dfbp.strategy.impl
@@ -28,7 +26,7 @@ import java.util.LinkedHashMap;
 @Service
 public class RepoMarketStrategy extends BaseMarketStrategy {
     @Override
-    public SecurityIndexVO calPositionIndex(ValMarket valMarket, LinkedHashMap securityMap) {
+    public SecurityParam calPositionIndex(ValMarket valMarket, SecurityParam securityParam) {
         return null;
     }
 }

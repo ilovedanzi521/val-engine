@@ -11,6 +11,7 @@
  ********************************************************/
 package com.win.dfbp.engine.service.impl;
 
+import com.win.dfbp.engine.dao.MarketDataMapper;
 import com.win.dfbp.engine.service.MarketDataService;
 import com.win.dfbp.engine.util.ReadFileUtil;
 import com.win.dfbp.entity.ValMarket;
@@ -36,6 +37,9 @@ public class MarketDataServiceImpl implements MarketDataService {
      */
     private final Integer loopLength = 2000;
 
+    @Autowired
+    private MarketDataMapper marketDataMapper;
+
     @Override
     public List getValMarketData() {
         List<ValMarket> valMarketList = new ArrayList();
@@ -54,14 +58,14 @@ public class MarketDataServiceImpl implements MarketDataService {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
                     list = ReadFileUtil.readTxt(filePath + marketFilePath + "/" + fileName);
-
+                    insertBatches(list);
                 }
                 // 解析中债行情数据dbf文件
                 if (tempList[i].isFile() && tempList[i].getName().endsWith(".dbf")) {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
                     list = ReadFileUtil.readDbf(file.getPath() + "/" + fileName,false);
-                    // TODO 插入缓存
+                    insertBatches(list);
                 }
                 if(list != null){
                     valMarketList.addAll(list);
@@ -79,6 +83,7 @@ public class MarketDataServiceImpl implements MarketDataService {
                     //文件名，不包含路径
                     String fileName = tempList[i].getName();
                     list = ReadFileUtil.readDbf(file2.getPath() + "/" + fileName,true);
+                    insertBatches(list);
                 }
                 if(list != null){
                     valMarketList.addAll(list);
@@ -88,5 +93,30 @@ public class MarketDataServiceImpl implements MarketDataService {
             // 2、缓存获取持仓信息
         }
         return valMarketList;
+    }
+
+    /**
+     * 分批数据插入
+     * @Title: insertBatches
+     * @param list
+     * @return: void
+     * @throws
+     * @author: zoujian
+     * @Date:  2019-10-11/13:31
+     */
+    private void insertBatches(List list) {
+        // 分批插入行情数据
+        if(list != null){
+            int insertLength = list.size();
+            int k = 0;
+            while (insertLength > loopLength) {
+                marketDataMapper.insertList(list.subList(k, k + loopLength));
+                k = k + loopLength;
+                insertLength = insertLength - loopLength;
+            }
+            if (insertLength > 0) {
+                marketDataMapper.insertList(list.subList(k, k + insertLength));
+            }
+        }
     }
 }
