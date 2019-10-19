@@ -22,6 +22,7 @@ import lombok.Data;
 import org.apache.poi.hpsf.Decimal;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -195,7 +196,7 @@ public class SecurityParam {
      * @Date 2019/10/18/10:17
      */
     public SecurityParam setSecurityParam() {
-        TreeSet<String> keys =new TreeSet<>();
+        LinkedHashSet<String> keys =new LinkedHashSet<>();
         for (int i =1;i<=6;i++){
             keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+levelKey(i));
         }

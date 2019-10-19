@@ -43,13 +43,11 @@ public class SecurityCalculation1 implements ISecurityCalculation {
     }
     @Override
     public SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex) {
-        String securityCharacter = securityIndex.getSecurityCharacter();
         SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getSecurityCode());
         if(ObjectUtil.isEmpty(securityParam)){
             return securityIndex;
         }
-        StrategyFactory strategyFactory = SpringContextUtil.getBean(StrategyFactory.class);
-        BaseStrategy strategy = strategyFactory.getPromotionStrategy(securityParam.getSecurityType());
+        BaseStrategy strategy = judgeStrategy(securityIndex,securityParam);
         strategy.setSecurityIndex(securityIndex);
         strategy.calPositionIndex(oldIndex,securityParam);
         return securityIndex;
@@ -78,7 +76,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
      */
     private BaseStrategy judgeStrategy(SecurityIndex securityIndex,SecurityParam securityParam){
         StrategyFactory strategyFactory = SpringContextUtil.getBean(StrategyFactory.class);
-        BaseStrategy strategy = strategyFactory.getPromotionStrategy(securityParam.getSecurityType());
+        BaseStrategy strategy = strategyFactory.getPromotionStrategy(securityParam.getAssetType());
         return strategy;
     }
 
@@ -101,6 +99,6 @@ public class SecurityCalculation1 implements ISecurityCalculation {
             //1 . json转object 获取证券内码对用的证券基础信息
             securityParam = JSON.parseObject(JSON.toJSONString(securityInfo),SecurityParam.class);
         }
-        return securityParam;
+        return securityParam.setSecurityParam();
     }
 }

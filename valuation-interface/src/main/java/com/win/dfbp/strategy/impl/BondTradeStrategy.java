@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 包名称：com.win.dfbp.strategy.impl
@@ -58,18 +59,20 @@ public class BondTradeStrategy extends BaseStrategy {
                         CommonConstants.HORIZONTAL_LINE+
                         securityIndex.getFundNo(),
                 TradeRuleConstant.VAL_PARAM_DIC_FP001,"methodCode");
+        //持仓成本
+        securityParam.setPositionCost(securityIndex.getStockSettleAmount());
         //1计算持仓成本
         //初次持仓，交易金额=持仓成本
-        securityParam.setPositionCost(securityIndex.getCashSettleBalance());
+        securityParam.setPositionAmount(securityIndex.getCashSettleBalance());
+        indexVO.setPositionAmount(securityIndex.getCashSettleBalance());
         BigDecimal positionCost = positionCostFactory.getInstance(costAccount).cal(securityParam);
         //成本价格=持仓成本/持仓数量
-        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
+        indexVO.setCostPrice(positionCost.divide(securityParam.getPositionAmount(),
+                securityParam.getDecimalAccuracy(), RoundingMode.HALF_EVEN));
         indexVO.setPositionCost(positionCost);
         //2.获取估值参数
         String valCriteria = securityParam.getValCriteria();
         //计算公允价格
-        securityParam.setPositionAmount(securityIndex.getCashSettleBalance());
-        securityParam.setPositionCost(securityIndex.getStockSettleAmount());
         BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityParam);
         //返回设置公允价格
         indexVO.setFairPrice(fairPrice);
@@ -90,12 +93,15 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         SecurityIndexVO indexVO = new SecurityIndexVO();
         //持仓数量
-        securityParam.setPositionAmount(securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionAmount()));
+        BigDecimal positionAmount = securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionAmount());
+        securityParam.setPositionAmount(positionAmount);
+        indexVO.setPositionAmount(positionAmount);
         //持仓成本
-        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
+        securityParam.setPositionCost(securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionCost()));
         //计算公允价格
         BigDecimal fairPrice = oldIndex.getIndexVO().getFairPrice();
         indexVO.setFairPrice(fairPrice);
+        securityParam.setFairPrice(fairPrice);
         //2.获取成本转结方式
         String costAccount= RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_CONFIG+
                         CommonConstants.HORIZONTAL_LINE+
@@ -110,7 +116,8 @@ public class BondTradeStrategy extends BaseStrategy {
         BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityParam);
         indexVO.setPositionMarketValue(positionMarketValue);
         //持仓成本/持仓数量
-        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount()));
+        indexVO.setCostPrice(positionCost.divide(indexVO.getPositionAmount(),
+                securityParam.getDecimalAccuracy(), RoundingMode.HALF_EVEN));
         //浮动盈亏=持仓市值-持仓成本
         indexVO.setFloatingPL(positionMarketValue.subtract(positionCost));
         securityIndex.setIndexVO(indexVO);

@@ -53,7 +53,7 @@ public class FlinkKafKaConsumerTask {
 
     @Autowired
     private Properties kproperties;
-    @Async(value = "kafkaConsumerThread")
+//    @Async(value = "kafkaConsumerThread")
     public void run() {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         FlinkKafkaConsumer consumer = new FlinkKafkaConsumer(

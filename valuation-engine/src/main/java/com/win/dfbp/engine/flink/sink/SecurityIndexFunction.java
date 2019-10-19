@@ -63,7 +63,7 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                 SecurityIndexState state = new SecurityIndexState();
 //                stockList
 
-                if(state.getIndexVO()!=null){
+                if(stockList.getIndexVO()!=null){
                     out.collect(stockList);
                     // 更新state
                     indexState.update(state.clone(stockList));

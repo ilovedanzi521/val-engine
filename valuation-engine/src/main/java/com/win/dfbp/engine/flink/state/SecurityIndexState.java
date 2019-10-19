@@ -74,26 +74,26 @@ public class SecurityIndexState implements Serializable {
     private SecurityIndexVO indexVO;
 
     public SecurityIndexState clone(SecurityIndex securityIndex){
-        SecurityIndexState indexState = new SecurityIndexState();
-        indexState.setFundCharacter(securityIndex.getFundCharacter());
-        indexState.setFundNo(securityIndex.getFundNo());
-        indexState.setInvestFlag(securityIndex.getInvestFlag());
-        indexState.setMarketCode(securityIndex.getMarketCode());
-        indexState.setPlatformCode(securityIndex.getPlatformCode());
-        indexState.setPortfNo(securityIndex.getPortfNo());
-        indexState.setSecurityCharacter(securityIndex.getSecurityCharacter());
-        indexState.setSecurityCode(securityIndex.getSecurityCode());
-        indexState.setCashSettleBalance(securityIndex.getCashSettleBalance());
-        indexState.setStockSettleAmount(securityIndex.getStockSettleAmount());
+        this.setFundCharacter(securityIndex.getFundCharacter());
+        this.setFundNo(securityIndex.getFundNo());
+        this.setInvestFlag(securityIndex.getInvestFlag());
+        this.setMarketCode(securityIndex.getMarketCode());
+        this.setPlatformCode(securityIndex.getPlatformCode());
+        this.setPortfNo(securityIndex.getPortfNo());
+        this.setSecurityCharacter(securityIndex.getSecurityCharacter());
+        this.setSecurityCode(securityIndex.getSecurityCode());
+        this.setCashSettleBalance(securityIndex.getCashSettleBalance());
+        this.setStockSettleAmount(securityIndex.getStockSettleAmount());
         SecurityIndexVO indexVO = new SecurityIndexVO();
+        indexVO.setPositionAmount(securityIndex.getIndexVO().getPositionAmount());
         indexVO.setCostPrice(securityIndex.getIndexVO().getCostPrice());
         indexVO.setFairPrice(securityIndex.getIndexVO().getFairPrice());
         indexVO.setFloatingPL(securityIndex.getIndexVO().getFloatingPL());
         indexVO.setPositionCost(securityIndex.getIndexVO().getPositionCost());
         indexVO.setPositionMarketValue(securityIndex.getIndexVO().getPositionMarketValue());
         indexVO.setInterestRateOfHundred(securityIndex.getIndexVO().getInterestRateOfHundred());
-        indexState.setIndexVO(indexVO);
-        return indexState;
+        this.setIndexVO(indexVO);
+        return this;
     }
 
     public SecurityIndex parse(){
@@ -109,6 +109,7 @@ public class SecurityIndexState implements Serializable {
         index.setCashSettleBalance(this.getCashSettleBalance());
         index.setStockSettleAmount(this.getStockSettleAmount());
         SecurityIndexVO indexVO = new SecurityIndexVO();
+        indexVO.setPositionAmount(this.getIndexVO().getPositionAmount());
         indexVO.setCostPrice(this.getIndexVO().getCostPrice());
         indexVO.setFairPrice(this.getIndexVO().getFairPrice());
         indexVO.setFloatingPL(this.getIndexVO().getFloatingPL());
