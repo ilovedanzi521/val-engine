@@ -107,4 +107,6 @@ public class RedisKeyPrefix {
      * 最新行情信息
      */
     public static final String VAL_MARKET = "VAL_MARKET";
+
+
 }

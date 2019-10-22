@@ -81,7 +81,7 @@ public class WriteIntoKafka {
             return "{\n" +
                     "  \"fundNo\": \"GHP01\",\n" +
                     "  \"fundCharacter\": \"001\",\n" +
-                    "  \"portfNo\": \"123456\",\n" +
+                    "  \"portfNo\": \"124\",\n" +
                     "  \"securityCode\": \"6033832\",\n" +
                     "  \"marketCode\": \"SH\",\n" +
                     "  \"platformCode\": \"123\",\n" +

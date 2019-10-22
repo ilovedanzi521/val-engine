@@ -13,7 +13,8 @@
 package com.win.dfbp.engine.flink;
 
 import com.alibaba.fastjson.JSON;
-import com.win.dfbp.engine.flink.sink.SecurityIndexFunction;
+import com.win.dfbp.engine.flink.sink.RedisSinkFunction;
+import com.win.dfbp.engine.flink.transform.SecurityIndexFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
 import com.win.dfbp.entity.SecurityIndex;
 import org.apache.flink.api.common.functions.FilterFunction;
@@ -66,8 +67,7 @@ public class FlinkKafKaConsumerTask {
                 .keyBy(securityTranPrimaryKey)
                 // 开始计算
                 .flatMap(new SecurityIndexFunction())
-                // 打印在控制台
-                .print();
+                .addSink(new RedisSinkFunction());
         try {
             env.execute();
         } catch (Exception e) {

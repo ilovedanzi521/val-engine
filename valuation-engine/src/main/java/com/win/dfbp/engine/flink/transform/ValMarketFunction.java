@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author zoujian    
+ * 创建人: @author zoujian
  * 创建时间: 2019-10-15/16:03
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValMarketFunction.java
@@ -9,7 +9,7 @@
  * @Copyright:2016-2019
  *
  ********************************************************/
-package com.win.dfbp.engine.flink.sink;
+package com.win.dfbp.engine.flink.transform;
 
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;

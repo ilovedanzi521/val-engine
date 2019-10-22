@@ -10,23 +10,19 @@
  *
  ********************************************************/
 
-package com.win.dfbp.engine.flink.sink;
+package com.win.dfbp.engine.flink.transform;
 
 import com.win.dfbp.cal.ISecurityCalculation;
 import com.win.dfbp.engine.factory.SpiFactory;
 import com.win.dfbp.engine.flink.state.SecurityIndexState;
 import com.win.dfbp.entity.SecurityIndex;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
-import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.util.Collector;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 包名称：com.win.wl

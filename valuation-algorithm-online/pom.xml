@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.win.dfbp</groupId>
-            <artifactId>valuation-interface</artifactId>
+            <artifactId>valuation-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

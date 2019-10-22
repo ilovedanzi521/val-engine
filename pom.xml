@@ -27,12 +27,12 @@
 
 	<modules>
 		<!-- <module>realtime-algorithm-t1</module> <module>realtime-algorithm-t2</module> -->
-		<!--<module>valuation-interface</module>-->
+		<!--<module>valuation-core</module>-->
 		<!--<module>valuation-algorithm-inline</module>-->
 		<!--<module>valuation-engine</module>-->
 		<module>valuation-manage</module>
 		<module>valuation-engine</module>
-		<module>valuation-interface</module>
+		<module>valuation-core</module>
 		<module>valuation-algorithm-online</module>
 	</modules>
 
