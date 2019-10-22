@@ -29,6 +29,8 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.util.Collector;
 
+import java.io.IOException;
+
 /**
  * 包名称：com.win.wl
  * 类名称：SecurityIndexFunction
@@ -55,40 +57,31 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         String algorithm = "";
         ISecurityCalculation securityCalculation = SpiFactory.getStockMarketAlgorithm(algorithm);
         //获取数据库或redis缓存中是否存在持仓
-        Object cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE+in.key());
+        Object cashSecurityIndex = null;
         // 第一次进入计算,更新state,init state
-        if (lastState == null && cashSecurityIndex==null) {
-            if (securityCalculation != null) {
-                SecurityIndex stockList = securityCalculation.initSecurityIndex(in);
-                // 初始化state
-                SecurityIndexState state = new SecurityIndexState();
+        if (lastState == null ) {
+            cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE+in.key());
+            if( cashSecurityIndex==null){
+                if (securityCalculation != null) {
+                    SecurityIndex stockList = securityCalculation.initSecurityIndex(in);
+                    // 初始化state
+                    SecurityIndexState state = new SecurityIndexState();
 //                stockList
-                if(stockList.getIndexVO()!=null){
-                    out.collect(stockList);
-                    // 更新state
-                    indexState.update(state.clone(stockList));
+                    if (stockList.getIndexVO() != null) {
+                        out.collect(stockList);
+                        // 更新state
+                        indexState.update(state.clone(stockList));
+                    }
                 }
+            }else{
+                SecurityIndex oldIndex = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class);
+                existHistoryPosition(securityCalculation,in,oldIndex,out,lastState);
             }
         } else {
             //非第一次进入，进行计算
             if (securityCalculation != null) {
-                SecurityIndex oldIndex;
-                if(lastState==null){
-                    oldIndex = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class);;
-                }else{
-                    oldIndex = lastState.parse();
-                }
-                SecurityIndex stockList = securityCalculation.calculateSecurityIndex(in,oldIndex);
-                if (stockList != null) {
-                    lastState = lastState.clone(stockList);
-                }
-                out.collect(stockList);
-                indexState.update(lastState);
-                //持仓信息,不持仓,按条件清理
-                boolean hold = true;
-                if (!hold) {
-                    indexState.clear();
-                }
+                SecurityIndex oldIndex = lastState.parse();
+                existHistoryPosition(securityCalculation,in,oldIndex,out,lastState);
             }
         }
     }
@@ -110,4 +103,20 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         indexState = getRuntimeContext().getState(descriptor);
     }
 
+
+
+    private void existHistoryPosition(ISecurityCalculation securityCalculation,SecurityIndex in,SecurityIndex oldIndex,
+                                      Collector<SecurityIndex> out, SecurityIndexState lastState) throws IOException {
+        SecurityIndex stockList = securityCalculation.calculateSecurityIndex(in,oldIndex);
+        if (stockList != null) {
+            lastState = lastState.clone(stockList);
+        }
+        out.collect(stockList);
+        indexState.update(lastState);
+        //持仓信息,不持仓,按条件清理
+        boolean hold = true;
+        if (!hold) {
+            indexState.clear();
+        }
+    }
 }

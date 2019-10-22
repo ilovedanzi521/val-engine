@@ -72,9 +72,9 @@ public class WriteIntoKafka {
 
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
-//            while(running) {
+            while(running) {
                 ctx.collect(prouderJson());
-//            }
+            }
         }
 
         private String prouderJson() {
