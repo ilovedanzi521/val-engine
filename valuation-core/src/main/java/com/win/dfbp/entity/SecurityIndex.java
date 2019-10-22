@@ -69,5 +69,18 @@ public class SecurityIndex {
      * 指标
      */
     private SecurityIndexVO indexVO;
+    /**
+     * @Title: key
+     * @Description 返回SecurityIndex 主键key
+     * @param
+     * @return java.lang.String
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/22/10:18
+     */
+    public String key(){
+        return this.getFundNo()+this.getPortfNo()+this.getSecurityCode()+
+                this.getMarketCode()+this.getSecurityCharacter()+getInvestFlag();
+    }
 
 }
