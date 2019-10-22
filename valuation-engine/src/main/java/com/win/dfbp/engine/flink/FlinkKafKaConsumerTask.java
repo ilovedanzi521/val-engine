@@ -46,9 +46,8 @@ public class FlinkKafKaConsumerTask {
      * 定义下单数据主键，通过主键计算指标
      */
     private static String[] securityTranPrimaryKey = new String[]{
-            SecurityTranPrimaryKey.FUND_NO,SecurityTranPrimaryKey.FUND_CHARACTER,
-            SecurityTranPrimaryKey.PORTF_NO,SecurityTranPrimaryKey.SECURITY_CODE,
-            SecurityTranPrimaryKey.MARKET_CODE,SecurityTranPrimaryKey.PLATFORM_CODE,
+            SecurityTranPrimaryKey.FUND_NO, SecurityTranPrimaryKey.PORTF_NO,
+            SecurityTranPrimaryKey.SECURITY_CODE,SecurityTranPrimaryKey.MARKET_CODE,
             SecurityTranPrimaryKey.SECURITY_CHARACTER,SecurityTranPrimaryKey.INVEST_FLAG
     };
 
