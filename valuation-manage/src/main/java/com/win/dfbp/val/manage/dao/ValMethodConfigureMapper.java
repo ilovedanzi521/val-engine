@@ -12,11 +12,10 @@
 
 package com.win.dfbp.val.manage.dao;
 
-import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.win.dfbp.val.manage.entity.ValMethodConfigure;
+import com.win.dfbp.val.manage.vo.respone.ValClassMethodRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.dao 
@@ -33,12 +32,12 @@ public interface ValMethodConfigureMapper {
 	 * 
 	 * @Title: getMethodByFundId
 	 * @Description: 根据产品id查询方法配置
-	 * @param fundConfigureId
+	 * @param fundId
 	 * @return   
-	 * @return: List<ValMethodConfigure>   
+	 * @return: ValClassMethodRepVO   
 	 * @throws
 	 * @author: huhe 
 	 * @Date:  2019年10月17日/下午6:30:28
 	 */
-	List<ValMethodConfigure> getMethodByFundId(Integer fundConfigureId);
+	ValClassMethodRepVO getMethodByFundId(Long fundId);
 }

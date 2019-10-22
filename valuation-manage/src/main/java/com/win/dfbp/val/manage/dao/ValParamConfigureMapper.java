@@ -12,11 +12,13 @@
 
 package com.win.dfbp.val.manage.dao;
 
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.win.dfbp.val.manage.entity.ValParamConfigure;
+import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
+import com.win.dfbp.val.manage.vo.respone.ValParamMethodRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.dao 
@@ -32,13 +34,25 @@ public interface ValParamConfigureMapper {
 	/**
 	 * 
 	 * @Title: getParamByFundId
-	 * @Description: 根据产品id查询参数配置
-	 * @param fundConfigureId
+	 * @Description: 根据产品id查询参数配置(列转行)
+	 * @param fundId
 	 * @return   
-	 * @return: List<ValParamConfigure>   
+	 * @return: ValParamMethodRepVO   
 	 * @throws
 	 * @author: huhe 
 	 * @Date:  2019年10月17日/下午6:30:28
 	 */
-	List<ValParamConfigure> getParamByFundId(Integer fundConfigureId);
+	ValParamMethodRepVO getParamByFundId(Long fundId);
+	
+	/**
+	 * 查询参数方法
+	 * @Title: getAllParamMethod
+	 * @Description: TODO
+	 * @return   
+	 * @return: List<ValParamMethodConfigure>   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月21日/下午6:19:33
+	 */
+	List<ValParamMethodConfigure> getAllParamMethod();
 }

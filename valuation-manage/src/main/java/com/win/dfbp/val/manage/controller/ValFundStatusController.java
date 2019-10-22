@@ -36,7 +36,7 @@ public class ValFundStatusController {
 
     @ApiOperation(value = "估值产品状态列表")
     @PostMapping("/list")
- 	public WinResponseData getValCalculationItems() {
+ 	public WinResponseData getValFundStatus() {
  		return WinResponseData.handleSuccess(ValFundStatusService.getValFundStatusList());
  	}
 }

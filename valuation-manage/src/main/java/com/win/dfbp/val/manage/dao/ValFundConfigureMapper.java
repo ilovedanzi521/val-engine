@@ -17,6 +17,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.win.dfbp.val.manage.entity.ValFundConfigure;
+import com.win.dfbp.val.manage.vo.query.ValFundConfigureQueryVO;
+import com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.dao 
@@ -32,12 +34,25 @@ public interface ValFundConfigureMapper {
 	/**
 	 * 
 	 * @Title: getValFundConfigureList
-	 * @Description: 查询所有的产品
+	 * @Description: 查询产品估值配置
+	 * @param reqVO
+	 * @return   
+	 * @return: List<ValFundConfigureRepVO>   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月18日/下午5:07:41
+	 */
+	List<ValFundConfigureRepVO> getValFundConfigureList(ValFundConfigureQueryVO reqVO);
+
+	/**
+	 * @Title: getValFundAll
+	 * @Description: 查询所有产品配置
 	 * @return   
 	 * @return: List<ValFundConfigure>   
 	 * @throws
 	 * @author: huhe 
-	 * @Date:  2019年10月17日/上午10:27:34
+	 * @Date:  2019年10月22日/上午11:04:21 
 	 */
-	List<ValFundConfigure> getValFundConfigureList();
+	
+	List<ValFundConfigure> getValFundAll();
 }

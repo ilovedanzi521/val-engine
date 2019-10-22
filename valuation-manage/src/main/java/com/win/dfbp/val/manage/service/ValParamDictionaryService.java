@@ -16,6 +16,7 @@ package com.win.dfbp.val.manage.service;
 import java.util.List;
 
 import com.win.dfbp.val.manage.entity.ValParamDictionary;
+import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.service 
@@ -38,4 +39,16 @@ public interface ValParamDictionaryService {
 	 * @Date:  2019年10月17日/上午11:28:07
 	 */
 	List<ValParamDictionary> getValParamDictionaryList();
+
+	/**
+	 * 
+	 * @Title: getValParamMethods
+	 * @Description: 参数方法
+	 * @return   
+	 * @return: List<ValParamMethodConfigure>   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月21日/下午6:22:01
+	 */
+	List<ValParamMethodConfigure> getValParamMethods();
 }
