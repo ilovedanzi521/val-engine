@@ -12,6 +12,7 @@
 
 package com.win.dfbp.engine.flink.sink;
 
+import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.engine.util.SpringContextUtil;
@@ -41,7 +42,7 @@ public class RedisSinkFunction extends RichSinkFunction<SecurityIndex> {
         //SELECT CONCAT(fund_no,fund_character,portf_no,security_code,market_code,platform_code,security_character,invest_flag,trade_direction) AS pk,
         //cash_settle_balance as cashSettleBalance,stock_settle_amount as stockSettleAmount,position_cost as positionCost,position_market_value as positionMarketValue,fair_price as fairPrice,cost_price as costPrice,floating_pl as floatingPL from val_position
         String key = securityIndex.key();
-        RedisUtil.set(RedisKeyPrefix.VAL_POSITION, securityIndex, -1);
+        RedisUtil.set(RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key, securityIndex, -1);
     }
 }
 
