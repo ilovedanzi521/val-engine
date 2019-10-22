@@ -50,7 +50,7 @@ public class ValCalculationItemServiceImpl implements ValCalculationItemService 
 		PageHelper.startPage(reqVO.getReqPageNum(), reqVO.getReqPageSize());
 		List<ValCalculationItemRepVO> list = valCalculationItemMapper.getValCalculationItems(reqVO);
 		for (ValCalculationItemRepVO valCalculationItemRepVO : list) {
-			if(StringUtils.isNotEmpty(valCalculationItemRepVO.getCalFormula())) {
+			if (StringUtils.isNotEmpty(valCalculationItemRepVO.getCalFormula())) {
 				valCalculationItemRepVO.setCalFormulaStr(translateCalFormula(valCalculationItemRepVO.getCalFormula()));
 			}
 		}
@@ -61,8 +61,8 @@ public class ValCalculationItemServiceImpl implements ValCalculationItemService 
 	public String translateCalFormula(String calFormula) {
 		List<ValItem> valItems = valItemMapper.getValItems();
 		for (ValItem valItem : valItems) {
-			if(calFormula.contains(valItem.getItemCode())) {
-				calFormula.replaceAll(valItem.getItemCode(), valItem.getItemName());
+			if (calFormula.contains(valItem.getItemCode())) {
+				calFormula = calFormula.replaceAll(valItem.getItemCode(), valItem.getItemName());
 			}
 		}
 		return calFormula;

@@ -41,7 +41,7 @@ public class ValFundConfigure  extends  BaseEntity {
      */
     @ApiModelProperty(value = "产品编码")
     @NotNull(message = "产品编码")
-	private String fundCode;
+	private String fundNo;
     /**
      * 产品名称
      */

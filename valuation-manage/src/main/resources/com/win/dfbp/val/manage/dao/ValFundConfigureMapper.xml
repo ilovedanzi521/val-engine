@@ -3,19 +3,38 @@
 <mapper namespace="com.win.dfbp.val.manage.dao.ValFundConfigureMapper">
 
     <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValFundConfigure">
-        <result column="fund_code" property="fundCode" />
+     	<result column="id" property="id" />
+        <result column="fund_no" property="fundNo" />
         <result column="fund_name" property="fundName" />
-         <result column="fund_status" property="fundStatus" />
-        <result column="fund_character" property="fundCharacter" />
+         <result column="fund_status" property="fundStatusCode" />
+        <result column="fund_character" property="fundCharacterCode" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        fund__code, fund_name,fund_status,fund_character
+        id,fund__no, fund_name,fund_status,fund_character
     </sql>
-
-    <select id="getValFundConfigureList" resultMap="BaseResultMap">
-		select <include refid="Base_Column_List"></include>
-		from val_fund_status
+	<select id="getValFundAll" resultMap="BaseResultMap">
+		select id, fund_no , fund_name ,fund_status ,fund_character 
+		from val_fund_configure 
+    </select>
+    <select id="getValFundConfigureList" resultType="com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO">
+		SELECT f.id, f.fund_no AS fundNo, 
+			f.fund_name AS fundName,
+			f.fund_status AS fundStatusCode,
+			f.fund_character AS fundCharacterCode,
+			fc.fund_character_name AS characterName,
+			fs.fund_status_name AS fundStatusName
+		FROM val_fund_configure f 
+		LEFT JOIN val_fund_character fc ON f.fund_character= fc.fund_character_code
+		LEFT JOIN val_fund_status fs ON f.fund_status= fs.fund_status_code 
+		<where>
+			<if test="fundNo !=null">
+				and f.fund_no = #{fundNo}
+			</if>
+			<if test="fundStatus !=null">
+				and f.fund_status = #{fundStatus}
+			</if>
+		</where>
     </select>
 </mapper>

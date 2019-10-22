@@ -12,13 +12,7 @@
 
 package com.win.dfbp.val.manage.vo.respone;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import com.win.dfas.common.vo.BaseRepVO;
-import com.win.dfbp.val.manage.entity.ValMethodConfigure;
-import com.win.dfbp.val.manage.entity.ValParamConfigure;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,8 +35,7 @@ public class ValFundConfigureRepVO extends BaseRepVO {
      * 产品编码
      */
     @ApiModelProperty(value = "产品编码")
-    @NotNull(message = "产品编码")
-	private String fundCode;
+	private String fundNo;
     /**
      * 产品名称
      */
@@ -59,14 +52,24 @@ public class ValFundConfigureRepVO extends BaseRepVO {
     @ApiModelProperty(value = "产品性质编码")
 	private String fundCharacterCode;
     /**
+     * 产品性质名称
+     */
+    @ApiModelProperty(value = "产品性质名称")
+	private String characterName;
+    /**
+     * 产品状态名称
+     */
+	@ApiModelProperty(value = "产品状态名称")
+	private String fundStatusName;
+    /**
      * 关联方法配置
      */
     @ApiModelProperty(value = "关联方法配置")
-    private List<ValMethodConfigure> methods;
+    private ValClassMethodRepVO classMethod;
     /**
      * 关联参数配置
      */
     @ApiModelProperty(value = "关联参数配置")
-    private List<ValParamConfigure> params;
+    private ValParamMethodRepVO paramMethod;
     
 }

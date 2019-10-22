@@ -17,8 +17,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.win.dfbp.val.manage.dao.ValParamConfigureMapper;
 import com.win.dfbp.val.manage.dao.ValParamDictionaryMapper;
 import com.win.dfbp.val.manage.entity.ValParamDictionary;
+import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
 import com.win.dfbp.val.manage.service.ValParamDictionaryService;
 
 /**   
@@ -34,11 +36,18 @@ public class ValParamDictionaryServiceImpl implements ValParamDictionaryService 
 	
 	@Autowired
 	private ValParamDictionaryMapper ValParamDictionaryMapper;
+	@Autowired
+	private ValParamConfigureMapper valParamConfigureMapper;
 
 	
 	@Override
 	public List<ValParamDictionary> getValParamDictionaryList() {
 		return ValParamDictionaryMapper.getValParamDictionaryList();
+	}
+	
+	@Override
+	public List<ValParamMethodConfigure> getValParamMethods() {
+		return valParamConfigureMapper.getAllParamMethod();
 	}
 		
 }

@@ -17,15 +17,14 @@
 
     <select id="getValCalculationManages" resultType="com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO"  parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO">
 		SELECT
-			 cm.cal_class AS calClass, cm.cal_method AS calMethod,
-			 cm.cal_formula AS calFormula, cm.cal_type AS calType, m.method_name AS calMethodName
-			 
+			 cm.val_class AS valClass, cm.val_method AS valMethod,
+			 cm.cal_formula AS calFormula, cm.cal_type AS calType, m.method_name AS methodName
 		FROM
 			val_cal_manage cm
 		INNER JOIN val_method m ON m.method_code = cm.val_method
 		<where>
 			<if test="calMethod != null">
-				WHERE cm.cal_method = #{calMethod}
+				and m.method_name LIKE CONCAT('%',#{calMethod},'%')
 			</if>
 		</where>
     </select>

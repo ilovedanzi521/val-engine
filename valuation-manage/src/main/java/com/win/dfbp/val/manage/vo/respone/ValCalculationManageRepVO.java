@@ -45,7 +45,7 @@ public class ValCalculationManageRepVO extends BaseRepVO {
      * 估值方法名称
      */
     @ApiModelProperty(value = "估值方法名称")
-	private String valMethodName;
+	private String methodName;
     /**
      * 计算公式
      */

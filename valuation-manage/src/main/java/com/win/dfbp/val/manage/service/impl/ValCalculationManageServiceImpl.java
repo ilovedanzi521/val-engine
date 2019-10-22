@@ -49,19 +49,20 @@ public class ValCalculationManageServiceImpl implements ValCalculationManageServ
 		PageHelper.startPage(reqVO.getReqPageNum(), reqVO.getReqPageSize());
 		List<ValCalculationManageRepVO> list = valCalculationManageMapper.getValCalculationManages(reqVO);
 		for (ValCalculationManageRepVO valCalculationManageRepVO : list) {
-			if(StringUtils.isNotEmpty(valCalculationManageRepVO.getCalFormula())) {
-				valCalculationManageRepVO.setCalFormulaStr(translateCalFormula(valCalculationManageRepVO.getCalFormula()));
+			if (StringUtils.isNotEmpty(valCalculationManageRepVO.getCalFormula())) {
+				valCalculationManageRepVO
+						.setCalFormulaStr(translateCalFormula(valCalculationManageRepVO.getCalFormula()));
 			}
 		}
 		PageInfo<ValCalculationManageRepVO> pageInfo = new PageInfo<>(list);
 		return ObjectUtils.copyPageInfo(pageInfo, ValCalculationManageRepVO.class, true);
 	}
-	
+
 	public String translateCalFormula(String calFormula) {
 		List<ValItem> valItems = valItemMapper.getValItems();
 		for (ValItem valItem : valItems) {
-			if(calFormula.contains(valItem.getItemCode())) {
-				calFormula.replaceAll(valItem.getItemCode(), valItem.getItemName());
+			if (calFormula.contains(valItem.getItemCode())) {
+				calFormula = calFormula.replaceAll(valItem.getItemCode(), valItem.getItemName());
 			}
 		}
 		return calFormula;

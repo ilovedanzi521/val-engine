@@ -12,7 +12,7 @@
         fund_status_code, fund_status_name
     </sql>
 
-    <select id="getFundStatusList" resultMap="BaseResultMap">
+    <select id="getValFundStatusList" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List"></include>
 		from val_fund_status
     </select>

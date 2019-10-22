@@ -36,7 +36,7 @@ public class ValMethodController {
 
     @ApiOperation(value = "估值方法列表")
     @PostMapping("/list")
- 	public WinResponseData getValCalculationItems() {
+ 	public WinResponseData getValMethods() {
  		return WinResponseData.handleSuccess(ValMethodService.getValMethodList());
  	}
 }

@@ -13,8 +13,18 @@
         method_code, class_code, fund_configure_id
     </sql>
 
-    <select id="getMethodByFundId" resultMap="BaseResultMap">
-		select <include refid="Base_Column_List"></include>
-		from val_method_configure where fund_configure_id=#{fundConfigureId}
+    <select id="getMethodByFundId" resultType="com.win.dfbp.val.manage.vo.respone.ValClassMethodRepVO">
+		SELECT max(CASE mc.class_code WHEN "VC001" THEN mc.method_code ELSE '' END) fairPrice ,
+			max(CASE mc.class_code WHEN "VC002" THEN mc.method_code ELSE '' END) positionCost,
+			max(CASE mc.class_code WHEN "VC003" THEN mc.method_code ELSE null END)  positionMarket,
+			max(CASE mc.class_code WHEN "VC004" THEN mc.method_code ELSE '' END) costPrice,
+			max(CASE mc.class_code WHEN "VC005" THEN mc.method_code ELSE '' END)  floatingProfitLoss,
+			max(CASE mc.class_code WHEN "VC001" THEN m.method_name ELSE '' END) fairPriceName ,
+			max(CASE mc.class_code WHEN "VC002" THEN m.method_name ELSE '' END) positionCostName,
+			max(CASE mc.class_code WHEN "VC003" THEN m.method_name ELSE null END)  positionMarketName,
+			max(CASE mc.class_code WHEN "VC004" THEN m.method_name ELSE '' END) costPriceName,
+			max(CASE mc.class_code WHEN "VC005" THEN m.method_name ELSE '' END)  floatingProfitLossName
+ 		FROM val_method_configure mc LEFT JOIN val_method m ON mc.method_code= m.method_code
+ 		WHERE mc.fund_configure_id=#{fundConfigureId} LIMIT 1
     </select>
 </mapper>

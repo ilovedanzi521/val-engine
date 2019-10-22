@@ -22,7 +22,7 @@
 		INNER JOIN val_item i ON c.cal_item = i.item_code AND i.item_level = 1
 		<where>
 			<if test="calItem != null">
-				WHERE c.cal_item = #{calItem}
+				and c.itemName LIKE CONCAT('%',#{calItem},'%')
 			</if>
 		</where>
     </select>

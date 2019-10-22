@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.win.dfbp.val.manage.entity.ValParamDictionary;
+import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.dao 

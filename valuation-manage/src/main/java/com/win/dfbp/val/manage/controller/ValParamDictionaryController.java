@@ -29,14 +29,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/param")
-@Api(value = "估值产品状态controller", tags = {"估值产品状态接口"})
+@Api(value = "估值产品参数controller", tags = {"估值产品参数接口"})
 public class ValParamDictionaryController {
     @Autowired
     private ValParamDictionaryService ValParamDictionaryService;
 
-    @ApiOperation(value = "估值产品状态列表")
+    @ApiOperation(value = "估值参数列表")
     @PostMapping("/list")
- 	public WinResponseData getValCalculationItems() {
+ 	public WinResponseData getValParamDictionaries() {
  		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamDictionaryList());
+ 	}
+    
+    @ApiOperation(value = "估值参数方法列表")
+    @PostMapping("/method/list")
+ 	public WinResponseData getValParamMethods() {
+ 		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamMethods());
  	}
 }
