@@ -37,7 +37,7 @@ public class WriteIntoKafka {
 
         Map properties= new HashMap();
         properties.put("bootstrap.servers", "192.168.0.61:9092");
-        properties.put("topic", "watchval");
+        properties.put("topic", "dfbpval");
 
         // parse user parameters
         ParameterTool parameterTool = ParameterTool.fromMap(properties);
@@ -72,8 +72,9 @@ public class WriteIntoKafka {
 
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
-            while(running) {
+            for (int i=0;i<1000;i++) {
                 ctx.collect(prouderJson());
+                Thread.sleep(10);
             }
         }
 

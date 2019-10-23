@@ -33,14 +33,14 @@ kafka:
   #
   # bootstrap_servers: localhost:9092
   bootstrap-servers: 192.168.0.61:9092
-  group-id: watchval
+  group-id: dfbpval
   enable-auto-commit: true
   auto-commit-interval-ms: 1000
   auto-offset_reset: earliest
   session-timeout-ms: 30000
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  topic: watchval
+  topic: dfbpval
 mybatis:
   type-aliases-package: com.win.dfbp.entity
   mapper-locations: classpath*:com/**/dao/**/*.xml

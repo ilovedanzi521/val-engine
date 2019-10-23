@@ -70,7 +70,7 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     continue;
                 }
                 // 4、匹配估值标准 获取估值标准、小数精度、估价来源等
-                securityParam.setSecurityParam(fundNo);
+                securityParam.setSecurityParam( positionMap.get(ValPositionConstant.FUND_NO).toString());
                 if(!valMarket.getDataSource().equals(securityParam.getSource())){
                     // 行情估值来源不同于估值标准的估值来源 跳过计算
                     continue;

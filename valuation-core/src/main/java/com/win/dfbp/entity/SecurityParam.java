@@ -15,10 +15,10 @@ package com.win.dfbp.entity;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
-import com.win.dfas.common.exception.WinException;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
@@ -40,6 +40,7 @@ import java.util.List;
  * 创建时间：2019/10/17/19:23
  */
 @Data
+@Slf4j
 public class SecurityParam {
     //入参：资产类别
     private String assetType;
@@ -153,7 +154,8 @@ public class SecurityParam {
         Object price = RedisUtil.get(RedisKeyPrefix.VAL_MARKET+ CommonConstants.HORIZONTAL_LINE+
                 this.getSecurityCode()+this.getMarketCode()+this.getSource());
         if(ObjectUtil.isEmpty(price)){
-            throw new WinException("无法获取行情的净价全价信息");
+            log.error("无法获取行情的净价全价信息:{}",this.getSecurityCode()+this.getMarketCode()+this.getSource());
+            return this;
         }else{
             SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(price),SecurityParam.class);
             this.setFullPrice(tmpParam.getFullPrice());
@@ -175,7 +177,8 @@ public class SecurityParam {
         Object interest = RedisUtil.get(RedisKeyPrefix.VAL_INTEREST+ CommonConstants.HORIZONTAL_LINE+
                 this.getSecurityCode()+this.getMarketCode());
         if(ObjectUtil.isEmpty(interest)){
-            throw new WinException("无法获取百元利息信息");
+            log.error("无法获取百元利息信息:{}",this.getSecurityCode()+this.getMarketCode());
+            return this;
         }else{
             SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(interest),SecurityParam.class);
             this.setPretaxInterest(tmpParam.getPretaxInterest());
@@ -195,10 +198,10 @@ public class SecurityParam {
      * @Date 2019/10/18/10:17
      */
     public SecurityParam setSecurityParam(String fundNo) {
-        //获取方案
         Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
         if(ObjectUtil.isEmpty(scheme)){
-            throw new WinException("无法获取估值参数方案信息");
+            log.error("无法获取估值参数方案信息:{}",fundNo);
+            return this;
         }
         ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
         LinkedHashSet<String> keys =new LinkedHashSet<>();
@@ -219,7 +222,8 @@ public class SecurityParam {
                 }
             }
         }else{
-            throw new WinException("无法获取估值参数信息");
+            log.error("无法获取估值参数信息:{}",keys);
+            return this;
         }
         return this;
     }

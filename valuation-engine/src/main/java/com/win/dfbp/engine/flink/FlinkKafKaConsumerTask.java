@@ -17,6 +17,7 @@ import com.win.dfbp.engine.flink.sink.RedisSinkFunction;
 import com.win.dfbp.engine.flink.transform.SecurityIndexFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
 import com.win.dfbp.entity.SecurityIndex;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
@@ -40,6 +41,7 @@ import java.util.Properties;
  * 创建人：@author wanglei
  * 创建时间：2019/10/12/13:35
  */
+@Slf4j
 @Component
 public class FlinkKafKaConsumerTask {
     /**
@@ -60,7 +62,11 @@ public class FlinkKafKaConsumerTask {
                 kproperties.getProperty("topic"), new SimpleStringSchema(), kproperties);
         DataStream<String> messageStream = env.addSource(consumer);
         messageStream.flatMap((String line, Collector<SecurityIndex> out) -> {
-            out.collect(JSON.parseObject(line,SecurityIndex.class));
+           try{
+               out.collect(JSON.parseObject(line,SecurityIndex.class));
+           }catch (Exception e){
+               log.error("消息报文:{},格式异常{}",line,e);
+           }
         }).returns(SecurityIndex.class)
                 // 按key分组，维护state时可认为只有一个key
                 .keyBy(securityTranPrimaryKey)

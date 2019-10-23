@@ -109,10 +109,15 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                                       Collector<SecurityIndex> out, SecurityIndexState lastState) throws IOException {
         SecurityIndex stockList = securityCalculation.calculateSecurityIndex(in,oldIndex);
         if (stockList != null) {
+            if(lastState==null){
+                lastState = new SecurityIndexState();
+            }
             lastState = lastState.clone(stockList);
         }
-        out.collect(stockList);
-        indexState.update(lastState);
+        if (stockList.getIndexVO() != null) {
+            out.collect(stockList);
+            indexState.update(lastState);
+        }
         //持仓信息,不持仓,按条件清理
         boolean hold = true;
         if (!hold) {
