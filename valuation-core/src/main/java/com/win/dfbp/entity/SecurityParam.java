@@ -19,12 +19,10 @@ import com.win.dfas.common.exception.WinException;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import lombok.Data;
-import org.apache.poi.hpsf.Decimal;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * 包名称：com.win.wl
@@ -188,17 +186,25 @@ public class SecurityParam {
 
     /**
      * @Title: getSecurityParam
-     * @Description 获取证券信息，
+     * @Description 获取证券估值参数信息
      * @param
+     * @param fundNo
      * @return com.win.dfbp.entity.SecurityParam
      * @throws
      * @author wanglei
      * @Date 2019/10/18/10:17
      */
-    public SecurityParam setSecurityParam() {
+    public SecurityParam setSecurityParam(String fundNo) {
+        //获取方案
+        Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
+        if(ObjectUtil.isEmpty(scheme)){
+            throw new WinException("无法获取估值参数方案信息");
+        }
+        ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
         LinkedHashSet<String> keys =new LinkedHashSet<>();
         for (int i =1;i<=6;i++){
-            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+levelKey(i));
+            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+
+                    valParamScheme.getValSchemeCode()+levelKey(i));
         }
         //批量获取keys
         List list = RedisUtil.multiGet(keys);

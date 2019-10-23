@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author zoujian    
+ * 创建人: @author zoujian
  * 创建时间: 2019-10-17/16:58
  * 项目名称: dfbp-fa-engine
  * 文件名称: BondMarketStrategy.java
@@ -17,7 +17,6 @@ import com.win.dfbp.constant.InvestFlagConstant;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.constant.ValPositionConstant;
-import com.win.dfbp.entity.SecurityIndexVO;
 import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValMarket;
 import com.win.dfbp.strategy.BaseMarketStrategy;
@@ -71,7 +70,7 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     continue;
                 }
                 // 4、匹配估值标准 获取估值标准、小数精度、估价来源等
-                securityParam.setSecurityParam();
+                securityParam.setSecurityParam(fundNo);
                 if(!valMarket.getDataSource().equals(securityParam.getSource())){
                     // 行情估值来源不同于估值标准的估值来源 跳过计算
                     continue;

@@ -43,7 +43,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
     }
     @Override
     public SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex,SecurityIndex oldIndex) {
-        SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getSecurityCode());
+        SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getFundNo(),securityIndex.getSecurityCode());
         if(ObjectUtil.isEmpty(securityParam)){
             return securityIndex;
         }
@@ -55,7 +55,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
 
     @Override
     public SecurityIndex initSecurityIndex(SecurityIndex securityIndex) {
-        SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getSecurityCode());
+        SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getFundNo(),securityIndex.getSecurityCode());
         if(ObjectUtil.isEmpty(securityParam)){
             return securityIndex;
         }
@@ -89,7 +89,7 @@ public class SecurityCalculation1 implements ISecurityCalculation {
      * @author wanglei
      * @Date 2019/10/18/10:45
      */
-    public SecurityParam querySecurityBasciInfo(String securityCode) {
+    public SecurityParam querySecurityBasciInfo(String fundNo,String securityCode) {
         //缓存中获取证券信息
         Object securityInfo = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO+ CommonConstants.HORIZONTAL_LINE+securityCode);
         SecurityParam securityParam = null;
@@ -99,6 +99,6 @@ public class SecurityCalculation1 implements ISecurityCalculation {
             //1 . json转object 获取证券内码对用的证券基础信息
             securityParam = JSON.parseObject(JSON.toJSONString(securityInfo),SecurityParam.class);
         }
-        return securityParam.setSecurityParam();
+        return securityParam.setSecurityParam(fundNo);
     }
 }
