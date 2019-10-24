@@ -12,14 +12,14 @@
 
 package com.win.dfbp.engine.flink;
 
+import com.win.dfas.common.vo.SysRedisCacheReqVO;
+import com.win.dfbp.engine.flink.sink.ValPositionFunction;
 import com.win.dfbp.engine.flink.transform.ValMarketFunction;
+import com.win.dfbp.engine.service.depand.RedisCacheLoaderFeign;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
-import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValMarket;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.operators.DataSource;
-import org.apache.flink.api.java.operators.FlatMapOperator;
-import org.apache.flink.util.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -38,6 +38,9 @@ public class FlinkFileReadTask {
     @Autowired
     private MarketDataServiceImpl marketDataService;
 
+    @Autowired
+    private RedisCacheLoaderFeign redisCacheLoaderFeign;
+
     @Async(value = "flinkFileReadThread")
     public void run() {
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
@@ -47,12 +50,45 @@ public class FlinkFileReadTask {
             // 1、解析文件读取到List集合中
             DataSource<ValMarket> dataSource = env.fromCollection(list);
             // 2、将List集合数据塞入Flink中
-            List collectorList = dataSource.flatMap(new ValMarketFunction()).collect();
+            dataSource.flatMap(new ValMarketFunction()).print();
+//            dataSource.flatMap(new ValMarketFunction()).map(new ValPositionFunction());
             // 3、更新val_position表数据
-            System.out.println(collectorList);
-            // 4、强制刷新缓存
+            //updateValPosition(collectorList);
+            // 4、强制库存刷新缓存
+            updatePositionCache();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Flink 操作Mysql更新val_position
+     * @Title: updateValPosition
+     * @param list
+     * @return: void
+     * @throws
+     * @author: zoujian
+     * @Date:  2019-10-19/16:44
+     */
+    private void updateValPosition(List list){
+
+
+    }
+
+    /**
+     * 刷新库存val_position缓存
+     * @Title: updatePositionCache
+     * @param
+     * @return: void
+     * @throws
+     * @author: zoujian
+     * @Date:  2019-10-21/11:43
+     */
+    private void updatePositionCache(){
+        SysRedisCacheReqVO reqVO = new SysRedisCacheReqVO();
+        reqVO.setCacheType("VAL_POSITION");
+        reqVO.setKey("pk");
+        redisCacheLoaderFeign.refreshCache(reqVO);
     }
 }

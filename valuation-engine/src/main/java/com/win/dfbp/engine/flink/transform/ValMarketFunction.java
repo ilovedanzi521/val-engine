@@ -15,8 +15,11 @@ import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
+import com.win.dfbp.engine.util.SpringContextUtil;
 import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValMarket;
+import com.win.dfbp.strategy.BaseMarketStrategy;
+import com.win.dfbp.strategy.MarketStrategyFactory;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.util.Collector;
@@ -53,19 +56,13 @@ public class ValMarketFunction implements FlatMapFunction<ValMarket,Collector> {
         Object securityObj  = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO + CommonConstants.HORIZONTAL_LINE +  key);
         if(securityObj != null){
             SecurityParam securityParam = JSON.parseObject(JSON.toJSONString(securityObj),SecurityParam.class);
-//            // 2、按资产类别进行区分
-//            String assetType = securityParam.getAssetType();
-//            MarketStrategyFactory marketStrategyFactory = SpringContextUtil.getBean(MarketStrategyFactory.class);
-//            BaseMarketStrategy strategy = marketStrategyFactory.getPromotionStrategy(assetType);
-//            // 计算持仓指标
-//            strategy.calPositionIndex(valMarket, securityParam);
+            // 2、按资产类别进行区分
+            String assetType = securityParam.getAssetType();
+            MarketStrategyFactory marketStrategyFactory = SpringContextUtil.getBean(MarketStrategyFactory.class);
+            BaseMarketStrategy strategy = marketStrategyFactory.getPromotionStrategy(assetType);
+            // 计算持仓指标
+            strategy.calPositionIndex(valMarket, securityParam);
             collector.collect(securityParam);
         }
-
-        // 3、匹配估值标准
-        // 4、计算公允价
-        // 5、更新公允价  全价、净价
-        // 6、计算持仓市值
-        // 7、更新市值
     }
 }

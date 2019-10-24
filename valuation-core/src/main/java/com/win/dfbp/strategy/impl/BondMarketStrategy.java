@@ -76,6 +76,8 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     continue;
                 }
 
+                // 获取产品估值配置数据
+
                 // 获取估值标准
                 String valCriteria = RedisServiceUtil.getRedisJsonFieldValue(RedisKeyPrefix.FUND_VAL_SCHEME,
                         positionMap.get(ValPositionConstant.FUND_NO).toString(),"valCriteria");
@@ -100,6 +102,6 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                 securityParam.setFloatingPL(positionMarketValue.subtract(positionCost));
             }
         }
-        return null;
+        return securityParam;
     }
 }

@@ -24,6 +24,8 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import static com.win.dfbp.constant.TradeRuleConstant.*;
+
 /**
  * 包名称：com.win.wl
  * 类名称：SecurityIndexVO
@@ -116,6 +118,11 @@ public class SecurityParam {
      * 浮动盈亏
      */
     private BigDecimal floatingPL;
+
+    /**
+     * 原始价
+     */
+    private BigDecimal originalPrice;
 
     public String levelKey(int level){
         switch (level){
@@ -218,6 +225,11 @@ public class SecurityParam {
                     this.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
                     this.setValCriteria(tmpParam.getValCriteria());
                     this.setSource(tmpParam.getSource());
+                    if(VAL_CRITERIA_P001.equals(tmpParam.getValCriteria()) || VAL_CRITERIA_P002.equals(tmpParam.getValCriteria())){
+                        this.setOriginalPrice(this.getNetPrice());
+                    }else if (VAL_CRITERIA_P003.equals(tmpParam.getValCriteria()) || VAL_CRITERIA_P004.equals(tmpParam.getValCriteria())  || VAL_CRITERIA_P005.equals(tmpParam.getValCriteria())){
+                        this.setOriginalPrice(this.getFullPrice());
+                    }
                     return this;
                 }
             }
