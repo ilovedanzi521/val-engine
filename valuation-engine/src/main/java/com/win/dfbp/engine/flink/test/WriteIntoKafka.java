@@ -86,7 +86,7 @@ public class WriteIntoKafka {
                     "  \"securityCode\": \"6033832\",\n" +
                     "  \"marketCode\": \"SH\",\n" +
                     "  \"platformCode\": \"123\",\n" +
-                    "  \"securityCharacter\": \"bond\",\n" +
+                    "  \"securityCharacter\": \"SS\",\n" +
                     "  \"investFlag\": \"J\",\n" +
                     "  \"cashSettleBalance\": \"1222\",\n" +
                     "  \"stockSettleAmount\": \"456612\",\n" +

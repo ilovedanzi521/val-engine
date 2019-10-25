@@ -29,6 +29,7 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.util.Collector;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * 包名称：com.win.wl
@@ -56,10 +57,9 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         SecurityIndexState lastState = indexState.value();
         String algorithm = "";
         //获取数据库或redis缓存中是否存在持仓
-        Object cashSecurityIndex = null;
+        Object cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + in.key());
         // 第一次进入计算,更新state,init state
         if (lastState == null) {
-            cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + in.key());
             if (cashSecurityIndex == null) {
                 try {
                     SecurityIndex stockList = SecurityCalculationUtil.initSecurityIndex(in);
@@ -79,9 +79,14 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                 existHistoryPosition(in, oldIndex, out, lastState);
             }
         } else {
-            //非第一次进入，进行计算
             SecurityIndex oldIndex = lastState.parse();
+            if(cashSecurityIndex!=null){
+                BigDecimal fairPrice = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class)
+                        .getIndexVO().getFairPrice();
+                oldIndex.getIndexVO().setFairPrice(fairPrice);
+            }
             existHistoryPosition(in, oldIndex, out, lastState);
+            //非第一次进入，进行计算
         }
     }
 
