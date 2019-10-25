@@ -77,6 +77,7 @@ public class SecurityCalculationUtil {
         if (ObjectUtil.isEmpty(securityParam)) {
             return securityIndex;
         }
+        securityParam.setFundNo(fundNo);
         //计算指标
         BaseStrategy strategy = judgeStrategy(securityIndex, securityParam);
         strategy.setSecurityIndex(securityIndex);

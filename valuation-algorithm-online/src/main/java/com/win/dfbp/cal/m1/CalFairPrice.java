@@ -12,8 +12,10 @@
 
 package com.win.dfbp.cal.m1;
 
+import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.cal.ISecurityCalculation;
 import com.win.dfbp.cal.strategy.fairprice.FairPriceFactory;
+import com.win.dfbp.cal.strategy.positionmarketvalue.PositionMarketValueFactory;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,8 @@ import java.math.BigDecimal;
  * 创建人：@author wanglei
  * 创建时间：2019/10/24/11:36
  */
-@Component
 public class CalFairPrice implements ISecurityCalculation {
-    @Autowired
-    private FairPriceFactory fairPriceFactory;
+    private FairPriceFactory fairPriceFactory = SpringContextUtil.getBean(FairPriceFactory.class);
 
     private static final String clz = CalFairPrice.class.getName();
     @Override

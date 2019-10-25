@@ -16,7 +16,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
+import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.cal.ISecurityCalculation;
+import com.win.dfbp.cal.strategy.fairprice.FairPriceFactory;
 import com.win.dfbp.cal.strategy.positioncost.PositionCostFactory;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
@@ -36,12 +38,10 @@ import java.math.BigDecimal;
  * 创建人：@author wanglei
  * 创建时间：2019/10/24/11:36
  */
-@Component
 @Slf4j
 public class CalPositionCost implements ISecurityCalculation {
     private static final String clz = CalPositionCost.class.getName();
-    @Autowired
-    private PositionCostFactory positionCostFactory;
+    private PositionCostFactory positionCostFactory = SpringContextUtil.getBean(PositionCostFactory.class);
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
         if(clz.equals(algorithm)){

@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   redis:
     database: 0
     host: 192.168.0.107

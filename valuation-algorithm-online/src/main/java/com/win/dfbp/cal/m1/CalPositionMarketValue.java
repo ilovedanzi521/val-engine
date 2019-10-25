@@ -12,6 +12,7 @@
 
 package com.win.dfbp.cal.m1;
 
+import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.cal.ISecurityCalculation;
 import com.win.dfbp.cal.strategy.positionmarketvalue.PositionMarketValueFactory;
 import com.win.dfbp.entity.SecurityIndex;
@@ -28,10 +29,8 @@ import java.math.BigDecimal;
  * 创建人：@author wanglei
  * 创建时间：2019/10/24/11:37
  */
-@Component
 public class CalPositionMarketValue implements ISecurityCalculation {
-    @Autowired
-    private PositionMarketValueFactory positionMarketValueFactory;
+    private PositionMarketValueFactory positionMarketValueFactory = SpringContextUtil.getBean(PositionMarketValueFactory.class);
     private static final String clz = CalPositionMarketValue.class.getName();
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
