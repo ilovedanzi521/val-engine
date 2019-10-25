@@ -23,8 +23,8 @@
 			val_cal_manage cm
 		INNER JOIN val_method m ON m.method_code = cm.val_method
 		<where>
-			<if test="calMethod != null">
-				and m.method_name LIKE CONCAT('%',#{calMethod},'%')
+			<if test="valMethod != null">
+				and m.method_name LIKE CONCAT('%',#{valMethod},'%')
 			</if>
 		</where>
     </select>

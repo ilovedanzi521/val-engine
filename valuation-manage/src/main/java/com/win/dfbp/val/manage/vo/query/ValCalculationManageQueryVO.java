@@ -36,7 +36,7 @@ public class ValCalculationManageQueryVO extends BaseQryReqVO {
 	 * 方法编码
 	 */
 	@ApiModelProperty(value = "方法编码")
-	private String calMethod;
+	private String valMethod;
 	/**
 	 * 编辑时传的计算表达式参数
 	 */

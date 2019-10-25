@@ -27,4 +27,17 @@
  		FROM val_method_configure mc LEFT JOIN val_method m ON mc.method_code= m.method_code
  		WHERE mc.fund_configure_id=#{fundConfigureId} LIMIT 1
     </select>
+    
+    <update id="updateMethodConfigure" parameterType="com.win.dfbp.val.manage.entity.ValMethodConfigure">
+    	UPDATE val_method_configure 
+    	<set>
+    		<if test="classCode != null">
+    			class_code = #{classCode},
+    		</if>
+    		<if test="methodCode != null">
+    			method_code = #{methodCode}
+    		</if>
+    	</set>
+    	WHERE fund_configure_id=#{fundConfigureId} AND class_code = #{classCode}
+    </update>
 </mapper>

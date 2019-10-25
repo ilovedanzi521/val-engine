@@ -56,4 +56,16 @@ public interface ValFundConfigureService {
 	 * @Date:  2019年10月18日/下午4:59:49
 	 */
 	PageInfo<ValFundConfigureRepVO> getValFundConfigures(ValFundConfigureQueryVO reqVO);
+
+	/**
+	 * 
+	 * @Title: updateFundConfigure
+	 * @Description:  修改产品估值配置
+	 * @param repVO   
+	 * @return: void   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月24日/上午11:48:21
+	 */
+	void updateFundConfigure(ValFundConfigureRepVO repVO);
 }

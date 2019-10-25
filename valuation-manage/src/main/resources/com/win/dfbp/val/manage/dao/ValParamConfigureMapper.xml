@@ -15,11 +15,11 @@
 
     <select id="getParamByFundId" resultType="com.win.dfbp.val.manage.vo.respone.ValParamMethodRepVO">
 		SELECT max(CASE pc.param_code WHEN "FP001" THEN pc.method_code ELSE '' END) costSettlement ,
-			max(CASE pc.param_code WHEN "FP001" THEN pc.method_code ELSE '' END) costSettlementSort,
-			max(CASE pc.param_code WHEN "FP001" THEN pc.method_code ELSE null END) realInterestRate,
+			max(CASE pc.param_code WHEN "FP002" THEN pc.method_code ELSE '' END) costSettlementSort,
+			max(CASE pc.param_code WHEN "FP003" THEN pc.method_code ELSE null END) realInterestRate,
 			max(CASE pc.param_code WHEN "FP001" THEN cpc.method_name ELSE '' END) costSettlementName ,
-			max(CASE pc.param_code WHEN "FP001" THEN cpc.method_name ELSE '' END) costSettlementSortName,
-			max(CASE pc.param_code WHEN "FP001" THEN cpc.method_name ELSE null END) realInterestRateName
+			max(CASE pc.param_code WHEN "FP002" THEN cpc.method_name ELSE '' END) costSettlementSortName,
+			max(CASE pc.param_code WHEN "FP003" THEN cpc.method_name ELSE null END) realInterestRateName
  		FROM val_param_configure pc
 		LEFT JOIN val_cal_param_configure cpc ON pc.method_code = cpc.method_code 
  		WHERE pc.fund_configure_id=#{fundConfigureId} LIMIT 1
@@ -30,4 +30,14 @@
 			method_code AS methodcode,method_name AS methodName
 		from val_cal_param_configure
     </select>
+    
+     <update id="updateParamMethodConfigure" parameterType="com.win.dfbp.val.manage.entity.ValParamConfigure">
+    	UPDATE val_param_configure 
+    	<set>
+    		<if test="methodCode != null">
+    			method_code = #{methodCode}
+    		</if>
+    	</set>
+    	WHERE fund_configure_id=#{fundConfigureId} AND param_code = #{paramCode}
+    </update>
 </mapper>

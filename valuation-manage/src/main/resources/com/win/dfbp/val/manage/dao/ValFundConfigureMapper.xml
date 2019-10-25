@@ -37,4 +37,23 @@
 			</if>
 		</where>
     </select>
+    
+    <update id="updateFundConfigure" parameterType="com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO">
+    	UPDATE val_fund_configure 
+    	<set>
+    		<if test="fundNo != null">
+    			fund_no = #{fundNo},
+    		</if>
+    		<if test="fundName != null">
+    			fund_name = #{fundName},
+    		</if>
+    		<if test="fundStatusCode != null">
+    			fund_status = #{fundStatusCode},
+    		</if>
+    		<if test="fundCharacterCode != null">
+    			fund_character = #{fundCharacterCode}
+    		</if>
+    	</set>
+    	WHERE id=#{id}
+    </update>
 </mapper>

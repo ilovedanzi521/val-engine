@@ -15,6 +15,6 @@
 
     <select id="getValItems" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List"></include>
-		from val_item where item_level = 1
+		from val_item group by item_code
     </select>
 </mapper>

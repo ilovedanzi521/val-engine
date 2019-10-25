@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 包名称：com.win.dfbp.fa.manage.controller
  * 类名称：ValParamDictionaryController
- * 类描述：估值产品状态controller
+ * 类描述：估值参数controller
  * 创建人：@author huhe
  * 创建时间：2019-10-16/17:41
  */
 @RestController
 @RequestMapping("/param")
-@Api(value = "估值产品参数controller", tags = {"估值产品参数接口"})
+@Api(value = "估值参数controller", tags = {"估值产品参数接口"})
 public class ValParamDictionaryController {
     @Autowired
     private ValParamDictionaryService ValParamDictionaryService;
@@ -45,4 +45,5 @@ public class ValParamDictionaryController {
  	public WinResponseData getValParamMethods() {
  		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamMethods());
  	}
+       
 }

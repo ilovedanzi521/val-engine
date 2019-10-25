@@ -17,7 +17,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.win.dfbp.val.manage.entity.ValParamConfigure;
 import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
+import com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO;
 import com.win.dfbp.val.manage.vo.respone.ValParamMethodRepVO;
 
 /**   
@@ -55,4 +57,16 @@ public interface ValParamConfigureMapper {
 	 * @Date:  2019年10月21日/下午6:19:33
 	 */
 	List<ValParamMethodConfigure> getAllParamMethod();
+	
+	/**
+	 * 
+	 * @Title: updateParamMethodConfigure
+	 * @Description: 更新
+	 * @param valParamConfigure   
+	 * @return: void   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月23日/下午7:32:05
+	 */
+	void updateParamMethodConfigure(ValParamConfigure valParamConfigure );
 }

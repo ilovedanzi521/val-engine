@@ -51,5 +51,5 @@ public class ValMethodConfigure  extends  BaseEntity {
      * 产品id
      */
     @ApiModelProperty(value = "产品id")
-	private String fundConfigureId;
+	private Long fundConfigureId;
 }

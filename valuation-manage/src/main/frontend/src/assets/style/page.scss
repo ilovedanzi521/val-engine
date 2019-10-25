@@ -1,0 +1,75 @@
+@charset 'UTF-8';
+@import "./var.scss";
+
+$--color-icon-button-default: #2b3551 !default;
+$--color-icon-button-blue: #2680eb !default;
+
+.container {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.primary {
+    color: $--color-primary;
+}
+
+.success {
+    color: $--color-success;
+}
+
+.warning {
+    color: $--color-warning;
+}
+
+.danger {
+    color: $--color-danger;
+}
+
+.info {
+    color: $--color-info;
+}
+
+.query-form .el-form--inline .el-form-item {
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.form-button .icon-button-default {
+    color: #fff;
+    background: $--color-icon-button-default;
+    border: $--color-icon-button-default;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.icon-button-blue {
+    color: #fff;
+    background: $--color-icon-button-blue;
+    border: $--color-icon-button-blue;
+}
+
+.font-blue {
+    color: $--color-icon-button-blue;
+}
+
+.el-icon-edit {
+    color: #33cc33;
+}
+
+.el-icon-delete {
+    color: #ff4d4d;
+}
+
+.operate span {
+    cursor: pointer;
+}
+
+.divCenter {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.buttons button {
+    margin: 0px 10px;
+}
