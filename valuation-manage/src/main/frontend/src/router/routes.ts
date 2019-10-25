@@ -1,6 +1,6 @@
 import { Layout } from "win-biz";
 import Directional from "@/page/fram/view/Directional.vue";
-import Valuation from "@/page/valuation/view/Exchange.vue";
+import Valuation from "@/page/valuation/base/view/Exchange.vue";
 let routers = [
     {
         path: "/",

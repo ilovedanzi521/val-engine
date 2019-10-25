@@ -14,6 +14,7 @@ package com.win.dfbp.val.manage.controller;
 import com.win.dfas.common.vo.WinResponseData;
 import com.win.dfbp.val.manage.service.ValFundConfigureService;
 import com.win.dfbp.val.manage.vo.query.ValFundConfigureQueryVO;
+import com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,5 +51,13 @@ public class ValFundConfigureController {
     @PostMapping("/all")
  	public WinResponseData getFundAll() {
  		return WinResponseData.handleSuccess(valFundConfigureService.getValFundAll());
+ 	}
+    
+    @ApiOperation(value = "修改方法估值配置")
+    @ApiImplicitParam(name = "reqVO", value = "修改方法估值配置", required = true, dataType = "FundConfigureRepVO")
+    @PostMapping("/update")
+ 	public WinResponseData updateFundConfigure(@RequestBody ValFundConfigureRepVO repVO) {
+    	valFundConfigureService.updateFundConfigure(repVO);
+ 		return WinResponseData.handleSuccess("产品方法配置修改成功");
  	}
 }

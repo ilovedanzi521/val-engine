@@ -55,4 +55,16 @@ public interface ValFundConfigureMapper {
 	 */
 	
 	List<ValFundConfigure> getValFundAll();
+	
+	/**
+	 * 更新
+	 * @Title: updateFundConfigure
+	 * @Description: 更新
+	 * @param repVO   
+	 * @return: void   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月23日/下午7:11:42
+	 */
+	void updateFundConfigure(ValFundConfigureRepVO repVO);
 }

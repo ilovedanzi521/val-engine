@@ -15,6 +15,7 @@ package com.win.dfbp.val.manage.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.win.dfbp.val.manage.entity.ValMethodConfigure;
 import com.win.dfbp.val.manage.vo.respone.ValClassMethodRepVO;
 
 /**   
@@ -40,4 +41,16 @@ public interface ValMethodConfigureMapper {
 	 * @Date:  2019年10月17日/下午6:30:28
 	 */
 	ValClassMethodRepVO getMethodByFundId(Long fundId);
+	
+	/**
+	 * 
+	 * @Title: updateMethodConfigure
+	 * @Description: 更新
+	 * @param valMethodConfigure   
+	 * @return: void   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月24日/上午11:33:08
+	 */
+	void updateMethodConfigure(ValMethodConfigure valMethodConfigure);
 }
