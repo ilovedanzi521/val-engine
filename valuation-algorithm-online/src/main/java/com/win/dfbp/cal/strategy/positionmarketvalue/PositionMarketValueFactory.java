@@ -29,10 +29,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class PositionMarketValueFactory {
-    //投资标志=交易性/可供出售
+    /**
+     *  投资标志=交易性/可供出售
+     */
     @Autowired
     private CalPositionMarketValue1 calPositionMarketValue1;
-    //投资标志=持有至到期/贷款
+    /**
+     *  投资标志=持有至到期/贷款
+     */
     @Autowired
     private CalPositionMarketValue2 calPositionMarketValue2;
 

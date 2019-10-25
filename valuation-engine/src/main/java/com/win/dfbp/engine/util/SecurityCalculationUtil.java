@@ -103,14 +103,6 @@ public class SecurityCalculationUtil {
     * @Date 2019/10/24/11:51
     */
     public static SecurityParam querySecurityBasciInfo(String fundNo, String securityCode) {
-        //1获取产品方案信息
-        Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
-        if(ObjectUtil.isEmpty(scheme)){
-            log.error("无法获取估值参数方案信息:{}",fundNo);
-            return null;
-        }
-        ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
-
         //缓存中获取证券信息
         Object securityInfo = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO + CommonConstants.HORIZONTAL_LINE + securityCode);
         SecurityParam securityParam = null;
@@ -121,6 +113,6 @@ public class SecurityCalculationUtil {
             securityParam = JSON.parseObject(JSON.toJSONString(securityInfo), SecurityParam.class);
         }
         securityParam.setFundNo(fundNo);
-        return securityParam.setSecurityParam(valParamScheme.getValSchemeCode());
+        return securityParam.setSecurityParam(fundNo);
     }
 }

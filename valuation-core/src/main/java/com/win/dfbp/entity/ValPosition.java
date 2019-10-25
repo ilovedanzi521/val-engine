@@ -27,10 +27,11 @@ import java.math.BigDecimal;
 @ApiModel(value = "持仓信息实体类")
 @Data
 public class ValPosition extends BaseEntity {
-    private Long fundNo;
+    private String fundNo;
     private String fundCharacter;
     private Long portfNo;
     private String securityCode;
+    private String marketCode;
     private String platformCode;
     private String securityCharacter;
     private String investFlag;
@@ -63,4 +64,9 @@ public class ValPosition extends BaseEntity {
      * 浮动盈亏
      */
     private BigDecimal floatingPL;
+
+    /**
+     * 原始价
+     */
+    private BigDecimal originalPrice;
 }

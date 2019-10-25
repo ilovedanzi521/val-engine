@@ -24,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
+
+import static com.win.dfbp.constant.TradeRuleConstant.*;
+
 /**
  * 包名称：com.win.dfbp.entity
  * 类名称：SecurityParam
@@ -113,6 +116,14 @@ public class SecurityParam {
      * 浮动盈亏
      */
     private BigDecimal floatingPL;
+    /**
+     * 证券性质
+     */
+    private String securityCharacter;
+    /**
+     * 原始价
+     */
+    private BigDecimal originalPrice;
 
     public String levelKey(int level){
         switch (level){
@@ -188,17 +199,25 @@ public class SecurityParam {
      * @Title: getSecurityParam
      * @Description 获取证券估值参数信息
      * @param
-     * @param valSchemeCode 方案code
+     * @param fundNo
      * @return com.win.dfbp.entity.SecurityParam
      * @throws
      * @author wanglei
      * @Date 2019/10/18/10:17
      */
-    public SecurityParam setSecurityParam(String valSchemeCode) {
+    public SecurityParam setSecurityParam(String fundNo) {
+        //1获取产品方案信息
+        Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
+        if(ObjectUtil.isEmpty(scheme)){
+            log.error("无法获取估值参数方案信息:{}",fundNo);
+            return null;
+        }
+        ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
+
         LinkedHashSet<String> keys =new LinkedHashSet<>();
         for (int i =1;i<=6;i++){
-            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL+ CommonConstants.HORIZONTAL_LINE+
-                    valSchemeCode+levelKey(i));
+            keys.add(RedisKeyPrefix.VAL_CRITERIA_SCHEME_DETAIL +  CommonConstants.HORIZONTAL_LINE +
+                    valParamScheme.getValSchemeCode() + levelKey(i));
         }
         //批量获取keys
         List list = RedisUtil.multiGet(keys);
@@ -209,6 +228,11 @@ public class SecurityParam {
                     this.setDecimalAccuracy(tmpParam.getDecimalAccuracy());
                     this.setValCriteria(tmpParam.getValCriteria());
                     this.setSource(tmpParam.getSource());
+                    if(VAL_CRITERIA_P001.equals(tmpParam.getValCriteria()) || VAL_CRITERIA_P002.equals(tmpParam.getValCriteria())){
+                        this.setOriginalPrice(this.getNetPrice());
+                    }else if(VAL_CRITERIA_P003.equals(tmpParam.getValCriteria()) || VAL_CRITERIA_P004.equals(tmpParam.getValCriteria()) || VAL_CRITERIA_P005.equals(tmpParam.getValCriteria())){
+                        this.setOriginalPrice(this.getFullPrice());
+                    }
                     return this;
                 }
             }

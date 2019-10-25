@@ -13,7 +13,6 @@
 package com.win.dfbp.engine.flink;
 
 import com.win.dfas.common.vo.SysRedisCacheReqVO;
-import com.win.dfbp.engine.flink.sink.ValPositionFunction;
 import com.win.dfbp.engine.flink.transform.ValMarketFunction;
 import com.win.dfbp.engine.service.depand.RedisCacheLoaderFeign;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
