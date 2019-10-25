@@ -32,9 +32,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 包名称：com.win.dfbp.strategy.impl
@@ -71,6 +69,7 @@ public class BondTradeStrategy extends BaseStrategy {
         for (Map.Entry<String, Object> entry : context.entrySet()) {
             calModel=calModel.replaceAll(entry.getKey(), String.valueOf(entry.getValue()));
         }
+        log.info("计算公式:{}",calModel);
         MathExpress me = new MathExpress(calModel,5,RoundingMode.HALF_EVEN);
         return new BigDecimal(me.caculate());
     }
@@ -87,7 +86,17 @@ public class BondTradeStrategy extends BaseStrategy {
         return calIndex(oldIndex,securityParam,false);
     }
 
-
+    /**
+     * @Title: calIndex
+     * @Description 计算逻辑
+     * @param oldIndex
+     * @param securityParam
+     * @param isInit
+     * @return com.win.dfbp.entity.SecurityIndexVO
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/25/11:26
+     */
     public SecurityIndexVO calIndex(SecurityIndex oldIndex,SecurityParam securityParam,boolean isInit) {
 
         //获取价格和百元利息
@@ -107,7 +116,9 @@ public class BondTradeStrategy extends BaseStrategy {
             CalculationItem calculationItem = JSON.parseObject(JSON.toJSONString(item),CalculationItem.class);
             String code = calculationItem.getCalItem();
             //计算结果放入到map中,用于计算
-            context.put(code,securityParam.getCalculationItemValue(code));
+            BigDecimal value = securityParam.getCalculationItemValue(code);
+            context.put(code,value);
+            indexVO.setIndex(code,value);
         }
         //指标计算开始
         //Redis获取计算指标
@@ -116,8 +127,15 @@ public class BondTradeStrategy extends BaseStrategy {
         //获取指标list
         List<Object> list = RedisUtil.matchGet(pattern);
         //迭代计算
+        List<CalculationValClass> calList = new ArrayList<>();
         for (Object object : list) {
             CalculationValClass calculationItem =JSON.parseObject(JSON.toJSONString(object),CalculationValClass.class);
+            calList.add(calculationItem);
+            //排序
+            Collections.sort(calList);
+
+        }
+        for (CalculationValClass calculationItem : calList) {
             //指标分类
             String classCode = calculationItem.getClassCode();
             //计算公式或计算模型
@@ -143,6 +161,7 @@ public class BondTradeStrategy extends BaseStrategy {
             }
             indexVO.setIndex(classCode,calResult);
         }
+        securityIndex.setIndexVO(indexVO);
         return indexVO;
     }
 

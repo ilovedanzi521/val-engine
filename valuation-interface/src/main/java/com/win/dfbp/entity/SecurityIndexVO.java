@@ -86,6 +86,17 @@ public class SecurityIndexVO {
                this.setFloatingPL(value);
                break;
            }
+           case TradeRuleConstant.VAL_CAL_ITEM_I004:{
+               this.setPositionAmount(value);
+               break;
+           }
+           case TradeRuleConstant.VAL_CAL_ITEM_I002:{
+               this.setInterestRateOfHundred(value);
+               break;
+           }
+           default:{
+               return this;
+           }
        }
         return this;
     }

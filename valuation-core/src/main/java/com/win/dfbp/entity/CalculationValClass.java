@@ -22,10 +22,16 @@ import lombok.Data;
  * 创建时间：2019/10/24/14:30
  */
 @Data
-public class CalculationValClass {
+public class CalculationValClass implements Comparable<CalculationValClass>{
     private String fundNo;
     private String classCode;
     private String methodCode;
     private int calType;
     private String calModel;
+    private int calOrder;
+
+    @Override
+    public int compareTo(CalculationValClass other) {
+        return this.calOrder - other.calOrder;
+    }
 }

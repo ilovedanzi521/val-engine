@@ -58,9 +58,9 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         //获取数据库或redis缓存中是否存在持仓
         Object cashSecurityIndex = null;
         // 第一次进入计算,更新state,init state
-        cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + in.key());
-        if (cashSecurityIndex == null) {
-            if (lastState == null) {
+        if (lastState == null) {
+            cashSecurityIndex = RedisUtil.get(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + in.key());
+            if (cashSecurityIndex == null) {
                 try {
                     SecurityIndex stockList = SecurityCalculationUtil.initSecurityIndex(in);
                     // 初始化state

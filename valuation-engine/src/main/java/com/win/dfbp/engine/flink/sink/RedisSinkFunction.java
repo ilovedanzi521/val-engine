@@ -37,11 +37,11 @@ public class RedisSinkFunction extends RichSinkFunction<SecurityIndex> {
 
     @Override
     public void invoke(SecurityIndex securityIndex, Context context) throws Exception {
-        log.info("sink to VAL_POSITION");
         //产品代码、组合代码、证券代码、交易市场、证券性质、投资标志
         //SELECT CONCAT(fund_no,fund_character,portf_no,security_code,market_code,platform_code,security_character,invest_flag,trade_direction) AS pk,
         //cash_settle_balance as cashSettleBalance,stock_settle_amount as stockSettleAmount,position_cost as positionCost,position_market_value as positionMarketValue,fair_price as fairPrice,cost_price as costPrice,floating_pl as floatingPL from val_position
         String key = securityIndex.key();
+        log.info("sink to VAL_POSITION.key is {}",RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key);
         RedisUtil.set(RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key, securityIndex, -1);
     }
 }
