@@ -3,7 +3,8 @@
         <win-form :inline="true" ref="queryForm">
             <div>
                 <win-form-item label="" prop="calItem">
-                    <win-input clearable v-model="reqVO.valItem" placeholder="计算项模糊查询" @change="list()">
+
+                    <win-input clearable v-model="reqVO.valItem" placeholder="请输入查询条件" @input="list()">
                     </win-input>
                 </win-form-item>
             </div>

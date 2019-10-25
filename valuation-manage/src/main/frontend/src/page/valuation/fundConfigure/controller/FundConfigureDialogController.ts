@@ -7,6 +7,7 @@ import { CompareVO } from "../../../common/vo/CompareVO";
 import ParamMethodConfigureRepVO from "../vo/ParamMethodConfigureRepVO";
 import ParamMethodConfigureQueryVO from "../vo/ParamMethodConfigureQueryVO";
 import { WinRspType } from "../../../common/enum/BaseEnum";
+import Method from "../../../common/vo/Method";
 
 @Component({ components: {} })
 export default class FundConfigureDialogController extends BaseController {
@@ -26,6 +27,20 @@ export default class FundConfigureDialogController extends BaseController {
     public paramMethodList2: ParamMethodConfigureRepVO[];
     @Prop()
     public paramMethodList3: ParamMethodConfigureRepVO[];
+
+    /**
+     * 不同类型查询方法
+     */
+    @Prop()
+    public classMethodList1: Method[] = [];
+    @Prop()
+    public classMethodList2: Method[] = [];
+    @Prop()
+    public classMethodList3: Method[] = [];
+    @Prop()
+    public classMethodList4: Method[] = [];
+    @Prop()
+    public classMethodList5: Method[] = [];
 
     // span宽度
     private spanWidth: number = 8;

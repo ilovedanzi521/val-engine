@@ -13,6 +13,8 @@ import FundConfigureDialog from "../view/FundConfigureDialog.vue";
 import ParamMethodConfigureRepVO from "../vo/ParamMethodConfigureRepVO";
 import ParamMethodConfigureQueryVO from "../vo/ParamMethodConfigureQueryVO";
 import CompareInit from "../../../common/util/CompareInit";
+import Method from "../../../common/vo/Method";
+import ClassMethodConfigureQueryVO from "../vo/ClassMethodConfigureQueryVO";
 
 @Component({ components: { FundConfigureDialog } })
 export default class FundConfigureController extends BaseController {
@@ -38,6 +40,16 @@ export default class FundConfigureController extends BaseController {
     public paramMethodList2: ParamMethodConfigureRepVO[] = [];
     public paramMethodList3: ParamMethodConfigureRepVO[] = [];
     public paramMethodQueryVO: ParamMethodConfigureQueryVO = new ParamMethodConfigureQueryVO();
+
+    /**
+     * 不同类型查询方法
+     */
+    public classMethodList1: Method[] = [];
+    public classMethodList2: Method[] = [];
+    public classMethodList3: Method[] = [];
+    public classMethodList4: Method[] = [];
+    public classMethodList5: Method[] = [];
+    public classMethodConfigureQueryVO: ClassMethodConfigureQueryVO = new ClassMethodConfigureQueryVO();
 
     public mounted() {
         this.list();
@@ -83,13 +95,18 @@ export default class FundConfigureController extends BaseController {
         );
         // 复制，创建对象副本
         this.fund = this.copy(row);
+        //查询类型方法
+        this.getMethodByClass(ParamBondRatingConst.POSITIONCOST);
+        this.getMethodByClass(ParamBondRatingConst.FAIRPRICE);
+        this.getMethodByClass(ParamBondRatingConst.POSITIONMARKET);
+        this.getMethodByClass(ParamBondRatingConst.COSTPRICE);
+        this.getMethodByClass(ParamBondRatingConst.FLOATIONGPROFITLOSS);
+        //查询参数方法
         this.getMethodByParam(ParamBondRatingConst.COSTSETTLEMENT);
         this.getMethodByParam(ParamBondRatingConst.COSTSETTLEMENTSORT);
         this.getMethodByParam(ParamBondRatingConst.REALINTERESTRATE);
         // 产品性质
         CompareInit.initFundCharacter();
-        //方法
-        CompareInit.initMethod();
     }
 
     /**
@@ -117,6 +134,35 @@ export default class FundConfigureController extends BaseController {
                 }
             });
     }
+    /**
+     * 根据参数初始方法
+     * @param paramCode
+     */
+    public getMethodByClass(ClassCode: string) {
+        this.classMethodConfigureQueryVO = new ClassMethodConfigureQueryVO();
+        this.classMethodConfigureQueryVO.classCode = ClassCode;
+        this.fundConfigureService
+            .getMethodByclass(this.classMethodConfigureQueryVO)
+            .then((res: any) => {
+                if (res.winRspType === WinRspType.ERROR) {
+                    this.win_message_error(res.msg);
+                } else {
+                    if (ClassCode === ParamBondRatingConst.POSITIONCOST) {
+                        this.classMethodList2 = res.data;
+                    } else if (ClassCode === ParamBondRatingConst.FAIRPRICE) {
+                        this.classMethodList1 = res.data;
+                    } else if (
+                        ClassCode === ParamBondRatingConst.POSITIONMARKET
+                    ) {
+                        this.classMethodList3 = res.data;
+                    } else if (ClassCode === ParamBondRatingConst.COSTPRICE) {
+                        this.classMethodList4 = res.data;
+                    } else {
+                        this.classMethodList5 = res.data;
+                    }
+                }
+            });
+    }
 }
 
 export const ParamBondRatingConst = {
@@ -127,5 +173,15 @@ export const ParamBondRatingConst = {
     // 成本核算顺序对应的method_code
     COSTSETTLEMENTSORT: "FP002",
     // 实际利率对应的method_code
-    REALINTERESTRATE: "FP003"
+    REALINTERESTRATE: "FP003",
+    // 持仓成本
+    POSITIONCOST: "VC001",
+    // 公允价
+    FAIRPRICE: "VC002",
+    // 持仓市值
+    POSITIONMARKET: "VC003",
+    // 成本价
+    COSTPRICE: "VC004",
+    // 浮动盈亏
+    FLOATIONGPROFITLOSS: "VC005"
 };

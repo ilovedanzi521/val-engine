@@ -12,7 +12,7 @@
                 <win-form-item label="产品状态" prop="status">
                     <win-select clearable v-model="reqVO.fundStatus">
                         <win-option label="正常" value="1"> </win-option>
-                        <win-option label="注销" value="0"> </win-option>
+                        <win-option label="注销" value="2"> </win-option>
                     </win-select>
                 </win-form-item>
                 <win-form-item>
@@ -49,7 +49,8 @@
             <!-- 分页组件 -->
             <win-pagination v-bind:pageInfo="pageVO" @pageInfoChange="pageQuery"></win-pagination>
             <FundConfigureDialog v-if="dialogVO.visible" :dialogVO="dialogVO" :fund="fund" :compareVO="compareVO" :paramMethodList1="paramMethodList1" :paramMethodList2="paramMethodList2" :paramMethodList3="paramMethodList3"
-                @callFatherQuery="list"></FundConfigureDialog>
+                :classMethodList1="classMethodList1" :classMethodList2="classMethodList2" :classMethodList3="classMethodList3" :classMethodList4="classMethodList4" :classMethodList5="classMethodList5" @callFatherQuery="list">
+            </FundConfigureDialog>
         </win-form>
     </div>
 </template>

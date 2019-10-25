@@ -14,6 +14,7 @@ package com.win.dfbp.val.manage.controller;
 import com.win.dfas.common.vo.WinResponseData;
 import com.win.dfbp.val.manage.service.ValCalculationManageService;
 import com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO;
+import com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,5 +44,12 @@ public class ValCalculationManageController {
     @PostMapping("/method/list")
  	public WinResponseData getValCalculationManages(@RequestBody ValCalculationManageQueryVO reqVO) {
  		return WinResponseData.handleSuccess(valCalculationManageService.getValCalculationManages(reqVO));
+ 	}
+    
+    @ApiOperation(value = "分类方法列表")
+    @ApiImplicitParam(name = "reqVO", value = "分类方法列表查询", required = true, dataType = "ValMethodConfigureQueryVO")
+    @PostMapping("/class/methods")
+ 	public WinResponseData getMethodByClass(@RequestBody ValMethodConfigureQueryVO reqVO) {
+ 		return WinResponseData.handleSuccess(valCalculationManageService.getMethodByClass(reqVO));
  	}
 }

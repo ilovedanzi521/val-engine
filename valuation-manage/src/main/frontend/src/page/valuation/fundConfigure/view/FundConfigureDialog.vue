@@ -34,7 +34,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="公允价" prop="classMethod.fairPrice">
                             <win-select v-model="fund.classMethod.fairPrice" placeholder="请选择">
-                                <win-option v-for="item in compareVO.methodList" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList1" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -42,7 +42,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="持仓成本" prop="classMethod.positionCost">
                             <win-select v-model="fund.classMethod.positionCost" placeholder="请选择">
-                                <win-option v-for="item in compareVO.methodList" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList2" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -50,7 +50,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="持仓市值" prop="classMethod.positionMarket">
                             <win-select v-model="fund.classMethod.positionMarket" placeholder="请选择">
-                                <win-option v-for="item in compareVO.methodList" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList3" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -58,7 +58,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="成本价" prop="classMethod.costPrice">
                             <win-select v-model="fund.classMethod.costPrice" placeholder="请选择">
-                                <win-option v-for="item in compareVO.methodList" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList4" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -66,7 +66,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="浮动盈亏" prop="classMethod.floatingProfitLoss">
                             <win-select v-model="fund.classMethod.floatingProfitLoss" placeholder="请选择">
-                                <win-option v-for="item in compareVO.methodList" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList5" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>

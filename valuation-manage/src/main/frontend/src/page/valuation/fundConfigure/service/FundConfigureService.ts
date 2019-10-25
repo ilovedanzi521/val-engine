@@ -2,6 +2,7 @@ import AxiosFun from "win-biz";
 import FundConfigureQueryVO from "../vo/FundConfigureQueryVO";
 import ParamMethodConfigureQueryVO from "../vo/ParamMethodConfigureQueryVO";
 import FundConfigureRepVO from "../vo/FundConfigureRepVO";
+import ClassMethodConfigureQueryVO from "../vo/ClassMethodConfigureQueryVO";
 /**
  * 类描述：估值方法配置service
  * 创建人：@author huhe
@@ -43,6 +44,17 @@ export default class FundConfiguretionService {
         return AxiosFun.post(
             AxiosFun.valuationManageServiceName + "/fund/configure/update",
             fundConfigureRepVO
+        );
+    }
+
+    /**
+     * 根据class查询method
+     * @param queryVO
+     */
+    public getMethodByclass(queryVO: ClassMethodConfigureQueryVO) {
+        return AxiosFun.post(
+            AxiosFun.valuationManageServiceName + "/valManage/class/methods",
+            queryVO
         );
     }
 }

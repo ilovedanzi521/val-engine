@@ -16,8 +16,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.win.dfbp.val.manage.entity.ValMethod;
 import com.win.dfbp.val.manage.vo.query.ValCalculationItemQueryVO;
 import com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO;
+import com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationItemRepVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO;
 
@@ -44,6 +46,19 @@ public interface ValCalculationManageMapper {
 	 * @Date:  2019年10月17日/上午9:06:49
 	 */
 	List<ValCalculationManageRepVO> getValCalculationManages(ValCalculationManageQueryVO reqVO);
+	
+	/**
+	 * 
+	 * @Title: getMethodByClass
+	 * @Description: 根据类型查询方法
+	 * @param reqVO
+	 * @return   
+	 * @return: List<ValMethod>   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月25日/下午5:03:17
+	 */
+	List<ValMethod> getMethodByClass(ValMethodConfigureQueryVO reqVO);
 	
 	/**
 	 * 

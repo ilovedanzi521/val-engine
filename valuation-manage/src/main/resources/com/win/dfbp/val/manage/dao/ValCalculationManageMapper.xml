@@ -28,6 +28,19 @@
 			</if>
 		</where>
     </select>
+     <select id="getMethodByClass" resultType="com.win.dfbp.val.manage.entity.ValMethod"  parameterType="com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO">
+		SELECT
+			 cm.val_method AS methodCode,
+			 m.method_name AS methodName
+		FROM
+			val_cal_manage cm
+		INNER JOIN val_method m ON m.method_code = cm.val_method
+		<where>
+			<if test="classCode != null">
+				and cm.val_class LIKE CONCAT('%',#{classCode},'%')
+			</if>
+		</where>
+    </select>
     
     <update id="updataCalculationManage" parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO"> 
     	updata val_cal_manage

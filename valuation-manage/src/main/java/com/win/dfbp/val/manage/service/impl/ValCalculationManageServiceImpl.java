@@ -24,8 +24,10 @@ import com.win.dfas.common.util.ObjectUtils;
 import com.win.dfbp.val.manage.dao.ValCalculationManageMapper;
 import com.win.dfbp.val.manage.dao.ValItemMapper;
 import com.win.dfbp.val.manage.entity.ValItem;
+import com.win.dfbp.val.manage.entity.ValMethod;
 import com.win.dfbp.val.manage.service.ValCalculationManageService;
 import com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO;
+import com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO;
 
 /**   
@@ -66,6 +68,11 @@ public class ValCalculationManageServiceImpl implements ValCalculationManageServ
 			}
 		}
 		return calFormula;
+	}
+
+	@Override
+	public List<ValMethod> getMethodByClass(ValMethodConfigureQueryVO reqVO) {
+		return valCalculationManageMapper.getMethodByClass(reqVO);
 	}
 	
 }

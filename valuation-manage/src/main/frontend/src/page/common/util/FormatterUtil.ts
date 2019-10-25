@@ -21,9 +21,9 @@ export default class FormatterUtil {
      * @param param0
      */
     public typeFormatter({ cellValue }) {
-        if (cellValue === 0) {
+        if (cellValue === 1) {
             return "计算公式";
-        } else if (cellValue === 1) {
+        } else if (cellValue === 2) {
             return "计算模型";
         } else {
             return "未知类型";
