@@ -15,12 +15,10 @@ package com.win.dfbp.engine.flink.transform;
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
-import com.win.dfbp.cal.ISecurityCalculation;
 import com.win.dfbp.constant.RedisKeyPrefix;
-import com.win.dfbp.engine.factory.SpiFactory;
 import com.win.dfbp.engine.flink.state.SecurityIndexState;
+import com.win.dfbp.engine.util.SecurityCalculationUtil;
 import com.win.dfbp.entity.SecurityIndex;
-import com.win.dfbp.entity.SecurityParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
@@ -57,7 +55,6 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         // 获取flink状态内存中的数据
         SecurityIndexState lastState = indexState.value();
         String algorithm = "";
-        ISecurityCalculation securityCalculation = SpiFactory.getStockMarketAlgorithm(algorithm);
         //获取数据库或redis缓存中是否存在持仓
         Object cashSecurityIndex = null;
         // 第一次进入计算,更新state,init state
@@ -65,30 +62,26 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
         if (cashSecurityIndex == null) {
             if (lastState == null) {
                 try {
-                    if (securityCalculation != null) {
-                        SecurityIndex stockList = securityCalculation.initSecurityIndex(in);
-                        // 初始化state
-                        SecurityIndexState state = new SecurityIndexState();
-                        //stockList
-                        if (stockList.getIndexVO() != null) {
-                            out.collect(stockList);
-                            // 更新state
-                            indexState.update(state.clone(stockList));
-                        }
+                    SecurityIndex stockList = SecurityCalculationUtil.initSecurityIndex(in);
+                    // 初始化state
+                    SecurityIndexState state = new SecurityIndexState();
+                    //stockList
+                    if (stockList.getIndexVO() != null) {
+                        out.collect(stockList);
+                        // 更新state
+                        indexState.update(state.clone(stockList));
                     }
                 } catch (Throwable throwable) {
                     log.error("计算有异常:{}", throwable);
                 }
             } else {
                 SecurityIndex oldIndex = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class);
-                existHistoryPosition(securityCalculation, in, oldIndex, out, lastState);
+                existHistoryPosition(in, oldIndex, out, lastState);
             }
         } else {
             //非第一次进入，进行计算
-            if (securityCalculation != null) {
-                SecurityIndex oldIndex = lastState.parse();
-                existHistoryPosition(securityCalculation, in, oldIndex, out, lastState);
-            }
+            SecurityIndex oldIndex = lastState.parse();
+            existHistoryPosition(in, oldIndex, out, lastState);
         }
     }
 
@@ -113,7 +106,6 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
     /**
      * @Title: existHistoryPosition
      * @Description 存在历史持仓计算入口
-     * @param securityCalculation
      * @param in
      * @param oldIndex
      * @param out
@@ -123,10 +115,10 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
      * @author wanglei
      * @Date 2019/10/24/8:43
      */
-    private void existHistoryPosition(ISecurityCalculation securityCalculation,SecurityIndex in,SecurityIndex oldIndex,
+    private void existHistoryPosition(SecurityIndex in,SecurityIndex oldIndex,
                                       Collector<SecurityIndex> out, SecurityIndexState lastState) throws IOException {
         try {
-            SecurityIndex stockList = securityCalculation.calculateSecurityIndex(in, oldIndex);
+            SecurityIndex stockList = SecurityCalculationUtil.calculateSecurityIndex(in, oldIndex);
             if (stockList != null) {
                 if(lastState==null){
                     lastState = new SecurityIndexState();

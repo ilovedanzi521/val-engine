@@ -34,6 +34,7 @@
 		<module>valuation-engine</module>
 		<module>valuation-core</module>
 		<module>valuation-algorithm-online</module>
+		<module>valuation-interface</module>
 	</modules>
 
 	<parent>
