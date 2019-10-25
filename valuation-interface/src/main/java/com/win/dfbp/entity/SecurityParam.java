@@ -36,8 +36,6 @@ import java.util.List;
 public class SecurityParam {
     //入参产品
     private String fundNo;
-    //方案
-    private String schemeCode;
     //新增投资标志
     private String investFlag;
 

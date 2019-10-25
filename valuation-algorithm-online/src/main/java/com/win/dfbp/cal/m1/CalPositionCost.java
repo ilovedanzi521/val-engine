@@ -59,7 +59,7 @@ public class CalPositionCost implements ISecurityCalculation {
             log.error("无法成本转结方式:{}",RedisKeyPrefix.FUND_VAL_PARAM_CONFIG+ CommonConstants.HORIZONTAL_LINE+
                     securityParam.getFundNo()+CommonConstants.HORIZONTAL_LINE+TradeRuleConstant.VAL_PARAM_DIC_FP001);
         }else{
-            FundParam tmpParam = JSON.parseObject(JSON.toJSONString(securityParam), FundParam.class);
+            FundParam tmpParam = JSON.parseObject(JSON.toJSONString(costAccount), FundParam.class);
             BigDecimal positionCost = positionCostFactory.getInstance(tmpParam.getMethodCode()).cal(securityParam);
             return positionCost;
         }

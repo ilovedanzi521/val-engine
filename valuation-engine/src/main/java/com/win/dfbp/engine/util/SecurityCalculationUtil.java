@@ -49,7 +49,7 @@ public class SecurityCalculationUtil {
         if (ObjectUtil.isEmpty(securityParam)) {
             return securityIndex;
         }
-        BaseStrategy strategy = judgeStrategy(securityIndex, securityParam);
+        BaseStrategy strategy = judgeStrategy(securityParam);
         strategy.setSecurityIndex(securityIndex);
         strategy.calPositionIndex(oldIndex, securityParam);
         return securityIndex;
@@ -64,22 +64,14 @@ public class SecurityCalculationUtil {
      * @Date 2019/10/24/11:50
      */
     public static SecurityIndex initSecurityIndex(SecurityIndex securityIndex) {
-        //1获取产品方案信息
-        String fundNo = securityIndex.getFundNo();
-        Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
-        if(ObjectUtil.isEmpty(scheme)){
-            log.error("无法获取估值参数方案信息:{}",fundNo);
-            return securityIndex;
-        }
-        ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
+
         //2获取证券进出信息，以及获取参数信息
-        SecurityParam securityParam = querySecurityBasciInfo(valParamScheme.getValSchemeCode(), securityIndex.getSecurityCode());
+        SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getFundNo(), securityIndex.getSecurityCode());
         if (ObjectUtil.isEmpty(securityParam)) {
             return securityIndex;
         }
-        securityParam.setFundNo(fundNo);
         //计算指标
-        BaseStrategy strategy = judgeStrategy(securityIndex, securityParam);
+        BaseStrategy strategy = judgeStrategy(securityParam);
         strategy.setSecurityIndex(securityIndex);
         strategy.calInitIndex(securityParam);
         return securityIndex;
@@ -88,14 +80,13 @@ public class SecurityCalculationUtil {
     /**
      * @Title: judgeStrategy
      * @Description
-     * @param securityIndex
      * @param securityParam
      * @return com.win.dfbp.strategy.BaseStrategy
      * @throws
      * @author wanglei
      * @Date 2019/10/24/11:51
      */
-    private static BaseStrategy judgeStrategy(SecurityIndex securityIndex, SecurityParam securityParam) {
+    private static BaseStrategy judgeStrategy(SecurityParam securityParam) {
         StrategyFactory strategyFactory = SpringContextUtil.getBean(StrategyFactory.class);
         BaseStrategy strategy = strategyFactory.getPromotionStrategy(securityParam.getAssetType());
         return strategy;
@@ -104,14 +95,22 @@ public class SecurityCalculationUtil {
    /**
     * @Title: querySecurityBasciInfo
     * @Description 获取证券信息
-    * @param valSchemeCode 方案
+    * @param fundNo 产品
     * @param securityCode 证券类型
     * @return com.win.dfbp.entity.SecurityParam
     * @throws
     * @author wanglei
     * @Date 2019/10/24/11:51
     */
-    public static SecurityParam querySecurityBasciInfo(String valSchemeCode, String securityCode) {
+    public static SecurityParam querySecurityBasciInfo(String fundNo, String securityCode) {
+        //1获取产品方案信息
+        Object scheme = RedisUtil.get(RedisKeyPrefix.FUND_VAL_SCHEME+CommonConstants.HORIZONTAL_LINE+fundNo);
+        if(ObjectUtil.isEmpty(scheme)){
+            log.error("无法获取估值参数方案信息:{}",fundNo);
+            return null;
+        }
+        ValParamScheme valParamScheme = JSON.parseObject(JSON.toJSONString(scheme),ValParamScheme.class);
+
         //缓存中获取证券信息
         Object securityInfo = RedisUtil.get(RedisKeyPrefix.VAL_SECURITY_INFO + CommonConstants.HORIZONTAL_LINE + securityCode);
         SecurityParam securityParam = null;
@@ -121,6 +120,7 @@ public class SecurityCalculationUtil {
             //1 . json转object 获取证券内码对用的证券基础信息
             securityParam = JSON.parseObject(JSON.toJSONString(securityInfo), SecurityParam.class);
         }
-        return securityParam.setSecurityParam(valSchemeCode);
+        securityParam.setFundNo(fundNo);
+        return securityParam.setSecurityParam(valParamScheme.getValSchemeCode());
     }
 }
