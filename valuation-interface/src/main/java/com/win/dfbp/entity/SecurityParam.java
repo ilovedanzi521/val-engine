@@ -232,13 +232,13 @@ public class SecurityParam {
             case TradeRuleConstant.VAL_CAL_ITEM_I001:{
                 return this.getNetPrice();
             }
-            case TradeRuleConstant.VAL_CLASS_DIC_VC002:{
+            case TradeRuleConstant.VAL_CAL_ITEM_I002:{
                 return this.getAftertaxInterest();
             }
-            case TradeRuleConstant.VAL_CLASS_DIC_VC003:{
+            case TradeRuleConstant.VAL_CAL_ITEM_I003:{
                 return this.getFullPrice();
             }
-            case TradeRuleConstant.VAL_CLASS_DIC_VC005:{
+            case TradeRuleConstant.VAL_CAL_ITEM_I004:{
                 return this.getPositionAmount();
             }
         }
