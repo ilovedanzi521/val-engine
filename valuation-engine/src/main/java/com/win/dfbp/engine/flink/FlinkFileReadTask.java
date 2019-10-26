@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,23 +43,29 @@ public class FlinkFileReadTask {
 
     @Async(value = "flinkFileReadThread")
     public void run() {
-        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
-        // 解析获取行情文件数据
-        List<ValMarket> list = marketDataService.getValMarketData();
-        try {
-            // 1、解析文件读取到List集合中
-            DataSource<ValMarket> dataSource = env.fromCollection(list);
-            // 2、将List集合数据塞入Flink中
-            dataSource.flatMap(new ValMarketFunction()).print();
-//            dataSource.flatMap(new ValMarketFunction()).map(new ValPositionFunction());
-            // 3、更新val_position表数据
-            //updateValPosition(collectorList);
-            // 4、强制库存刷新缓存
-            updatePositionCache();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (true) {
+            ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+            // 解析获取行情文件数据
+            List<ValMarket> list = marketDataService.getValMarketData();
+            try {
+                // 1、解析文件读取到List集合中
+                DataSource<ValMarket> dataSource = env.fromCollection(list);
+                // 2、将List集合数据塞入Flink中
+                dataSource.flatMap(new ValMarketFunction()).print();
+    //            dataSource.flatMap(new ValMarketFunction()).map(new ValPositionFunction());
+                // 3、更新val_position表数据
+                //updateValPosition(collectorList);
+                // 4、强制库存刷新缓存
+                updatePositionCache();
+                // 5、删除目录下的文件
+                String filePath = this.getClass().getResource("/").getPath() + "marketFile";
+                clearFile(filePath);
+                Thread.sleep(1000 * 60 * 5);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -89,5 +96,21 @@ public class FlinkFileReadTask {
         reqVO.setCacheType("VAL_POSITION");
         reqVO.setKey("pk");
         redisCacheLoaderFeign.refreshCache(reqVO);
+    }
+
+    private void clearFile(String filePath){
+        File file = new File(filePath );
+        if(file.exists()) {
+            File[] filePaths = file.listFiles();
+            for(File f : filePaths) {
+                if(f.isFile()) {
+                    f.delete();
+                }
+                if(f.isDirectory()){
+                    String fpath = f.getPath();
+                    clearFile(fpath);
+                }
+            }
+        }
     }
 }
