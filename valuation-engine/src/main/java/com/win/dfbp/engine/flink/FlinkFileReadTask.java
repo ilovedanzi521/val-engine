@@ -48,18 +48,20 @@ public class FlinkFileReadTask {
             // 解析获取行情文件数据
             List<ValMarket> list = marketDataService.getValMarketData();
             try {
-                // 1、解析文件读取到List集合中
-                DataSource<ValMarket> dataSource = env.fromCollection(list);
-                // 2、将List集合数据塞入Flink中
-                dataSource.flatMap(new ValMarketFunction()).print();
-    //            dataSource.flatMap(new ValMarketFunction()).map(new ValPositionFunction());
-                // 3、更新val_position表数据
-                //updateValPosition(collectorList);
-                // 4、强制库存刷新缓存
-                updatePositionCache();
-                // 5、删除目录下的文件
-                String filePath = this.getClass().getResource("/").getPath() + "marketFile";
-                clearFile(filePath);
+                if(list != null && list.size() > 0){
+                    // 1、解析文件读取到List集合中
+                    DataSource<ValMarket> dataSource = env.fromCollection(list);
+                    // 2、将List集合数据塞入Flink中
+                    dataSource.flatMap(new ValMarketFunction()).print();
+                    //            dataSource.flatMap(new ValMarketFunction()).map(new ValPositionFunction());
+                    // 3、更新val_position表数据
+                    //updateValPosition(collectorList);
+                    // 4、强制库存刷新缓存
+                    updatePositionCache();
+                    // 5、删除目录下的文件
+                    String filePath = this.getClass().getResource("/").getPath() + "marketFile";
+                    clearFile(filePath);
+                }
                 Thread.sleep(1000 * 60 * 5);
             } catch (Exception e) {
                 e.printStackTrace();
