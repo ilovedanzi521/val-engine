@@ -42,6 +42,7 @@ public class SecurityParam {
     //新增投资标志
     private String investFlag;
 
+    private String  portfNo;
     //入参：资产类别
     private String assetType;
     /**

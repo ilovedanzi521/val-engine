@@ -50,6 +50,7 @@ public class CalPositionMarketValue implements ISecurityCalculation {
     }
 
     @Override
+
     public BigDecimal cal(SecurityIndex oldIndex, SecurityParam securityParam) {
         return cal(securityParam);
     }

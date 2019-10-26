@@ -29,7 +29,7 @@ import java.math.BigDecimal;
 public class ValPosition extends BaseEntity {
     private String fundNo;
     private String fundCharacter;
-    private Long portfNo;
+    private String portfNo;
     private String securityCode;
     private String marketCode;
     private String platformCode;
@@ -40,10 +40,6 @@ public class ValPosition extends BaseEntity {
      * 持仓金额
      */
     private BigDecimal cashSettleBalance;
-    /**
-     * 持仓数量
-     */
-    private BigDecimal stockSettleAmount;
     /**
      * 持仓成本
      */
@@ -65,6 +61,10 @@ public class ValPosition extends BaseEntity {
      */
     private BigDecimal floatingPL;
 
+    /**
+     * 持仓数量
+     */
+    private BigDecimal positionAmount;
     /**
      * 原始价
      */

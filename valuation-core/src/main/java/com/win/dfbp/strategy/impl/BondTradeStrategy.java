@@ -133,7 +133,6 @@ public class BondTradeStrategy extends BaseStrategy {
             calList.add(calculationItem);
             //排序
             Collections.sort(calList);
-
         }
         for (CalculationValClass calculationItem : calList) {
             //指标分类

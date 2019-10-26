@@ -61,6 +61,7 @@ public class CalPositionCost implements ISecurityCalculation {
         }else{
             FundParam tmpParam = JSON.parseObject(JSON.toJSONString(costAccount), FundParam.class);
             BigDecimal positionCost = positionCostFactory.getInstance(tmpParam.getMethodCode()).cal(securityParam);
+            securityParam.setPositionCost(positionCost);
             return positionCost;
         }
         return BigDecimal.ONE;

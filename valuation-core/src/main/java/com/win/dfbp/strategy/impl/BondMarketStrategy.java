@@ -24,6 +24,7 @@ import com.win.dfbp.strategy.BaseMarketStrategy;
 import com.win.dfbp.util.MathExpress;
 import org.apache.flink.api.java.io.jdbc.JDBCOutputFormat;
 import org.apache.flink.types.Row;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-import static java.sql.Types.DECIMAL;
-import static java.sql.Types.VARCHAR;
+import static java.sql.Types.*;
 
 /**
  * 包名称：com.win.dfbp.strategy.impl
@@ -63,6 +63,7 @@ public class BondMarketStrategy extends BaseMarketStrategy {
             securityParam.setFullPrice(fullPrice);
             for (Object ob: positionList){
                 ValPosition valPosition = JSON.parseObject(JSON.toJSONString(ob),ValPosition.class);
+                BeanUtils.copyProperties(valPosition,securityParam);
                 String investFlag = valPosition.getInvestFlag();
                 securityParam.setInvestFlag(investFlag);
                 if(InvestFlagConstant.FLAG_C.equals(investFlag) || InvestFlagConstant.FLAG_Y.equals(investFlag)){
@@ -75,9 +76,6 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     // 行情估值来源不同于估值标准的估值来源 跳过计算
                     continue;
                 }
-
-                // 获取估值标准
-                String valCriteria = securityParam.getValCriteria();
 
                 //context上下文用于计算表达式，使用替换
                 Map<String,Object> context = new HashMap<String,Object>();
@@ -108,7 +106,7 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     Collections.sort(calList);
                 }
                 //迭代计算
-                for (Object object : list) {
+                for (Object object : calList) {
                     CalculationValClass calculationItem =JSON.parseObject(JSON.toJSONString(object),CalculationValClass.class);
                     //指标分类
                     String classCode = calculationItem.getClassCode();
@@ -130,7 +128,8 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                         context.put(classCode,calResult);
                     }
                 }
-                updateValPosition(valPosition);
+                updateValPosition(securityParam);
+                System.out.println(context);
             }
         }
         return securityParam;
@@ -157,21 +156,21 @@ public class BondMarketStrategy extends BaseMarketStrategy {
     /**
      * 更新val_position
      * @Title: updateValPosition
-     * @param valPosition
+     * @param securityParam
      * @return: void
      * @throws
      * @author: zoujian
      * @Date:  2019-10-25/13:27
      */
-    private void updateValPosition(ValPosition valPosition){
+    private void updateValPosition(SecurityParam securityParam){
         String driverClassName = dataSourceProperties.getProperty("driverClassName");
         String url = dataSourceProperties.getProperty("url");
         String username = dataSourceProperties.getProperty("username");
         String password = dataSourceProperties.getProperty("password");
         String query = "update val_position set fair_price = ? , position_market_value = ? , floating_pl= ?, original_price = ? where security_code = ? and market_code = ?" +
-                "and security_character = ? and fund_no = ? and portf_no = ?  and invest_flag = ? ";
+                "and fund_no = ? and portf_no = ?  and invest_flag = ? ";
         //  参数数据类型
-        int[] sqlTypes = {DECIMAL,DECIMAL,DECIMAL,VARCHAR,VARCHAR};
+        int[] sqlTypes = {DECIMAL,DECIMAL,DECIMAL,DECIMAL,VARCHAR,VARCHAR,VARCHAR,VARCHAR,VARCHAR};
         JDBCOutputFormat jdbcOutputFormat = JDBCOutputFormat.buildJDBCOutputFormat()
                 .setDrivername(driverClassName)
                 .setDBUrl(url)
@@ -181,17 +180,17 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                 .setSqlTypes(sqlTypes)
                 .finish();
         Row rowComb = new Row(sqlTypes.length);
-        rowComb.setField(0,valPosition.getFairPrice());
-        rowComb.setField(1,valPosition.getPositionMarketValue());
-        rowComb.setField(2,valPosition.getFloatingPL());
-        rowComb.setField(3,valPosition.getOriginalPrice());
-        rowComb.setField(4,valPosition.getSecurityCode());
-        rowComb.setField(5,valPosition.getMarketCode());
-        rowComb.setField(6,valPosition.getSecurityCharacter());
-        rowComb.setField(7,valPosition.getFundNo());
-        rowComb.setField(8,valPosition.getPortfNo());
-        rowComb.setField(9,valPosition.getInvestFlag());
+        rowComb.setField(0,securityParam.getFairPrice());
+        rowComb.setField(1,securityParam.getPositionMarketValue());
+        rowComb.setField(2,securityParam.getFloatingPL());
+        rowComb.setField(3,securityParam.getOriginalPrice());
+        rowComb.setField(4,securityParam.getSecurityCode());
+        rowComb.setField(5,securityParam.getMarketCode());
+        rowComb.setField(6,securityParam.getFundNo());
+        rowComb.setField(7,securityParam.getPortfNo());
+        rowComb.setField(8,securityParam.getInvestFlag());
         try {
+            jdbcOutputFormat.open(0,1);
             jdbcOutputFormat.writeRecord(rowComb);
             jdbcOutputFormat.close();
         } catch (IOException e) {

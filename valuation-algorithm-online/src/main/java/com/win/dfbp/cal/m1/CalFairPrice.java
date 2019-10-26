@@ -47,6 +47,7 @@ public class CalFairPrice implements ISecurityCalculation {
         String valCriteria = securityParam.getValCriteria();
         //计算公允价格
         BigDecimal fairPrice = fairPriceFactory.getInstance(valCriteria).calFairPrice(securityParam);
+        securityParam.setFairPrice(fairPrice);
         return fairPrice;
     }
 
