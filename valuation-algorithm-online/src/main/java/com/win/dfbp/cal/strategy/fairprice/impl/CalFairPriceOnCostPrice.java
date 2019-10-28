@@ -2,7 +2,7 @@
  * 创建人: @author wanglei
  * 创建时间: 2019/10/16/13:21
  * 项目名称: dfbp-val-engine
- * 文件名称: CalFairPrice4.java
+ * 文件名称: CalFairPriceOnCostPrice.java
  * 文件描述: @Description:
  *
  * All rights Reserved, Designed By 投资交易团队
@@ -20,13 +20,13 @@ import java.math.BigDecimal;
 
 /**
  * 包名称：com.win.dfbp.strategy.fairprice.impl
- * 类名称：CalFairPrice4
+ * 类名称：CalFairPriceOnCostPrice
  * 类描述：成本
  * 创建人：@author wanglei
  * 创建时间：2019/10/16/13:21
  */
 @Service
-public class CalFairPrice6 extends AbsCalFairPrice {
+public class CalFairPriceOnCostPrice extends AbsCalFairPrice {
     @Override
     public BigDecimal cal(SecurityParam securityParam) {
         //公允价=持仓数量/持仓成本
