@@ -30,37 +30,37 @@ import org.springframework.stereotype.Component;
 public class FairPriceFactory {
     //净价 公允价计算
     @Autowired
-    private CalFairPrice1 calFairPrice1;
+    private CalFairPriceOnNetPrice calFairPriceOnNetPrice;
     //净价加税百元利息 公允价计算
     @Autowired
-    private CalFairPrice2 calFairPrice2;
+    private CalFairPriceOnNetPriceAndRates calFairPriceOnNetPriceAndRates;
     //全价 公允价计算
     @Autowired
-    private CalFairPrice3 calFairPrice3;
+    private CalFairPriceOnFullPrice calFairPriceOnFullPrice;
     //全价减税前百元利息 公允价计算
     @Autowired
-    private CalFairPrice4 calFairPrice4;
+    private CalFairPriceOnFullPriceSubBefRates calFairPriceOnFullPriceSubBefRates;
     //全价减税后百元利息 公允价计算
     @Autowired
-    private CalFairPrice5 calFairPrice5;
+    private CalFairPriceOnFullPriceSubAfterRates calFairPriceOnFullPriceSubAfterRates;
     //成本 公允价计算
     @Autowired
-    private CalFairPrice6 calFairPrice6;
+    private CalFairPriceOnCostPrice calFairPriceOnCostPrice;
 
     public AbsCalFairPrice getInstance(String type){
         switch (type){
             case TradeRuleConstant.VAL_CRITERIA_P001:
-                return calFairPrice1;
+                return calFairPriceOnNetPrice;
             case TradeRuleConstant.VAL_CRITERIA_P002:
-                return calFairPrice2;
+                return calFairPriceOnNetPriceAndRates;
             case TradeRuleConstant.VAL_CRITERIA_P003:
-                return calFairPrice3;
+                return calFairPriceOnFullPrice;
             case TradeRuleConstant.VAL_CRITERIA_P004:
-                return calFairPrice4;
+                return calFairPriceOnFullPriceSubBefRates;
             case TradeRuleConstant.VAL_CRITERIA_P005:
-                return calFairPrice5;
+                return calFairPriceOnFullPriceSubAfterRates;
             case TradeRuleConstant.VAL_CRITERIA_P006:
-                return calFairPrice6;
+                return calFairPriceOnCostPrice;
             default:
                log.error("估值标准参数方法错误");
         }

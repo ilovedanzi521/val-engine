@@ -12,8 +12,8 @@
 
 package com.win.dfbp.cal.strategy.positioncost;
 
-import com.win.dfbp.cal.strategy.positioncost.impl.CalPositionCost1;
-import com.win.dfbp.cal.strategy.positioncost.impl.CalPositionCost2;
+import com.win.dfbp.cal.strategy.positioncost.impl.CalPositionCostFIFO;
+import com.win.dfbp.cal.strategy.positioncost.impl.CalPositionCostWeightedAverag;
 import com.win.dfbp.constant.TradeRuleConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 public class PositionCostFactory {
     //成本结转方式= 加权平均 持仓成本
     @Autowired
-    private CalPositionCost1 calPositionCost1;
+    private CalPositionCostWeightedAverag calPositionCostWeightedAverag;
     //成本结转方式= 先进先出时 持仓成本
     @Autowired
-    private CalPositionCost2 calPositionCost2;
+    private CalPositionCostFIFO calPositionCostFIFO;
 
 
     public ICalPositionCost getInstance(String type){
         switch (type){
             case TradeRuleConstant.VAL_PARAM_C001:
-                return calPositionCost1;
+                return calPositionCostWeightedAverag;
             case TradeRuleConstant.VAL_PARAM_C002:
-                return calPositionCost2;
+                return calPositionCostFIFO;
             default:
                 log.error("成本结转方式错误");
         }

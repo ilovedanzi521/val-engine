@@ -12,8 +12,8 @@
 
 package com.win.dfbp.cal.strategy.positionmarketvalue;
 
-import com.win.dfbp.cal.strategy.positionmarketvalue.impl.CalPositionMarketValue1;
-import com.win.dfbp.cal.strategy.positionmarketvalue.impl.CalPositionMarketValue2;
+import com.win.dfbp.cal.strategy.positionmarketvalue.impl.CalPositionMarketValueOnHold;
+import com.win.dfbp.cal.strategy.positionmarketvalue.impl.CalPositionMarketValueOnTradable;
 import com.win.dfbp.constant.TradeRuleConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +33,22 @@ public class PositionMarketValueFactory {
      *  投资标志=交易性/可供出售
      */
     @Autowired
-    private CalPositionMarketValue1 calPositionMarketValue1;
+    private CalPositionMarketValueOnTradable calPositionMarketValueOnTradable;
     /**
      *  投资标志=持有至到期/贷款
      */
     @Autowired
-    private CalPositionMarketValue2 calPositionMarketValue2;
+    private CalPositionMarketValueOnHold calPositionMarketValueOnHold;
 
 
     public ICalPositionMarketValue getInstance(String type){
         switch (type){
             case TradeRuleConstant.INVEST_FLAG_J:
             case TradeRuleConstant.INVEST_FLAG_F:
-                return calPositionMarketValue1;
+                return calPositionMarketValueOnTradable;
             case TradeRuleConstant.INVEST_FLAG_C:
             case TradeRuleConstant.INVEST_FLAG_Y:
-                return calPositionMarketValue2;
+                return calPositionMarketValueOnHold;
             default:
                 log.error("投资标志错误");
         }
