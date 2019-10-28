@@ -28,13 +28,12 @@
                     </win-col>
                 </win-row>
             </div>
-
             <div class="hr">
                 <win-row>
                     <win-col :span="spanWidth">
                         <win-form-item label="公允价" prop="classMethod.fairPrice">
                             <win-select v-model="fund.classMethod.fairPrice" placeholder="请选择">
-                                <win-option v-for="item in classMethodList1" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList.fairPrices" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -42,7 +41,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="持仓成本" prop="classMethod.positionCost">
                             <win-select v-model="fund.classMethod.positionCost" placeholder="请选择">
-                                <win-option v-for="item in classMethodList2" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList.positionCosts" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -50,7 +49,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="持仓市值" prop="classMethod.positionMarket">
                             <win-select v-model="fund.classMethod.positionMarket" placeholder="请选择">
-                                <win-option v-for="item in classMethodList3" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList.positionMarkets" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -58,7 +57,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="成本价" prop="classMethod.costPrice">
                             <win-select v-model="fund.classMethod.costPrice" placeholder="请选择">
-                                <win-option v-for="item in classMethodList4" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList.costPrices" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -66,7 +65,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="浮动盈亏" prop="classMethod.floatingProfitLoss">
                             <win-select v-model="fund.classMethod.floatingProfitLoss" placeholder="请选择">
-                                <win-option v-for="item in classMethodList5" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in classMethodList.floatingProfitLoss" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -78,7 +77,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="成本结转" prop="paramMethod.costSettlement">
                             <win-select v-model="fund.paramMethod.costSettlement" placeholder="请选择">
-                                <win-option v-for="item in paramMethodList1" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in paramMethodList.costSettlements" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -86,7 +85,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="成本核算顺序" prop="paramMethod.costSettlementSort">
                             <win-select v-model="fund.paramMethod.costSettlementSort" placeholder="请选择">
-                                <win-option v-for="item in paramMethodList2" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in paramMethodList.costSettlementSorts" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>
@@ -94,7 +93,7 @@
                     <win-col :span="spanWidth">
                         <win-form-item label="实际利率" prop="paramMethod.realInterestRate">
                             <win-select v-model="fund.paramMethod.realInterestRate" placeholder="请选择">
-                                <win-option v-for="item in paramMethodList3" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
+                                <win-option v-for="item in paramMethodList.realInterestRates" :search="item.methodCode" :key="item.methodCode" :label="item.methodName" :value="item.methodCode">
                                 </win-option>
                             </win-select>
                         </win-form-item>

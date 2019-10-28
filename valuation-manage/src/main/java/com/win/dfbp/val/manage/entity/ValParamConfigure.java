@@ -12,10 +12,6 @@
 
 package com.win.dfbp.val.manage.entity;
 
-
-
-import javax.validation.constraints.NotNull;
-
 import com.win.dfas.common.entity.BaseEntity;
 
 import io.swagger.annotations.ApiModel;
@@ -40,7 +36,6 @@ public class ValParamConfigure  extends  BaseEntity {
      * 方法编码
      */
     @ApiModelProperty(value = "方法编码")
-    @NotNull(message = "方法编码")
 	private String methodCode;
     /**
      * 参数名称
@@ -53,4 +48,16 @@ public class ValParamConfigure  extends  BaseEntity {
      */
     @ApiModelProperty(value = "产品id")
 	private Long fundConfigureId;
+
+	public ValParamConfigure(String paramCode,String methodCode, Long fundConfigureId) {
+		
+		this.methodCode = methodCode;
+		this.paramCode = paramCode;
+		this.fundConfigureId = fundConfigureId;
+	}
+
+	public ValParamConfigure() {
+	}
+    
+    
 }

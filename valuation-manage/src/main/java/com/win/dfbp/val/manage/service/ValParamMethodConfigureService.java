@@ -15,14 +15,8 @@ package com.win.dfbp.val.manage.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.github.pagehelper.PageInfo;
-import com.win.dfbp.val.manage.entity.ValFundConfigure;
 import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
-import com.win.dfbp.val.manage.vo.query.ValFundConfigureQueryVO;
-import com.win.dfbp.val.manage.vo.query.ValParamMethodConfigureQueryVO;
-import com.win.dfbp.val.manage.vo.respone.ValFundConfigureRepVO;
+import com.win.dfbp.val.manage.vo.respone.ValParamMethodConfigureRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.service 
@@ -36,15 +30,26 @@ public interface ValParamMethodConfigureService {
 	
 	/**
 	 * 
-	 * @Title: getMethodByParam
-	 * @Description: 根据参数查询配置方法
-	 * @param queryVO
+	 * @Title: getValParamMethods
+	 * @Description: 参数方法
 	 * @return   
 	 * @return: List<ValParamMethodConfigure>   
 	 * @throws
 	 * @author: huhe 
-	 * @Date:  2019年10月23日/上午10:03:59
+	 * @Date:  2019年10月21日/下午6:22:01
 	 */
-	List<ValParamMethodConfigure> getMethodByParam(ValParamMethodConfigureQueryVO queryVO);
+	List<ValParamMethodConfigure> getValParamMethods();
+	
+	/**
+	 * 
+	 * @Title: getMethodByParam
+	 * @Description: 根据参数查询配置方法
+	 * @return   
+	 * @return: ValParamMethodConfigureRepVO   
+	 * @throws
+	 * @author: huhe 
+	 * @Date:  2019年10月28日/上午11:08:06
+	 */
+	ValParamMethodConfigureRepVO getMethodByParam();
 	
 }

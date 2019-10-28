@@ -5,9 +5,10 @@ import FundConfigureRepVO from "../vo/FundConfigureRepVO";
 import FundConfigureService from "../service/FundConfigureService";
 import { CompareVO } from "../../../common/vo/CompareVO";
 import ParamMethodConfigureRepVO from "../vo/ParamMethodConfigureRepVO";
-import ParamMethodConfigureQueryVO from "../vo/ParamMethodConfigureQueryVO";
 import { WinRspType } from "../../../common/enum/BaseEnum";
 import Method from "../../../common/vo/Method";
+import ParamMethodList from "../vo/ParamMethodList";
+import ClassMethodList from "../vo/ClassMethodList";
 
 @Component({ components: {} })
 export default class FundConfigureDialogController extends BaseController {
@@ -18,29 +19,7 @@ export default class FundConfigureDialogController extends BaseController {
     /** 数据准备 */
     @Prop()
     public compareVO = CompareVO;
-    /**
-     * 不同参数查询方法
-     */
-    @Prop()
-    public paramMethodList1: ParamMethodConfigureRepVO[];
-    @Prop()
-    public paramMethodList2: ParamMethodConfigureRepVO[];
-    @Prop()
-    public paramMethodList3: ParamMethodConfigureRepVO[];
-
-    /**
-     * 不同类型查询方法
-     */
-    @Prop()
-    public classMethodList1: Method[] = [];
-    @Prop()
-    public classMethodList2: Method[] = [];
-    @Prop()
-    public classMethodList3: Method[] = [];
-    @Prop()
-    public classMethodList4: Method[] = [];
-    @Prop()
-    public classMethodList5: Method[] = [];
+   
 
     // span宽度
     private spanWidth: number = 8;
@@ -52,6 +31,10 @@ export default class FundConfigureDialogController extends BaseController {
 
     /** 发送请求处理的service对象 */
     public fundConfigureService: FundConfigureService = new FundConfigureService();
+    @Prop()
+    public paramMethodList: ParamMethodList = new ParamMethodList();
+    @Prop()
+    public classMethodList: ClassMethodList = new ClassMethodList();
 
     /** 新增、修改，表单验证规则 */
     private rules = {

@@ -38,12 +38,5 @@ public class ValParamDictionaryController {
     @PostMapping("/list")
  	public WinResponseData getValParamDictionaries() {
  		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamDictionaryList());
- 	}
-    
-    @ApiOperation(value = "估值参数方法列表")
-    @PostMapping("/method/list")
- 	public WinResponseData getValParamMethods() {
- 		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamMethods());
- 	}
-       
+ 	}      
 }

@@ -17,7 +17,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
-import com.win.dfbp.val.manage.vo.query.ValParamMethodConfigureQueryVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.dao 
@@ -29,17 +28,16 @@ import com.win.dfbp.val.manage.vo.query.ValParamMethodConfigureQueryVO;
  */
 @Mapper
 public interface ValParamMethodConfigureMapper {
-
+	
 	/**
-	 * 
-	 * @Title: getMethodByParam
+	 * 查询参数方法
+	 * @Title: getAllParamMethod
 	 * @Description: TODO
-	 * @param queryVO
 	 * @return   
 	 * @return: List<ValParamMethodConfigure>   
 	 * @throws
 	 * @author: huhe 
-	 * @Date:  2019年10月23日/上午10:10:25
+	 * @Date:  2019年10月21日/下午6:19:33
 	 */
-	List<ValParamMethodConfigure> getMethodByParam(ValParamMethodConfigureQueryVO queryVO);
+	List<ValParamMethodConfigure> getAllParamMethod();
 }

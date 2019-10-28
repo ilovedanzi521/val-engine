@@ -25,12 +25,6 @@
  		WHERE pc.fund_configure_id=#{fundConfigureId} LIMIT 1
     </select>
     
-    <select id="getAllParamMethod" resultType="com.win.dfbp.val.manage.entity.ValParamMethodConfigure">
-		select param_code AS paramCode,param_name AS paramName, 
-			method_code AS methodcode,method_name AS methodName
-		from val_cal_param_configure
-    </select>
-    
      <update id="updateParamMethodConfigure" parameterType="com.win.dfbp.val.manage.entity.ValParamConfigure">
     	UPDATE val_param_configure 
     	<set>
