@@ -18,6 +18,7 @@ import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.engine.dao.ValPositionMapper;
 import com.win.dfbp.engine.util.SpringContextUtil;
 import com.win.dfbp.entity.SecurityIndex;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 
 /**
@@ -27,10 +28,15 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
  * 创建人：@author wanglei
  * 创建时间：2019/10/25/13:45
  */
+@Slf4j
 public class MysqlSinkFunction extends RichSinkFunction<SecurityIndex> {
     @Override
     public void invoke(SecurityIndex securityIndex, Context context){
-        ValPositionMapper valPositionMapper = SpringContextUtil.getBean(ValPositionMapper.class);
-        valPositionMapper.insertValPosition(securityIndex);
+        try {
+            ValPositionMapper valPositionMapper = SpringContextUtil.getBean(ValPositionMapper.class);
+            valPositionMapper.insertValPosition(securityIndex);
+        }catch (Throwable e){
+            log.error("数据库异常{}",e);
+        }
     }
 }

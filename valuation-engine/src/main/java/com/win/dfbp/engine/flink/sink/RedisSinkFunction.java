@@ -42,7 +42,11 @@ public class RedisSinkFunction extends RichSinkFunction<SecurityIndex> {
         //cash_settle_balance as cashSettleBalance,stock_settle_amount as stockSettleAmount,position_cost as positionCost,position_market_value as positionMarketValue,fair_price as fairPrice,cost_price as costPrice,floating_pl as floatingPL from val_position
         String key = securityIndex.key();
         log.info("sink to VAL_POSITION.key is {}",RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key);
-        RedisUtil.set(RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key, securityIndex, -1);
+        try {
+            RedisUtil.set(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + key, securityIndex, -1);
+        }catch (Throwable e){
+            log.error("Redis缓存异常{}",e);
+        }
     }
 }
 

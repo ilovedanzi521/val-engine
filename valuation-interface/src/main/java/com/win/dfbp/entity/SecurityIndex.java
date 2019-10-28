@@ -68,7 +68,7 @@ public class SecurityIndex {
     /**
      * 交易方向
      */
-    private String transactionDirection;
+    private String tradeDirection;
     /**
      * 指标
      */
