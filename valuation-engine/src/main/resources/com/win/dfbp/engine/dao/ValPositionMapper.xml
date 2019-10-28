@@ -10,7 +10,7 @@
     VALUES ( #{fundNo,jdbcType=VARCHAR}, #{fundCharacter,jdbcType=VARCHAR},
       #{portfNo,jdbcType=VARCHAR}, #{securityCode,jdbcType=VARCHAR}, #{marketCode,jdbcType=VARCHAR},
       #{platformCode,jdbcType=VARCHAR}, #{securityCharacter,jdbcType=VARCHAR}, #{investFlag,jdbcType=VARCHAR},
-      #{transactionDirection,jdbcType=VARCHAR}, #{indexVO.positionAmount,jdbcType=DECIMAL}, #{indexVO.positionCost,jdbcType=DECIMAL},
+      #{tradeDirection,jdbcType=VARCHAR}, #{indexVO.positionAmount,jdbcType=DECIMAL}, #{indexVO.positionCost,jdbcType=DECIMAL},
       #{indexVO.positionCost,jdbcType=DECIMAL}, #{indexVO.positionMarketValue,jdbcType=DECIMAL}, #{indexVO.fairPrice,jdbcType=DECIMAL},
       #{indexVO.costPrice,jdbcType=DECIMAL}, #{indexVO.floatingPL,jdbcType=DECIMAL}, #{indexVO.originalPrice,jdbcType=DECIMAL})
   ON DUPLICATE KEY UPDATE

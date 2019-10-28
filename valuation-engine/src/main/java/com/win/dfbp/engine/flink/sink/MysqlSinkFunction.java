@@ -33,8 +33,10 @@ public class MysqlSinkFunction extends RichSinkFunction<SecurityIndex> {
     @Override
     public void invoke(SecurityIndex securityIndex, Context context){
         try {
+
             ValPositionMapper valPositionMapper = SpringContextUtil.getBean(ValPositionMapper.class);
             valPositionMapper.insertValPosition(securityIndex);
+            log.info("Data write mysql Success!");
         }catch (Throwable e){
             log.error("数据库异常{}",e);
         }
