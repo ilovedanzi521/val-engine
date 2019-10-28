@@ -24,81 +24,16 @@ import java.math.BigDecimal;
  * 创建时间：2019/9/27/14:42
  */
 @Data
-public class SecurityIndex {
-    /**
-     * 产品代码
-     */
-    private String fundNo;
-    /**
-     * 产品性质
-     */
-    private String fundCharacter;
-    /**
-     * 组合代码
-     */
-    private String portfNo;
-    /**
-     *  证券代码
-     */
-    private String securityCode;
-    /**
-     * 交易市场
-     */
-    private String marketCode;
-    /**
-     * 交易平台
-     */
-    private String platformCode;
-    /**
-     * 证券性质
-     */
-    private String securityCharacter;
-    /**
-     * 投资标志
-     */
-    private String investFlag;
-    /**
-     * 交易数量
-     */
-    private BigDecimal cashSettleBalance;
-    /**
-     * 交易金额
-     */
-    private BigDecimal stockSettleAmount;
-    /**
-     * 交易方向
-     */
-    private String tradeDirection;
+public class SecurityIndex extends BaseKey{
     /**
      * 指标
      */
     private SecurityIndexVO indexVO;
-    /**
-     * @Title: key
-     * @Description 返回SecurityIndex 主键key
-     * @param
-     * @return java.lang.String
-     * @throws
-     * @author wanglei
-     * @Date 2019/10/22/10:18
-     */
-    public String key(){
-        return this.getSecurityCode()+
-                this.getMarketCode()+this.getSecurityCharacter()+getInvestFlag()+this.getFundNo()+this.getPortfNo();
-    }
+
 
     public SecurityIndexCash parseSecurityIndexCash(){
         SecurityIndexCash cash = new SecurityIndexCash();
-        cash.setFundCharacter(this.getFundCharacter());
-        cash.setFundNo(this.getFundNo());
-        cash.setInvestFlag(this.getInvestFlag());
-        cash.setMarketCode(this.getMarketCode());
-        cash.setPlatformCode(this.getPlatformCode());
-        cash.setPortfNo(this.getPortfNo());
-        cash.setSecurityCharacter(this.getSecurityCharacter());
-        cash.setSecurityCode(this.getSecurityCode());
-        cash.setCashSettleBalance(this.getCashSettleBalance());
-        cash.setStockSettleAmount(this.getStockSettleAmount());
+        cash.setPro(this);
         cash.setPositionAmount(this.getIndexVO().getPositionAmount());
         cash.setCostPrice(this.getIndexVO().getCostPrice());
         cash.setFairPrice(this.getIndexVO().getFairPrice());

@@ -24,78 +24,44 @@ import java.math.BigDecimal;
  * 创建时间：2019/9/27/14:42
  */
 @Data
-public class SecurityIndexCash extends SecurityIndexVO{
+public class SecurityIndexCash extends BaseKey{
     /**
-     * 产品代码
+     * 持仓数量
      */
-    private String fundNo;
+    private BigDecimal positionAmount;
     /**
-     * 产品性质
+     * 持仓成本
      */
-    private String fundCharacter;
+    private BigDecimal positionCost;
     /**
-     * 组合代码
+     * 持仓市值
      */
-    private String portfNo;
+    private BigDecimal positionMarketValue;
     /**
-     *  证券代码
+     * 百元利率
      */
-    private String securityCode;
+    private BigDecimal interestRateOfHundred;
     /**
-     * 交易市场
+     * 公允价格
      */
-    private String marketCode;
+    private BigDecimal fairPrice;
     /**
-     * 交易平台
+     * 成本价
      */
-    private String platformCode;
+    private BigDecimal costPrice;
     /**
-     * 证券性质
+     * 浮动盈亏
      */
-    private String securityCharacter;
+    private BigDecimal floatingPL;
     /**
-     * 投资标志
+     * 原始价
      */
-    private String investFlag;
-    /**
-     * 交易数量
-     */
-    private BigDecimal cashSettleBalance;
-    /**
-     * 交易金额
-     */
-    private BigDecimal stockSettleAmount;
-    /**
-     * 交易方向
-     */
-    private String tradeDirection;
+    private BigDecimal originalPrice;
 
-    /**
-     * @Title: key
-     * @Description 返回SecurityIndex 主键key
-     * @param
-     * @return java.lang.String
-     * @throws
-     * @author wanglei
-     * @Date 2019/10/22/10:18
-     */
-    public String key(){
-        return this.getSecurityCode()+
-                this.getMarketCode()+this.getSecurityCharacter()+getInvestFlag()+this.getFundNo()+this.getPortfNo();
-    }
 
     public SecurityIndex parseSecurityIndex(){
         SecurityIndex index = new SecurityIndex();
-        index.setFundCharacter(this.getFundCharacter());
-        index.setFundNo(this.getFundNo());
-        index.setInvestFlag(this.getInvestFlag());
-        index.setMarketCode(this.getMarketCode());
-        index.setPlatformCode(this.getPlatformCode());
-        index.setPortfNo(this.getPortfNo());
-        index.setSecurityCharacter(this.getSecurityCharacter());
-        index.setSecurityCode(this.getSecurityCode());
-        index.setCashSettleBalance(this.getCashSettleBalance());
-        index.setStockSettleAmount(this.getStockSettleAmount());
+        index.setPro(this);
         SecurityIndexVO indexVO = new SecurityIndexVO();
         indexVO.setPositionAmount(this.getPositionAmount());
         indexVO.setCostPrice(this.getCostPrice());

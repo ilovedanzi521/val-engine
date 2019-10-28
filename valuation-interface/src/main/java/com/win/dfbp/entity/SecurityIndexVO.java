@@ -104,4 +104,14 @@ public class SecurityIndexVO {
        }
         return this;
     }
+
+    public void setPro(SecurityIndexVO indexVO){
+        this.setPositionAmount(indexVO.getPositionAmount());
+        this.setCostPrice(indexVO.getCostPrice());
+        this.setFairPrice(indexVO.getFairPrice());
+        this.setFloatingPL(indexVO.getFloatingPL());
+        this.setPositionCost(indexVO.getPositionCost());
+        this.setPositionMarketValue(indexVO.getPositionMarketValue());
+        this.setInterestRateOfHundred(indexVO.getInterestRateOfHundred());
+    }
 }
