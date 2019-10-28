@@ -72,7 +72,7 @@ public class WriteIntoKafka {
 
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
-            for (int i=0;i<10;i++) {
+            for (int i=0;i<1;i++) {
                 ctx.collect(prouderJson());
                 Thread.sleep(10);
             }

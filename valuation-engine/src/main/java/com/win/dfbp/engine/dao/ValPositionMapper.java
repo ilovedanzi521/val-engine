@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author zoujian    
+ * 创建人: @author zoujian
  * 创建时间: 2019-10-19/13:45
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValPositionMapper.java
@@ -11,6 +11,7 @@
  ********************************************************/
 package com.win.dfbp.engine.dao;
 
+import com.win.dfbp.entity.SecurityIndex;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -34,4 +35,6 @@ public interface ValPositionMapper {
      * @Date:  2019-10-19/13:44
      */
     void batchUpdate(List list);
+
+    void insertValPosition(SecurityIndex securityIndex);
 }

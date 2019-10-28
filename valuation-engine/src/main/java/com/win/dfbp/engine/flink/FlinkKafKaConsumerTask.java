@@ -13,6 +13,7 @@
 package com.win.dfbp.engine.flink;
 
 import com.alibaba.fastjson.JSON;
+import com.win.dfbp.engine.flink.sink.MysqlSinkFunction;
 import com.win.dfbp.engine.flink.sink.RedisSinkFunction;
 import com.win.dfbp.engine.flink.transform.SecurityIndexFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
@@ -23,6 +24,8 @@ import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.DataStreamSink;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.util.Collector;
@@ -61,7 +64,7 @@ public class FlinkKafKaConsumerTask {
         FlinkKafkaConsumer consumer = new FlinkKafkaConsumer(
                 kproperties.getProperty("topic"), new SimpleStringSchema(), kproperties);
         DataStream<String> messageStream = env.addSource(consumer);
-        messageStream.flatMap((String line, Collector<SecurityIndex> out) -> {
+        SingleOutputStreamOperator streamOperator= messageStream.flatMap((String line, Collector<SecurityIndex> out) -> {
            try{
                out.collect(JSON.parseObject(line,SecurityIndex.class));
            }catch (Exception e){
@@ -71,8 +74,10 @@ public class FlinkKafKaConsumerTask {
                 // 按key分组，维护state时可认为只有一个key
                 .keyBy(securityTranPrimaryKey)
                 // 开始计算
-                .flatMap(new SecurityIndexFunction())
-                .addSink(new RedisSinkFunction());
+                .flatMap(new SecurityIndexFunction());
+//        streamOperator.addSink(new RedisSinkFunction());
+        streamOperator.addSink(new MysqlSinkFunction());
+        streamOperator.addSink(new RedisSinkFunction());
         try {
             env.execute();
         } catch (Exception e) {

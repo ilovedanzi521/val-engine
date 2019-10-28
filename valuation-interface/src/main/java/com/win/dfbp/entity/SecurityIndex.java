@@ -66,6 +66,10 @@ public class SecurityIndex {
      */
     private BigDecimal stockSettleAmount;
     /**
+     * 交易方向
+     */
+    private String transactionDirection;
+    /**
      * 指标
      */
     private SecurityIndexVO indexVO;

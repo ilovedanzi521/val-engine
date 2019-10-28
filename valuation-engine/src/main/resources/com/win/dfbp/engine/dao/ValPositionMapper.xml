@@ -1,48 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.win.dfbp.engine.dao.ValPositionMapper">
+    <update  id="insertValPosition" parameterType="com.win.dfbp.entity.SecurityIndex">
+    INSERT INTO `testdb`.`val_position`( `fund_no`, `fund_character`, `portf_no`,
+    `security_code`, `market_code`, `platform_code`, `security_character`, `invest_flag`,
+     `trade_direction`, `cash_settle_balance`, `stock_settle_amount`, `position_cost`,
+      `position_market_value`, `fair_price`, `cost_price`, `floating_pl`, `original_price`)
 
-    <resultMap id="BaseResultMap" type="com.win.dfbp.entity.SecurityParam">
-        <result column="security_code" property="securityCode" />
-        <result column="market_code" property="marketCode" />
-        <result column="full_price" property="fullPrice" />
-        <result column="net_price" property="netPrice" />
-        <result column="create_user_id" property="createUserId" />
-        <result column="create_time" property="createTime" />
-        <result column="update_user_id" property="updateUserId" />
-        <result column="update_time" property="updateTime" />
-        <result column="file_timestamp" property="fileTimestamp" />
-    </resultMap>
+    VALUES ( #{fundNo,jdbcType=VARCHAR}, #{fundCharacter,jdbcType=VARCHAR},
+      #{portfNo,jdbcType=VARCHAR}, #{securityCode,jdbcType=VARCHAR}, #{marketCode,jdbcType=VARCHAR},
+      #{platformCode,jdbcType=VARCHAR}, #{securityCharacter,jdbcType=VARCHAR}, #{investFlag,jdbcType=VARCHAR},
+      #{transactionDirection,jdbcType=VARCHAR}, #{indexVO.positionAmount,jdbcType=DECIMAL}, #{indexVO.positionCost,jdbcType=DECIMAL},
+      #{indexVO.positionCost,jdbcType=DECIMAL}, #{indexVO.positionMarketValue,jdbcType=DECIMAL}, #{indexVO.fairPrice,jdbcType=DECIMAL},
+      #{indexVO.costPrice,jdbcType=DECIMAL}, #{indexVO.floatingPL,jdbcType=DECIMAL}, #{indexVO.originalPrice,jdbcType=DECIMAL})
+  ON DUPLICATE KEY UPDATE
+	cash_settle_balance = #{indexVO.positionAmount,jdbcType=DECIMAL},
+	stock_settle_amount = #{indexVO.positionCost,jdbcType=DECIMAL},
+	position_cost = #{indexVO.positionCost,jdbcType=DECIMAL},
+	position_market_value = #{indexVO.positionMarketValue,jdbcType=DECIMAL},
+	fair_price = #{indexVO.fairPrice,jdbcType=DECIMAL},
+	cost_price = #{indexVO.costPrice,jdbcType=DECIMAL},
+	floating_pl = #{indexVO.floatingPL,jdbcType=DECIMAL}
+  </update >
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        security_code, full_price, net_price, market_code, security_short_name, valuation_date, data_source, create_user_id, create_time, file_timestamp
-    </sql>
-
-    <!-- 批量更新 -->
-    <update id="batchUpdate" parameterType="java.util.List">
-        insert into val_market
-               (security_code,
-                full_price,
-                net_price,
-                market_code,
-                security_short_name,
-                valuation_date,
-                data_source,
-                create_user_id,
-                create_time,
-                file_timestamp) values
-        <foreach collection="list" item="item" index="index" separator=",">
-               (#{item.securityCode},
-                #{item.fullPrice},
-                #{item.netPrice},
-                #{item.marketCode},
-                #{item.securityShortName},
-                #{item.valuationDate},
-                #{item.dataSource},
-                #{item.createUserId},
-                #{item.createTime},
-                #{item.fileTimestamp})
-        </foreach>
-    </update>
 </mapper>

@@ -55,6 +55,10 @@ public class SecurityIndexVO {
      */
     private BigDecimal floatingPL;
     /**
+     * 成本价
+     */
+    private BigDecimal originalPrice;
+    /**
      * @Title: setIndex
      * @Description 根据classcode设置指标
      * @param classCode
