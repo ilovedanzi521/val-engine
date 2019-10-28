@@ -55,7 +55,7 @@ public class SecurityIndexVO {
      */
     private BigDecimal floatingPL;
     /**
-     * 成本价
+     * 原始价
      */
     private BigDecimal originalPrice;
     /**
