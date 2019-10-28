@@ -36,6 +36,7 @@ public abstract class AbsCalFairPrice {
     public abstract BigDecimal cal(SecurityParam securityParam);
 
     public BigDecimal calFairPrice(SecurityParam securityParam){
-        return cal(securityParam.calPrice().calInterest());
+        BigDecimal fairPrice = cal(securityParam);
+        return fairPrice;
     }
 }

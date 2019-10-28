@@ -50,10 +50,20 @@ public class CalFairPrice implements ISecurityCalculation {
         securityParam.setFairPrice(fairPrice);
         return fairPrice;
     }
-
+    /**
+     * @Title: cal
+     * @Description 直接获取
+     * @param oldIndex
+     * @param securityParam
+     * @return java.math.BigDecimal
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/28/17:05
+     */
     @Override
     public BigDecimal cal(SecurityIndex oldIndex, SecurityParam securityParam) {
         BigDecimal fairPrice = oldIndex.getIndexVO().getFairPrice();
+        securityParam.setFairPrice(fairPrice);
         return fairPrice;
 
     }
