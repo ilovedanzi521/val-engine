@@ -17,6 +17,7 @@ import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.engine.util.SpringContextUtil;
 import com.win.dfbp.entity.SecurityIndex;
+import com.win.dfbp.entity.SecurityIndexCash;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
@@ -42,7 +43,8 @@ public class RedisSinkFunction extends RichSinkFunction<SecurityIndex> {
         //cash_settle_balance as cashSettleBalance,stock_settle_amount as stockSettleAmount,position_cost as positionCost,position_market_value as positionMarketValue,fair_price as fairPrice,cost_price as costPrice,floating_pl as floatingPL from val_position
         String key = securityIndex.key();
         try {
-            RedisUtil.set(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + key, securityIndex, -1);
+            SecurityIndexCash cash = securityIndex.parseSecurityIndexCash();
+            RedisUtil.set(RedisKeyPrefix.VAL_POSITION + CommonConstants.HORIZONTAL_LINE + key,cash , -1);
             log.info("Data write redis cash Success! key:{}",RedisKeyPrefix.VAL_POSITION+ CommonConstants.HORIZONTAL_LINE +key);
         }catch (Throwable e){
             log.error("Redis缓存异常{}",e);

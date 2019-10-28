@@ -24,7 +24,7 @@ import java.math.BigDecimal;
  * 创建时间：2019/9/27/14:42
  */
 @Data
-public class SecurityIndex {
+public class SecurityIndexCash extends SecurityIndexVO{
     /**
      * 产品代码
      */
@@ -69,10 +69,7 @@ public class SecurityIndex {
      * 交易方向
      */
     private String tradeDirection;
-    /**
-     * 指标
-     */
-    private SecurityIndexVO indexVO;
+
     /**
      * @Title: key
      * @Description 返回SecurityIndex 主键key
@@ -87,25 +84,27 @@ public class SecurityIndex {
                 this.getMarketCode()+this.getSecurityCharacter()+getInvestFlag()+this.getFundNo()+this.getPortfNo();
     }
 
-    public SecurityIndexCash parseSecurityIndexCash(){
-        SecurityIndexCash cash = new SecurityIndexCash();
-        cash.setFundCharacter(this.getFundCharacter());
-        cash.setFundNo(this.getFundNo());
-        cash.setInvestFlag(this.getInvestFlag());
-        cash.setMarketCode(this.getMarketCode());
-        cash.setPlatformCode(this.getPlatformCode());
-        cash.setPortfNo(this.getPortfNo());
-        cash.setSecurityCharacter(this.getSecurityCharacter());
-        cash.setSecurityCode(this.getSecurityCode());
-        cash.setCashSettleBalance(this.getCashSettleBalance());
-        cash.setStockSettleAmount(this.getStockSettleAmount());
-        cash.setPositionAmount(this.getIndexVO().getPositionAmount());
-        cash.setCostPrice(this.getIndexVO().getCostPrice());
-        cash.setFairPrice(this.getIndexVO().getFairPrice());
-        cash.setFloatingPL(this.getIndexVO().getFloatingPL());
-        cash.setPositionCost(this.getIndexVO().getPositionCost());
-        cash.setPositionMarketValue(this.getIndexVO().getPositionMarketValue());
-        cash.setInterestRateOfHundred(this.getIndexVO().getInterestRateOfHundred());
-        return cash;
+    public SecurityIndex parseSecurityIndex(){
+        SecurityIndex index = new SecurityIndex();
+        index.setFundCharacter(this.getFundCharacter());
+        index.setFundNo(this.getFundNo());
+        index.setInvestFlag(this.getInvestFlag());
+        index.setMarketCode(this.getMarketCode());
+        index.setPlatformCode(this.getPlatformCode());
+        index.setPortfNo(this.getPortfNo());
+        index.setSecurityCharacter(this.getSecurityCharacter());
+        index.setSecurityCode(this.getSecurityCode());
+        index.setCashSettleBalance(this.getCashSettleBalance());
+        index.setStockSettleAmount(this.getStockSettleAmount());
+        SecurityIndexVO indexVO = new SecurityIndexVO();
+        indexVO.setPositionAmount(this.getPositionAmount());
+        indexVO.setCostPrice(this.getCostPrice());
+        indexVO.setFairPrice(this.getFairPrice());
+        indexVO.setFloatingPL(this.getFloatingPL());
+        indexVO.setPositionCost(this.getPositionCost());
+        indexVO.setPositionMarketValue(this.getPositionMarketValue());
+        indexVO.setInterestRateOfHundred(this.getInterestRateOfHundred());
+        index.setIndexVO(indexVO);
+        return index;
     }
 }

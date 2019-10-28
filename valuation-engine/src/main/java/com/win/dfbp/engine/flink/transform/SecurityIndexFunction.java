@@ -19,6 +19,7 @@ import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.engine.flink.state.SecurityIndexState;
 import com.win.dfbp.engine.util.SecurityCalculationUtil;
 import com.win.dfbp.entity.SecurityIndex;
+import com.win.dfbp.entity.SecurityIndexCash;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
@@ -75,14 +76,14 @@ public class SecurityIndexFunction extends RichFlatMapFunction<SecurityIndex, Se
                     log.error("计算有异常:{}", throwable);
                 }
             } else {
-                SecurityIndex oldIndex = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class);
+                SecurityIndex oldIndex = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndexCash.class).parseSecurityIndex();
                 existHistoryPosition(in, oldIndex, out, lastState);
             }
         } else {
             SecurityIndex oldIndex = lastState.parse();
             if(cashSecurityIndex!=null){
-                BigDecimal fairPrice = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndex.class)
-                        .getIndexVO().getFairPrice();
+                BigDecimal fairPrice = JSON.parseObject(JSON.toJSONString(cashSecurityIndex), SecurityIndexCash.class)
+                        .getFairPrice();
                 oldIndex.getIndexVO().setFairPrice(fairPrice);
             }
             existHistoryPosition(in, oldIndex, out, lastState);
