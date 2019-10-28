@@ -12,8 +12,10 @@
 
 package com.win.dfbp.val.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +23,15 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.win.dfas.common.util.ObjectUtils;
+import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.val.manage.dao.ValCalculationManageMapper;
 import com.win.dfbp.val.manage.dao.ValItemMapper;
 import com.win.dfbp.val.manage.entity.ValItem;
-import com.win.dfbp.val.manage.entity.ValMethod;
 import com.win.dfbp.val.manage.service.ValCalculationManageService;
 import com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO;
-import com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO;
+import com.win.dfbp.val.manage.vo.respone.ValClassMethodConfigureReqVO;
+import com.win.dfbp.val.manage.vo.respone.ValMethodConfigureRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.service.impl 
@@ -71,8 +74,43 @@ public class ValCalculationManageServiceImpl implements ValCalculationManageServ
 	}
 
 	@Override
-	public List<ValMethod> getMethodByClass(ValMethodConfigureQueryVO reqVO) {
-		return valCalculationManageMapper.getMethodByClass(reqVO);
+	public ValMethodConfigureRepVO getMethodByClass() {
+		List<ValClassMethodConfigureReqVO> methods = valCalculationManageMapper.getMethodByClass();
+		ValMethodConfigureRepVO configureRepVO = new ValMethodConfigureRepVO();
+		List<ValClassMethodConfigureReqVO> positionCosts = new ArrayList<ValClassMethodConfigureReqVO>();
+		List<ValClassMethodConfigureReqVO> fairPrices = new ArrayList<ValClassMethodConfigureReqVO>();
+		List<ValClassMethodConfigureReqVO> positionMarkets = new ArrayList<ValClassMethodConfigureReqVO>();
+		List<ValClassMethodConfigureReqVO> costPrices = new ArrayList<ValClassMethodConfigureReqVO>();
+		List<ValClassMethodConfigureReqVO> floatingProfitLoss = new ArrayList<ValClassMethodConfigureReqVO>();
+		if (CollectionUtils.isNotEmpty(methods)) {
+			for (ValClassMethodConfigureReqVO method : methods) {
+				switch (method.getClassCode()) {
+				case TradeRuleConstant.VAL_CLASS_DIC_VC001:
+					positionCosts.add(method);
+					break;
+				case TradeRuleConstant.VAL_CLASS_DIC_VC002:
+					fairPrices.add(method);
+					break;
+				case TradeRuleConstant.VAL_CLASS_DIC_VC003:
+					positionMarkets.add(method);
+					break;
+				case TradeRuleConstant.VAL_CLASS_DIC_VC004:
+					costPrices.add(method);
+					break;
+				case TradeRuleConstant.VAL_CLASS_DIC_VC005:
+					floatingProfitLoss.add(method);
+					break;
+				default:
+					break;
+				}
+			}
+			configureRepVO.setPositionCosts(positionCosts);
+			configureRepVO.setFairPrices(fairPrices);
+			configureRepVO.setPositionMarkets(positionMarkets);
+			configureRepVO.setCostPrices(costPrices);
+			configureRepVO.setFloatingProfitLoss(floatingProfitLoss);
+		}
+		return configureRepVO;
 	}
 	
 }

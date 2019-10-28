@@ -26,14 +26,13 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.win.dfas.common.util.ObjectUtils;
+import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.val.manage.dao.ValFundConfigureMapper;
 import com.win.dfbp.val.manage.dao.ValMethodConfigureMapper;
 import com.win.dfbp.val.manage.dao.ValParamConfigureMapper;
 import com.win.dfbp.val.manage.entity.ValFundConfigure;
 import com.win.dfbp.val.manage.entity.ValMethodConfigure;
 import com.win.dfbp.val.manage.entity.ValParamConfigure;
-import com.win.dfbp.val.manage.enumeration.ValClassEnum;
-import com.win.dfbp.val.manage.enumeration.ValParamEnum;
 import com.win.dfbp.val.manage.service.ValFundConfigureService;
 import com.win.dfbp.val.manage.vo.query.ValFundConfigureQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValClassMethodRepVO;
@@ -83,7 +82,6 @@ public class ValFundConfigureServiceImpl implements ValFundConfigureService {
 	public List<ValFundConfigure> getValFundAll() {
 		return valFundConfigureMapper.getValFundAll();
 	}
-
 	
 	@Override
 	public void updateFundConfigure(ValFundConfigureRepVO repVO) {
@@ -99,58 +97,40 @@ public class ValFundConfigureServiceImpl implements ValFundConfigureService {
 	public void updateValParamConfigures(ValFundConfigureRepVO repVO) {
 		ValParamMethodRepVO valParamMethodRepVO = repVO.getParamMethod();
 		if (StringUtils.isNotEmpty(valParamMethodRepVO.getCostSettlement())) {
-			valParamConfigureMapper.updateParamMethodConfigure(this.getValParamConfigure(
-					ValParamEnum.COST_SETTLEMENT.getCode(), valParamMethodRepVO.getCostSettlement(), repVO.getId()));
+			valParamConfigureMapper.updateParamMethodConfigure(new ValParamConfigure(
+					TradeRuleConstant.VAL_PARAM_DIC_FP001, valParamMethodRepVO.getCostSettlement(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valParamMethodRepVO.getCostSettlementSort())) {
-			valParamConfigureMapper
-					.updateParamMethodConfigure(this.getValParamConfigure(ValParamEnum.COST_SETTLEMENT_SORT.getCode(),
-							valParamMethodRepVO.getCostSettlementSort(), repVO.getId()));
+			valParamConfigureMapper.updateParamMethodConfigure(new ValParamConfigure(
+					TradeRuleConstant.VAL_PARAM_DIC_FP002, valParamMethodRepVO.getCostSettlementSort(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valParamMethodRepVO.getRealInterestRate())) {
-			valParamConfigureMapper.updateParamMethodConfigure(this.getValParamConfigure(
-					ValParamEnum.REAL_INTEREST_RATE.getCode(), valParamMethodRepVO.getRealInterestRate(), repVO.getId()));
+			valParamConfigureMapper.updateParamMethodConfigure(new ValParamConfigure(
+					TradeRuleConstant.VAL_PARAM_DIC_FP003, valParamMethodRepVO.getRealInterestRate(), repVO.getId()));
 		}
 	}
 
 	public void updateValMethodConfigures(ValFundConfigureRepVO repVO) {
 		ValClassMethodRepVO valClassMethodRepVO = repVO.getClassMethod();
 		if (StringUtils.isNotEmpty(valClassMethodRepVO.getFairPrice())) {
-			valMethodConfigureMapper.updateMethodConfigure(this.getValMethodConfigure(ValClassEnum.FAIR_PRICE.getCode(),
+			valMethodConfigureMapper.updateMethodConfigure(new ValMethodConfigure(TradeRuleConstant.VAL_CLASS_DIC_VC002,
 					valClassMethodRepVO.getFairPrice(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valClassMethodRepVO.getCostPrice())) {
-			valMethodConfigureMapper.updateMethodConfigure(this.getValMethodConfigure(ValClassEnum.COST_PRICE.getCode(),
+			valMethodConfigureMapper.updateMethodConfigure(new ValMethodConfigure(TradeRuleConstant.VAL_CLASS_DIC_VC004,
 					valClassMethodRepVO.getCostPrice(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valClassMethodRepVO.getFloatingProfitLoss())) {
-			valMethodConfigureMapper
-					.updateMethodConfigure(this.getValMethodConfigure(ValClassEnum.FLOAT_PROFIT_LOSS.getCode(),
-							valClassMethodRepVO.getFloatingProfitLoss(), repVO.getId()));
+			valMethodConfigureMapper.updateMethodConfigure(new ValMethodConfigure(TradeRuleConstant.VAL_CLASS_DIC_VC005,
+					valClassMethodRepVO.getFloatingProfitLoss(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valClassMethodRepVO.getPositionCost())) {
-			valMethodConfigureMapper.updateMethodConfigure(this.getValMethodConfigure(
-					ValClassEnum.POSITION_COST.getCode(), valClassMethodRepVO.getPositionCost(), repVO.getId()));
+			valMethodConfigureMapper.updateMethodConfigure(new ValMethodConfigure(TradeRuleConstant.VAL_CLASS_DIC_VC001,
+					valClassMethodRepVO.getPositionCost(), repVO.getId()));
 		}
 		if (StringUtils.isNotEmpty(valClassMethodRepVO.getPositionMarket())) {
-			valMethodConfigureMapper.updateMethodConfigure(this.getValMethodConfigure(
-					ValClassEnum.POSITION_MARKET.getCode(), valClassMethodRepVO.getPositionMarket(), repVO.getId()));
+			valMethodConfigureMapper.updateMethodConfigure(new ValMethodConfigure(TradeRuleConstant.VAL_CLASS_DIC_VC003,
+					valClassMethodRepVO.getPositionMarket(), repVO.getId()));
 		}
-	}
-
-	public ValMethodConfigure getValMethodConfigure(String classCode, String methodCode, long fundConfigureId) {
-		ValMethodConfigure valMethodConfigure = new ValMethodConfigure();
-		valMethodConfigure.setFundConfigureId(fundConfigureId);
-		valMethodConfigure.setMethodCode(methodCode);
-		valMethodConfigure.setClassCode(classCode);
-		return valMethodConfigure;
-	}
-
-	public ValParamConfigure getValParamConfigure(String paramCode, String methodCode, long fundConfigureId) {
-		ValParamConfigure valParamConfigure = new ValParamConfigure();
-		valParamConfigure.setFundConfigureId(fundConfigureId);
-		valParamConfigure.setMethodCode(methodCode);
-		valParamConfigure.setParamCode(paramCode);
-		return valParamConfigure;
 	}
 }

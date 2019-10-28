@@ -13,14 +13,11 @@ package com.win.dfbp.val.manage.controller;
 
 import com.win.dfas.common.vo.WinResponseData;
 import com.win.dfbp.val.manage.service.ValParamMethodConfigureService;
-import com.win.dfbp.val.manage.vo.query.ValParamMethodConfigureQueryVO;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,10 +36,15 @@ public class ValCalParamMethodConfigureController {
     private ValParamMethodConfigureService valParamMethodConfigureService;
 
     @ApiOperation(value = "参数方法配置分页列表")
-    @ApiImplicitParam(name = "queryVO", value = "参数方法配置查询参数", required = true, dataType = "FundConfigureQueryVO")
     @PostMapping("/method")
- 	public WinResponseData getValParamMethodByParam(@RequestBody ValParamMethodConfigureQueryVO queryVO) {
- 		return WinResponseData.handleSuccess(valParamMethodConfigureService.getMethodByParam(queryVO));
+ 	public WinResponseData getValParamMethodByParam() {
+ 		return WinResponseData.handleSuccess(valParamMethodConfigureService.getMethodByParam());
+ 	}
+    
+    @ApiOperation(value = "估值参数方法列表")
+    @PostMapping("/method/list")
+ 	public WinResponseData getValParamMethods() {
+ 		return WinResponseData.handleSuccess(valParamMethodConfigureService.getValParamMethods());
  	}
     
 }

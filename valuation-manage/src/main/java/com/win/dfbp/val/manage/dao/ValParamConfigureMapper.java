@@ -47,18 +47,6 @@ public interface ValParamConfigureMapper {
 	ValParamMethodRepVO getParamByFundId(Long fundId);
 	
 	/**
-	 * 查询参数方法
-	 * @Title: getAllParamMethod
-	 * @Description: TODO
-	 * @return   
-	 * @return: List<ValParamMethodConfigure>   
-	 * @throws
-	 * @author: huhe 
-	 * @Date:  2019年10月21日/下午6:19:33
-	 */
-	List<ValParamMethodConfigure> getAllParamMethod();
-	
-	/**
 	 * 
 	 * @Title: updateParamMethodConfigure
 	 * @Description: 更新

@@ -55,7 +55,7 @@ export default class CommonService {
      */
     public static getAllParamMethodList() {
         return AxiosFun.post(
-            AxiosFun.valuationManageServiceName + "/param/method/list",
+            AxiosFun.valuationManageServiceName + "/param/configure/method/list",
             null
         );
     }

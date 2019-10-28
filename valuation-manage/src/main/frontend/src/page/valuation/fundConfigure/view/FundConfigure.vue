@@ -48,8 +48,7 @@
             </win-row>
             <!-- 分页组件 -->
             <win-pagination v-bind:pageInfo="pageVO" @pageInfoChange="pageQuery"></win-pagination>
-            <FundConfigureDialog v-if="dialogVO.visible" :dialogVO="dialogVO" :fund="fund" :compareVO="compareVO" :paramMethodList1="paramMethodList1" :paramMethodList2="paramMethodList2" :paramMethodList3="paramMethodList3"
-                :classMethodList1="classMethodList1" :classMethodList2="classMethodList2" :classMethodList3="classMethodList3" :classMethodList4="classMethodList4" :classMethodList5="classMethodList5" @callFatherQuery="list">
+            <FundConfigureDialog v-if="dialogVO.visible" :dialogVO="dialogVO" :fund="fund" :compareVO="compareVO" :paramMethodList="paramMethodList" :classMethodList="classMethodList"  @callFatherQuery="list">
             </FundConfigureDialog>
         </win-form>
     </div>

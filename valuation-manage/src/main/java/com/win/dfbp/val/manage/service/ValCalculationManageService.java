@@ -12,14 +12,10 @@
 
 package com.win.dfbp.val.manage.service;
 
-
-import java.util.List;
-
 import com.github.pagehelper.PageInfo;
-import com.win.dfbp.val.manage.entity.ValMethod;
 import com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO;
-import com.win.dfbp.val.manage.vo.query.ValMethodConfigureQueryVO;
 import com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO;
+import com.win.dfbp.val.manage.vo.respone.ValMethodConfigureRepVO;
 
 /**   
  * 包名称： com.win.dfbp.val.manage.service 
@@ -48,12 +44,11 @@ public interface ValCalculationManageService {
 	 * 
 	 * @Title: getMethodByClass
 	 * @Description: 根据类型查询方法
-	 * @param reqVO
 	 * @return   
-	 * @return: List<ValMethod>   
+	 * @return: ValMethodConfigureRepVO   
 	 * @throws
 	 * @author: huhe 
-	 * @Date:  2019年10月25日/下午5:03:17
+	 * @Date:  2019年10月28日/上午11:52:51
 	 */
-	List<ValMethod> getMethodByClass(ValMethodConfigureQueryVO reqVO);
+	ValMethodConfigureRepVO getMethodByClass();
 }

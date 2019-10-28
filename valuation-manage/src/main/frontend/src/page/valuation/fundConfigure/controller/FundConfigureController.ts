@@ -10,11 +10,9 @@ import { FundConfigurePrepare } from "../vo/FundConfigurePrepare";
 import { CompareVO } from "../../../common/vo/CompareVO";
 import DialogVO from "../../../common/vo/DialogVO";
 import FundConfigureDialog from "../view/FundConfigureDialog.vue";
-import ParamMethodConfigureRepVO from "../vo/ParamMethodConfigureRepVO";
-import ParamMethodConfigureQueryVO from "../vo/ParamMethodConfigureQueryVO";
 import CompareInit from "../../../common/util/CompareInit";
-import Method from "../../../common/vo/Method";
-import ClassMethodConfigureQueryVO from "../vo/ClassMethodConfigureQueryVO";
+import ParamMethodList from "../vo/ParamMethodList";
+import ClassMethodList from "../vo/ClassMethodList";
 
 @Component({ components: { FundConfigureDialog } })
 export default class FundConfigureController extends BaseController {
@@ -33,23 +31,8 @@ export default class FundConfigureController extends BaseController {
      * 数据转化
      */
     public formatterUtil: FormatterUtil = new FormatterUtil();
-    /**
-     * 不同参数查询方法
-     */
-    public paramMethodList1: ParamMethodConfigureRepVO[] = [];
-    public paramMethodList2: ParamMethodConfigureRepVO[] = [];
-    public paramMethodList3: ParamMethodConfigureRepVO[] = [];
-    public paramMethodQueryVO: ParamMethodConfigureQueryVO = new ParamMethodConfigureQueryVO();
-
-    /**
-     * 不同类型查询方法
-     */
-    public classMethodList1: Method[] = [];
-    public classMethodList2: Method[] = [];
-    public classMethodList3: Method[] = [];
-    public classMethodList4: Method[] = [];
-    public classMethodList5: Method[] = [];
-    public classMethodConfigureQueryVO: ClassMethodConfigureQueryVO = new ClassMethodConfigureQueryVO();
+    public paramMethodList: ParamMethodList = new ParamMethodList();
+    public classMethodList: ClassMethodList = new ClassMethodList();
 
     public mounted() {
         this.list();
@@ -96,15 +79,10 @@ export default class FundConfigureController extends BaseController {
         // 复制，创建对象副本
         this.fund = this.copy(row);
         //查询类型方法
-        this.getMethodByClass(ParamBondRatingConst.POSITIONCOST);
-        this.getMethodByClass(ParamBondRatingConst.FAIRPRICE);
-        this.getMethodByClass(ParamBondRatingConst.POSITIONMARKET);
-        this.getMethodByClass(ParamBondRatingConst.COSTPRICE);
-        this.getMethodByClass(ParamBondRatingConst.FLOATIONGPROFITLOSS);
+        this.getMethodByClass();
         //查询参数方法
-        this.getMethodByParam(ParamBondRatingConst.COSTSETTLEMENT);
-        this.getMethodByParam(ParamBondRatingConst.COSTSETTLEMENTSORT);
-        this.getMethodByParam(ParamBondRatingConst.REALINTERESTRATE);
+        this.getMethodByParam();
+
         // 产品性质
         CompareInit.initFundCharacter();
     }
@@ -113,55 +91,27 @@ export default class FundConfigureController extends BaseController {
      * 根据参数初始方法
      * @param paramCode
      */
-    public getMethodByParam(paramCode: string) {
-        this.paramMethodQueryVO = new ParamMethodConfigureQueryVO();
-        this.paramMethodQueryVO.paramCode = paramCode;
-        this.fundConfigureService
-            .getMethodByParam(this.paramMethodQueryVO)
-            .then((res: any) => {
-                if (res.winRspType === WinRspType.ERROR) {
-                    this.win_message_error(res.msg);
-                } else {
-                    if (paramCode === ParamBondRatingConst.COSTSETTLEMENT) {
-                        this.paramMethodList1 = res.data;
-                    } else if (
-                        paramCode === ParamBondRatingConst.COSTSETTLEMENTSORT
-                    ) {
-                        this.paramMethodList2 = res.data;
-                    } else {
-                        this.paramMethodList3 = res.data;
-                    }
-                }
-            });
+    public getMethodByParam() {
+        this.fundConfigureService.getMethodByParam().then((res: any) => {
+            if (res.winRspType === WinRspType.ERROR) {
+                this.win_message_error(res.msg);
+            } else {
+                this.paramMethodList = res.data;
+            }
+        });
     }
     /**
      * 根据参数初始方法
      * @param paramCode
      */
-    public getMethodByClass(ClassCode: string) {
-        this.classMethodConfigureQueryVO = new ClassMethodConfigureQueryVO();
-        this.classMethodConfigureQueryVO.classCode = ClassCode;
-        this.fundConfigureService
-            .getMethodByclass(this.classMethodConfigureQueryVO)
-            .then((res: any) => {
-                if (res.winRspType === WinRspType.ERROR) {
-                    this.win_message_error(res.msg);
-                } else {
-                    if (ClassCode === ParamBondRatingConst.POSITIONCOST) {
-                        this.classMethodList2 = res.data;
-                    } else if (ClassCode === ParamBondRatingConst.FAIRPRICE) {
-                        this.classMethodList1 = res.data;
-                    } else if (
-                        ClassCode === ParamBondRatingConst.POSITIONMARKET
-                    ) {
-                        this.classMethodList3 = res.data;
-                    } else if (ClassCode === ParamBondRatingConst.COSTPRICE) {
-                        this.classMethodList4 = res.data;
-                    } else {
-                        this.classMethodList5 = res.data;
-                    }
-                }
-            });
+    public getMethodByClass() {
+        this.fundConfigureService.getMethodByclass().then((res: any) => {
+            if (res.winRspType === WinRspType.ERROR) {
+                this.win_message_error(res.msg);
+            } else {
+                this.classMethodList = res.data;
+            }
+        });
     }
 }
 
