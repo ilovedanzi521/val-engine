@@ -58,11 +58,11 @@ public class BaseKey {
      */
     private String investFlag;
     /**
-     * 交易数量
+     * 金额';
      */
     private BigDecimal cashSettleBalance;
     /**
-     * 交易金额
+     * 交易数量
      */
     private BigDecimal stockSettleAmount;
     /**

@@ -48,10 +48,10 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calInitIndex(SecurityParam securityParam) {
         securityParam.setInvestFlag(securityIndex.getInvestFlag());
         //持仓成本
-        securityParam.setPositionCost(securityIndex.getStockSettleAmount());
+        securityParam.setPositionCost(securityIndex.getCashSettleBalance());
         //1计算持仓成本
         //初次持仓，交易金额=持仓成本
-        securityParam.setPositionAmount(securityIndex.getCashSettleBalance());
+        securityParam.setPositionAmount(securityIndex.getStockSettleAmount());
 
         return calIndex(null,securityParam,true);
     }
@@ -79,10 +79,10 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         securityParam.setInvestFlag(securityIndex.getInvestFlag());
         //持仓数量
-        BigDecimal positionAmount = securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionAmount());
+        BigDecimal positionAmount = securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionAmount());
         securityParam.setPositionAmount(positionAmount);
         //持仓成本
-        securityParam.setPositionCost(securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionCost()));
+        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
         return calIndex(oldIndex,securityParam,false);
     }
 
