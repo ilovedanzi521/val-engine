@@ -46,6 +46,7 @@ public class CalPositionMarketValue implements ISecurityCalculation {
         String investFlag= securityParam.getInvestFlag();
         //计算持仓市值
         BigDecimal positionMarketValue = positionMarketValueFactory.getInstance(investFlag).cal(securityParam);
+        securityParam.setPositionMarketValue(positionMarketValue);
         return positionMarketValue;
     }
 
