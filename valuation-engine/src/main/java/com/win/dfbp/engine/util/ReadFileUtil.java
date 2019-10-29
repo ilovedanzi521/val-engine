@@ -65,7 +65,7 @@ public class ReadFileUtil {
                     if(isBegin){
                         String[] arrStrings = lineTxt.split("\\|");
                         if(arrStrings.length < 10){
-                            LOGGER.info("数据有误！");
+                            LOGGER.info("该行数据为空或者有误！");
                             continue;
                         }
                         valMarket.setDataSource("ZW");

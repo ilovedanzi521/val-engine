@@ -35,7 +35,7 @@ public class MarketDataServiceImpl implements MarketDataService {
     /**
      * 每次循环插入数据的条数
      */
-    private final Integer loopLength = 2000;
+    private final Integer loopLength = 5000;
 
     @Autowired
     private MarketDataMapper marketDataMapper;

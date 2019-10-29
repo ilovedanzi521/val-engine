@@ -129,7 +129,6 @@ public class BondMarketStrategy extends BaseMarketStrategy {
                     }
                 }
                 updateValPosition(securityParam);
-                System.out.println(context);
             }
         }
         return securityParam;
@@ -152,7 +151,7 @@ public class BondMarketStrategy extends BaseMarketStrategy {
         MathExpress me = new MathExpress(calModel,5, RoundingMode.HALF_EVEN);
         return new BigDecimal(me.caculate());
     }
-    
+
     /**
      * 更新val_position
      * @Title: updateValPosition

@@ -15,13 +15,10 @@ package com.win.dfbp.engine.init;
 import com.win.dfbp.engine.flink.FlinkFileReadTask;
 import com.win.dfbp.engine.flink.FlinkKafKaConsumerTask;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * 包名称：com.win.dfbp.engine.init
