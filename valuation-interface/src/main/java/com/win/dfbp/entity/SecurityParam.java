@@ -15,6 +15,7 @@ package com.win.dfbp.entity;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
+import com.win.dfas.common.exception.WinException;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
@@ -183,7 +184,7 @@ public class SecurityParam {
                 this.getSecurityCode()+this.getMarketCode()+this.getSource());
         if(ObjectUtil.isEmpty(price)){
             log.error("无法获取行情的净价全价信息:{}",this.getSecurityCode()+this.getMarketCode()+this.getSource());
-            return this;
+            throw new WinException("无法获取行情的净价全价信息:{}",this.getSecurityCode()+this.getMarketCode()+this.getSource());
         }else{
             SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(price),SecurityParam.class);
             this.setFullPrice(tmpParam.getFullPrice());
@@ -206,7 +207,7 @@ public class SecurityParam {
                 this.getSecurityCode()+this.getMarketCode());
         if(ObjectUtil.isEmpty(interest)){
             log.error("无法获取百元利息信息:{}",this.getSecurityCode()+this.getMarketCode());
-            return this;
+            throw new WinException("无法获取百元利息信息:{}",this.getSecurityCode()+this.getMarketCode());
         }else{
             SecurityParam tmpParam = JSON.parseObject(JSON.toJSONString(interest),SecurityParam.class);
             this.setPretaxInterest(tmpParam.getPretaxInterest());
