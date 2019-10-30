@@ -12,12 +12,29 @@
 
 package com.win.dfbp.engine.flink.sink;
 
+import com.alibaba.fastjson.JSONObject;
 import com.win.dfbp.engine.dao.ValPositionMapper;
 import com.win.dfbp.engine.util.SpringContextUtil;
 import com.win.dfbp.entity.SecurityIndex;
+import feign.Client;
+import feign.Feign;
+import feign.Headers;
+import feign.RequestLine;
+import feign.codec.Decoder;
+import feign.codec.Encoder;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.FeignClientsConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 包名称：com.win.dfbp.engine.flink.sink
@@ -28,15 +45,32 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 public class ApiSinkFunction  extends RichSinkFunction<SecurityIndex> {
+
+    private String url;
+
+    public ApiSinkFunction(String apiUrl) {
+        this.url =apiUrl;
+    }
+
     @Override
     public void invoke(SecurityIndex securityIndex, Context context){
         try {
-
-            ValPositionMapper valPositionMapper = SpringContextUtil.getBean(ValPositionMapper.class);
-            valPositionMapper.insertValPosition(securityIndex);
-            log.info("Data write mysql Success!");
+            ApiProvide apiProvide= Feign.builder()
+                    .encoder(new GsonEncoder())
+                    .decoder(new GsonDecoder())
+                    .target(ApiProvide.class, url);
+            List<SecurityIndex> list = new ArrayList<>();
+            list.add(securityIndex);
+            Object object = apiProvide.put(list);
+            log.info("Data write Api Server Success!Return:{}",object);
         }catch (Throwable e){
-            log.error("数据库异常{}",e);
+            log.error("api异常{}",e);
         }
     }
+    interface ApiProvide {
+        @RequestLine("PUT")
+        @Headers("Content-Type: application/json")
+        Object put(Object params);
+    }
 }
+

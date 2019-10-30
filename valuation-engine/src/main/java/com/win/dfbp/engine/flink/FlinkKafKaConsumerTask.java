@@ -13,15 +13,18 @@
 package com.win.dfbp.engine.flink;
 
 import com.alibaba.fastjson.JSON;
+import com.win.dfbp.engine.flink.sink.ApiSinkFunction;
 import com.win.dfbp.engine.flink.sink.MysqlSinkFunction;
 import com.win.dfbp.engine.flink.sink.RedisSinkFunction;
 import com.win.dfbp.engine.flink.transform.SecurityIndexFunction;
 import com.win.dfbp.engine.service.impl.MarketDataServiceImpl;
+import com.win.dfbp.engine.util.SpringContextUtil;
 import com.win.dfbp.entity.SecurityIndex;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSink;
@@ -51,11 +54,11 @@ public class FlinkKafKaConsumerTask {
     /**
      * 定义下单数据主键，通过主键计算指标
      */
-    private static String[] securityTranPrimaryKey = new String[]{
-            SecurityTranPrimaryKey.FUND_NO, SecurityTranPrimaryKey.PORTF_NO,
-            SecurityTranPrimaryKey.SECURITY_CODE,SecurityTranPrimaryKey.MARKET_CODE,
-            SecurityTranPrimaryKey.SECURITY_CHARACTER,SecurityTranPrimaryKey.INVEST_FLAG
-    };
+//    private static String[] securityTranPrimaryKey = new String[]{
+//            SecurityTranPrimaryKey.FUND_NO, SecurityTranPrimaryKey.PORTF_NO,
+//            SecurityTranPrimaryKey.SECURITY_CODE,SecurityTranPrimaryKey.MARKET_CODE,
+//            SecurityTranPrimaryKey.SECURITY_CHARACTER,SecurityTranPrimaryKey.INVEST_FLAG
+//    };
 
     @Autowired
     private Properties kproperties;
@@ -74,12 +77,18 @@ public class FlinkKafKaConsumerTask {
            }
         }).returns(SecurityIndex.class)
                 // 按key分组，维护state时可认为只有一个key
-                .keyBy(securityTranPrimaryKey)
+                .keyBy(new KeySelector<SecurityIndex, String>() {
+                    @Override
+                    public String getKey(SecurityIndex securityIndex) throws Exception {
+                        return securityIndex.key();
+                    }
+                })
                 // 开始计算
                 .flatMap(new SecurityIndexFunction()).setParallelism(1);
 //        streamOperator.addSink(new RedisSinkFunction());
         streamOperator.addSink(new MysqlSinkFunction());
         streamOperator.addSink(new RedisSinkFunction());
+        streamOperator.addSink(new ApiSinkFunction(kproperties.getProperty("apiUrl")));
         try {
             env.execute();
         } catch (Throwable e) {

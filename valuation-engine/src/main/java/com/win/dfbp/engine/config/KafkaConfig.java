@@ -20,6 +20,7 @@ public class KafkaConfig {
     private String keyDeserializer;
     private String valueDeserializer;
     private String topic;
+    private String apiUrl;
 
     @Bean(name ="kproperties")
     private Properties kafkaProperties(){
@@ -33,8 +34,18 @@ public class KafkaConfig {
         properties.setProperty("key.deserializer", getKeyDeserializer());
         properties.setProperty("value.deserializer", getValueDeserializer());
         properties.setProperty("topic", KafkaUtils.createTopic(getBootstrapServers(),getTopic()));
+        properties.setProperty("apiUrl", getApiUrl());
         return properties;
     }
+
+    private String getApiUrl() {
+        return apiUrl;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
     public String getBootstrapServers() {
         return bootstrapServers;
     }

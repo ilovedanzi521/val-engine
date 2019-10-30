@@ -47,6 +47,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<fegin.core.version>10.2.3</fegin.core.version>
+		<fegin.version>8.18.0</fegin.version>
 	</properties>
 
 	<dependencyManagement>

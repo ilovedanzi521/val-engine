@@ -110,11 +110,21 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.linuxense</groupId>-->
+            <!--<artifactId>javadbf</artifactId>-->
+            <!--<version>0.4.0</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.linuxense</groupId>
-            <artifactId>javadbf</artifactId>
-            <version>0.4.0</version>
-            <scope>compile</scope>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>${fegin.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-gson</artifactId>
+            <version>${fegin.version}</version>
         </dependency>
 
     </dependencies>

@@ -24,7 +24,10 @@ import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValParamScheme;
 import com.win.dfbp.strategy.BaseStrategy;
 import com.win.dfbp.strategy.StrategyFactory;
+import com.win.dfbp.util.ServiceUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.math.BigDecimal;
 
 /**
  * 包名称：com.win.dfbp.engine.util
@@ -48,6 +51,14 @@ public class SecurityCalculationUtil {
     public static SecurityIndex calculateSecurityIndex(SecurityIndex securityIndex, SecurityIndex oldIndex) {
         SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getFundNo(), securityIndex.getSecurityCode());
         if (ObjectUtil.isEmpty(securityParam)) {
+            return securityIndex;
+        }
+        if(TradeDirectionConstant.SELL.equals(securityIndex.getTradeDirection())){
+            BigDecimal balance = ServiceUtil.calAmount(oldIndex.getIndexVO().getPositionAmount()
+                    ,securityIndex.getStockSettleAmount(),securityIndex.getTradeDirection());
+            if(balance.compareTo(BigDecimal.ZERO)>1){
+                log.error("卖出数量{}>持有数量{}",securityIndex.getStockSettleAmount(), oldIndex.getIndexVO().getPositionAmount());
+            }
             return securityIndex;
         }
         BaseStrategy strategy = judgeStrategy(securityParam);

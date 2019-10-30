@@ -397,9 +397,14 @@ public class MathExpress {
                 } else if (temp.equals(OP3)) {
                     tempNumber = tempNumber2.multiply(tempNumber1);
                 } else if (temp.equals(OP4)) {
-                    tempNumber = tempNumber2.divide(tempNumber1,
-                            precision,
-                            roundingMode);
+                    //对0.00做处理
+                    if(tempNumber2.compareTo(BigDecimal.ZERO)==0){
+                        tempNumber = BigDecimal.ZERO;
+                    }else {
+                        tempNumber = tempNumber2.divide(tempNumber1,
+                                precision,
+                                roundingMode);
+                    }
                 }
                 numberStack.push(tempNumber.toString());
 

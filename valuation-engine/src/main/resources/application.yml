@@ -43,6 +43,7 @@ kafka:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   topic: dfbpval
+  api-url: http://192.168.3.163:11020/api/rpt/val/position
 mybatis:
   type-aliases-package: com.win.dfbp.entity
   mapper-locations: classpath*:com/**/dao/**/*.xml
