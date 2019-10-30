@@ -38,14 +38,14 @@
 
 	<!-- 开发环境 -->
 	<springProfile name="dev">
-		<logger name="com.win" level="DEBUG">
+		<logger name="com.win" level="INFO">
 			<appender-ref ref="LOGCONSOLE" />
 		</logger>
 		<root level="INFO">
-            <appender-ref ref="LOGCONSOLE" />
+            <appender-ref ref="asyncFileAppender" />
         </root>
 	</springProfile>
-	
+
 	<!-- 开发测试环境 -->
     <springProfile name="test">
         <logger name="com.win" level="DEBUG">

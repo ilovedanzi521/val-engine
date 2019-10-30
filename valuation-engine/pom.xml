@@ -16,7 +16,7 @@
         <flink.version>1.8.0</flink.version>
         <slf4j.version>1.7.25</slf4j.version>
         <kafka-spring.version>2.2.0.RELEASE</kafka-spring.version>
-        <kafka.version>2.2.1</kafka.version>
+        <kafka.version>1.0.1</kafka.version>
     </properties>
 
     <dependencies>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>1.0.1</version>
+            <version>${kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -110,12 +110,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.linuxense</groupId>-->
-            <!--<artifactId>javadbf</artifactId>-->
-            <!--<version>0.4.0</version>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.linuxense</groupId>
+            <artifactId>javadbf</artifactId>
+            <version>${file.version}</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-core</artifactId>
