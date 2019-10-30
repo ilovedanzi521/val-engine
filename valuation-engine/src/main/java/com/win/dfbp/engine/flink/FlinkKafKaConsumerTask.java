@@ -27,6 +27,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSink;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.timestamps.AscendingTimestampExtractor;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.util.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class FlinkKafKaConsumerTask {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         FlinkKafkaConsumer consumer = new FlinkKafkaConsumer(
                 kproperties.getProperty("topic"), new SimpleStringSchema(), kproperties);
+
         DataStream<String> messageStream = env.addSource(consumer);
         SingleOutputStreamOperator streamOperator= messageStream.flatMap((String line, Collector<SecurityIndex> out) -> {
            try{
@@ -74,14 +76,14 @@ public class FlinkKafKaConsumerTask {
                 // 按key分组，维护state时可认为只有一个key
                 .keyBy(securityTranPrimaryKey)
                 // 开始计算
-                .flatMap(new SecurityIndexFunction());
+                .flatMap(new SecurityIndexFunction()).setParallelism(1);
 //        streamOperator.addSink(new RedisSinkFunction());
         streamOperator.addSink(new MysqlSinkFunction());
         streamOperator.addSink(new RedisSinkFunction());
         try {
             env.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            log.error("数据已经被消费:{}",e);
         }
 
     }

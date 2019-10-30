@@ -95,6 +95,7 @@ public class SecurityParam {
      */
     private BigDecimal aftertaxInterest;
 
+
     /**
      *持仓数量';
      */
@@ -125,6 +126,24 @@ public class SecurityParam {
      * 原始价
      */
     private BigDecimal originalPrice;
+
+    /**
+     * 交易金额
+     */
+    private BigDecimal cashSettleBalance;
+    /**
+     * 交易数量
+     */
+    private BigDecimal stockSettleAmount;
+    /**
+     * 交易方向
+     */
+    private String tradeDirection;
+
+    /**
+     * 所含利息
+     */
+    private BigDecimal tradeRates;
 
     public String levelKey(int level){
         switch (level){

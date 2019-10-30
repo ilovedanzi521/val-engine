@@ -12,6 +12,7 @@
 
 package com.win.dfbp.cal.strategy.positioncost;
 
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityParam;
 
 import java.math.BigDecimal;
@@ -25,4 +26,6 @@ import java.math.BigDecimal;
  */
 public interface ICalPositionCost {
     public BigDecimal cal(SecurityParam securityParam);
+
+    BigDecimal cal(SecurityIndex oldIndex, SecurityParam securityParam);
 }

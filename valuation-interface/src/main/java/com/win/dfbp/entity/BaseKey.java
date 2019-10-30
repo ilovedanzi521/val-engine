@@ -69,6 +69,10 @@ public class BaseKey {
      * 交易方向
      */
     private String tradeDirection;
+    /**
+     * 交易所含利息
+     */
+    private BigDecimal tradeRates;
 
     public void setPro(BaseKey baseKey){
         this.setFundCharacter(baseKey.getFundCharacter());
@@ -82,6 +86,7 @@ public class BaseKey {
         this.setCashSettleBalance(baseKey.getCashSettleBalance());
         this.setStockSettleAmount(baseKey.getStockSettleAmount());
         this.setTradeDirection(baseKey.getTradeDirection());
+        this.setTradeRates(baseKey.getTradeRates());
     }
 
     /**

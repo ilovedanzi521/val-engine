@@ -13,6 +13,7 @@
 package com.win.dfbp.cal.strategy.positioncost.impl;
 
 import com.win.dfbp.cal.strategy.positioncost.ICalPositionCost;
+import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityParam;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ import java.math.BigDecimal;
 public class CalPositionCostFIFO implements ICalPositionCost {
     @Override
     public BigDecimal cal(SecurityParam securityParam) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal cal(SecurityIndex oldIndex, SecurityParam securityParam) {
         return null;
     }
 }

@@ -24,6 +24,7 @@ import com.win.dfbp.constant.RedisKeyPrefix;
 import com.win.dfbp.constant.TradeRuleConstant;
 import com.win.dfbp.entity.FundParam;
 import com.win.dfbp.entity.SecurityIndex;
+import com.win.dfbp.entity.SecurityIndexVO;
 import com.win.dfbp.entity.SecurityParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +70,19 @@ public class CalPositionCost implements ISecurityCalculation {
 
     @Override
     public BigDecimal cal(SecurityIndex oldIndex, SecurityParam securityParam) {
-        //计算持仓成本
-        //2.获取成本转结方式
-        return cal(securityParam);
+        Object costAccount = RedisUtil.get(RedisKeyPrefix.FUND_VAL_PARAM_CONFIG+ CommonConstants.HORIZONTAL_LINE+
+                securityParam.getFundNo()+CommonConstants.HORIZONTAL_LINE+TradeRuleConstant.VAL_PARAM_DIC_FP001);
+        if(ObjectUtil.isEmpty(costAccount)){
+            log.error("无法成本转结方式:{}",RedisKeyPrefix.FUND_VAL_PARAM_CONFIG+ CommonConstants.HORIZONTAL_LINE+
+                    securityParam.getFundNo()+CommonConstants.HORIZONTAL_LINE+TradeRuleConstant.VAL_PARAM_DIC_FP001);
+        }else{
+            FundParam tmpParam = JSON.parseObject(JSON.toJSONString(costAccount), FundParam.class);
+            BigDecimal positionCost = positionCostFactory.getInstance(tmpParam.getMethodCode()).cal(oldIndex,securityParam);
+            securityParam.setPositionCost(positionCost);
+            return positionCost;
+        }
+        return BigDecimal.ONE;
+
 
     }
 }

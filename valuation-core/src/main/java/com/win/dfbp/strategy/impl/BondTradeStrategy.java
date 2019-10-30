@@ -27,6 +27,7 @@ import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.factory.SpiFactory;
 import com.win.dfbp.strategy.BaseStrategy;
 import com.win.dfbp.util.MathExpress;
+import com.win.dfbp.util.ServiceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +48,6 @@ public class BondTradeStrategy extends BaseStrategy {
     @Override
     public SecurityIndexVO calInitIndex(SecurityParam securityParam) {
         securityParam.setInvestFlag(securityIndex.getInvestFlag());
-        //持仓成本
-        securityParam.setPositionCost(securityIndex.getCashSettleBalance());
         //1计算持仓成本
         //初次持仓，交易金额=持仓成本
         securityParam.setPositionAmount(securityIndex.getStockSettleAmount());
@@ -79,10 +78,11 @@ public class BondTradeStrategy extends BaseStrategy {
     public SecurityIndexVO calPositionIndex(SecurityIndex oldIndex,SecurityParam securityParam) {
         securityParam.setInvestFlag(securityIndex.getInvestFlag());
         //持仓数量
-        BigDecimal positionAmount = securityIndex.getStockSettleAmount().add(oldIndex.getIndexVO().getPositionAmount());
+        BigDecimal positionAmount = ServiceUtil.calAmount(oldIndex.getIndexVO().getPositionAmount(),
+                securityIndex.getStockSettleAmount(),securityIndex.getTradeDirection());
         securityParam.setPositionAmount(positionAmount);
         //持仓成本
-        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
+//        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
         return calIndex(oldIndex,securityParam,false);
     }
 
@@ -98,7 +98,14 @@ public class BondTradeStrategy extends BaseStrategy {
      * @Date 2019/10/25/11:26
      */
     public SecurityIndexVO calIndex(SecurityIndex oldIndex,SecurityParam securityParam,boolean isInit) {
-
+        //所含税
+        securityParam.setTradeRates(securityParam.getTradeRates());
+        //交易金额
+        securityParam.setCashSettleBalance(securityIndex.getCashSettleBalance());
+        //交易数量
+        securityParam.setStockSettleAmount(securityIndex.getStockSettleAmount());
+        //交易方向
+        securityParam.setTradeDirection(securityIndex.getTradeDirection());
         //获取价格和百元利息
         securityParam.calPrice().calInterest();
         //获取产品配置的对应的

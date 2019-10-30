@@ -88,9 +88,9 @@ public class WriteIntoKafka {
                     "  \"platformCode\": \"123\",\n" +
                     "  \"securityCharacter\": \"SS\",\n" +
                     "  \"investFlag\": \"J\",\n" +
-                    "  \"cashSettleBalance\": \"1222\",\n" +
-                    "  \"stockSettleAmount\": \"456612\",\n" +
-                    "  \"tradeDirection\": \"1\"\n" +
+                    "  \"cashSettleBalance\": \"100\",\n" +
+                    "  \"stockSettleAmount\": \"10\",\n" +
+                    "  \"tradeDirection\": \"2\"\n" +
                     "}";
         }
 

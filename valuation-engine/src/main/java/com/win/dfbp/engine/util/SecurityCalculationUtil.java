@@ -18,6 +18,7 @@ import com.win.dfas.common.constant.CommonConstants;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
+import com.win.dfbp.constant.TradeDirectionConstant;
 import com.win.dfbp.entity.SecurityIndex;
 import com.win.dfbp.entity.SecurityParam;
 import com.win.dfbp.entity.ValParamScheme;
@@ -68,6 +69,10 @@ public class SecurityCalculationUtil {
         //2获取证券进出信息，以及获取参数信息
         SecurityParam securityParam = querySecurityBasciInfo(securityIndex.getFundNo(), securityIndex.getSecurityCode());
         if (ObjectUtil.isEmpty(securityParam)) {
+            return securityIndex;
+        }
+        if(TradeDirectionConstant.SELL.equals(securityIndex.getTradeDirection())){
+            log.error("初次交易方向不能卖出:{}",securityIndex.getTradeDirection());
             return securityIndex;
         }
         //计算指标
