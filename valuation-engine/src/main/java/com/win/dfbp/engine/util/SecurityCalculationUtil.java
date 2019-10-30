@@ -15,6 +15,7 @@ package com.win.dfbp.engine.util;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.win.dfas.common.constant.CommonConstants;
+import com.win.dfas.common.exception.WinException;
 import com.win.dfas.common.util.RedisUtil;
 import com.win.dfas.common.util.SpringContextUtil;
 import com.win.dfbp.constant.RedisKeyPrefix;
@@ -124,6 +125,7 @@ public class SecurityCalculationUtil {
         SecurityParam securityParam = null;
         if (ObjectUtil.isEmpty(securityInfo)) {
             log.error("无法获取证券信息缓存,key={}", RedisKeyPrefix.VAL_SECURITY_INFO + CommonConstants.HORIZONTAL_LINE + securityCode);
+            throw new WinException("无法获取证券信息缓存,key={}", RedisKeyPrefix.VAL_SECURITY_INFO + CommonConstants.HORIZONTAL_LINE + securityCode);
         } else {
             //1 . json转object 获取证券内码对用的证券基础信息
             securityParam = JSON.parseObject(JSON.toJSONString(securityInfo), SecurityParam.class);
