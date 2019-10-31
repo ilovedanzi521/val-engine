@@ -145,25 +145,57 @@ public class SecurityParam {
      * 所含利息
      */
     private BigDecimal tradeRates;
-
+    /**
+     * 优先级 1
+     */
+    private static final int LEVEL_ONE = 1;
+    /**
+     * 优先级 2
+     */
+    private static final int LEVEL_TWO = 2;
+    /**
+     * 优先级 3
+     */
+    private static final int LEVEL_THREE = 3;
+    /**
+     * 优先级 4
+     */
+    private static final int LEVEL_FOUR = 4;
+    /**
+     * 优先级 5
+     */
+    private static final int LEVEL_FIVE = 5;
+    /**
+     * 优先级 6
+     */
+    private static final int LEVEL_SIX = 6;
+    /**
+     * @Title: levelKey
+     * @Description 根据优先级获取产品配置的方案明细信息
+     * @param level
+     * @return java.lang.String
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/31/13:38
+     */
     public String levelKey(int level){
         switch (level){
-            case 1:{
+            case LEVEL_ONE:{
                 return assetType+securityType+marketCode+securityCode;
             }
-            case 2:{
+            case LEVEL_TWO:{
                 return assetType+securityType+marketCode+isDiscount;
             }
-            case 3:{
+            case LEVEL_THREE:{
                 return assetType+securityType+isDiscount;
             }
-            case 4:{
+            case LEVEL_FOUR:{
                 return assetType+securityType+marketCode;
             }
-            case 5:{
+            case LEVEL_FIVE:{
                 return assetType+isDiscount;
             }
-            case 6:{
+            case LEVEL_SIX:{
                 return assetType+marketCode;
             }
         }

@@ -66,7 +66,7 @@ public class BaseKey {
      */
     private BigDecimal stockSettleAmount;
     /**
-     * 交易方向
+     * 交易方向 多空标志
      */
     private String tradeDirection;
     /**

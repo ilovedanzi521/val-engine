@@ -68,7 +68,7 @@ public class BondTradeStrategy extends BaseStrategy {
         for (Map.Entry<String, Object> entry : context.entrySet()) {
             calModel=calModel.replaceAll(entry.getKey(), String.valueOf(entry.getValue()));
         }
-        log.info("计算公式:{}",calModel);
+//        log.info("计算公式:{}",calModel);
         MathExpress me = new MathExpress(calModel,5,RoundingMode.HALF_EVEN);
         return new BigDecimal(me.caculate());
     }
