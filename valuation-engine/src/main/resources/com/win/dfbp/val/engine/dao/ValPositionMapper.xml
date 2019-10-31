@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.win.dfbp.val.engine.dao.ValPositionMapper">
+    <update  id="insertValPosition" parameterType="com.win.dfbp.val.common.entity.SecurityIndex">
+    INSERT INTO `testdb`.`val_position`( `fund_no`, `fund_character`, `portf_no`,
+    `security_code`, `market_code`, `platform_code`, `security_character`, `invest_flag`,
+     `trade_direction`, `cash_settle_balance`, `stock_settle_amount`, `position_cost`,
+      `position_market_value`, `fair_price`, `cost_price`, `floating_pl`, `original_price`)
+
+    VALUES ( #{fundNo,jdbcType=VARCHAR}, #{fundCharacter,jdbcType=VARCHAR},
+      #{portfNo,jdbcType=VARCHAR}, #{securityCode,jdbcType=VARCHAR}, #{marketCode,jdbcType=VARCHAR},
+      #{platformCode,jdbcType=VARCHAR}, #{securityCharacter,jdbcType=VARCHAR}, #{investFlag,jdbcType=VARCHAR},
+      #{tradeDirection,jdbcType=VARCHAR}, #{indexVO.positionAmount,jdbcType=DECIMAL}, #{indexVO.positionCost,jdbcType=DECIMAL},
+      #{indexVO.positionCost,jdbcType=DECIMAL}, #{indexVO.positionMarketValue,jdbcType=DECIMAL}, #{indexVO.fairPrice,jdbcType=DECIMAL},
+      #{indexVO.costPrice,jdbcType=DECIMAL}, #{indexVO.floatingPL,jdbcType=DECIMAL}, #{indexVO.originalPrice,jdbcType=DECIMAL})
+  ON DUPLICATE KEY UPDATE
+	cash_settle_balance = #{indexVO.positionAmount,jdbcType=DECIMAL},
+	stock_settle_amount = #{indexVO.positionCost,jdbcType=DECIMAL},
+	position_cost = #{indexVO.positionCost,jdbcType=DECIMAL},
+	position_market_value = #{indexVO.positionMarketValue,jdbcType=DECIMAL},
+	fair_price = #{indexVO.fairPrice,jdbcType=DECIMAL},
+	cost_price = #{indexVO.costPrice,jdbcType=DECIMAL},
+	floating_pl = #{indexVO.floatingPL,jdbcType=DECIMAL}
+  </update >
+
+</mapper>
