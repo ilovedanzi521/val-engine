@@ -30,8 +30,14 @@ import java.util.Map;
  */
 @Component
 public class StrategyFactory {
+    /**
+     * 债券计算
+     */
     @Autowired
     private  BondTradeStrategy bondTradeStrategy;
+    /**
+     * 回购计算
+     */
     @Autowired
     private  RepoTradeStrategy repoTradeStrategy;
     public BaseStrategy getPromotionStrategy(String promotionKey){

@@ -24,5 +24,8 @@ import lombok.Data;
 @Data
 public class ValParamScheme {
     private String fundNo;
+    /**
+     * 产品对应配置的参数方案
+     */
     private String valSchemeCode;
 }

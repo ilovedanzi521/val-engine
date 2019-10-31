@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 /**
  * 包名称：com.win.wl
  * 类名称：SecurityIndex
- * 类描述：证券指标
+ * 类描述：证券指标 为了sql的缓存和存放的bean一致
  * 创建人：@author wanglei
  * 创建时间：2019/9/27/14:42
  */

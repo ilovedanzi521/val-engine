@@ -10,7 +10,9 @@ import java.util.Properties;
 @Component
 @ConfigurationProperties("kafka")
 public class KafkaConfig {
-
+    /**
+     * kafka配置
+     */
     private String bootstrapServers;
     private String groupId;
     private String enableAutoCommit;
@@ -20,6 +22,9 @@ public class KafkaConfig {
     private String keyDeserializer;
     private String valueDeserializer;
     private String topic;
+    /**
+     * 指标结果发送给第三方api服务url地址
+     */
     private String apiUrl;
 
     @Bean(name ="kproperties")

@@ -33,7 +33,7 @@ public class MysqlSinkFunction extends RichSinkFunction<SecurityIndex> {
     @Override
     public void invoke(SecurityIndex securityIndex, Context context){
         try {
-
+            //mysql数据持久化
             ValPositionMapper valPositionMapper = SpringContextUtil.getBean(ValPositionMapper.class);
             valPositionMapper.insertValPosition(securityIndex);
             log.info("Data write mysql Success!");

@@ -68,6 +68,15 @@ public class ApiSinkFunction  extends RichSinkFunction<SecurityIndex> {
         }
     }
     interface ApiProvide {
+        /**
+         * @Title: put
+         * @Description http put 操作
+         * @param params
+         * @return java.lang.Object
+         * @throws
+         * @author wanglei
+         * @Date 2019/10/31/14:21
+         */
         @RequestLine("PUT")
         @Headers("Content-Type: application/json")
         Object put(Object params);

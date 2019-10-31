@@ -31,7 +31,7 @@ import static com.win.dfbp.constant.TradeRuleConstant.*;
 /**
  * 包名称：com.win.dfbp.entity
  * 类名称：SecurityParam
- * 类描述：证券参数
+ * 类描述：证券参数 用于计算
  * 创建人：@author wanglei
  * 创建时间：2019/10/17/19:23
  */

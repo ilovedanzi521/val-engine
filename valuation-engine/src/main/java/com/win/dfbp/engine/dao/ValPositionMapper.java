@@ -35,6 +35,14 @@ public interface ValPositionMapper {
      * @Date:  2019-10-19/13:44
      */
     void batchUpdate(List list);
-
+    /**
+     * @Title: insertValPosition
+     * @Description merge insert_update操作
+     * @param securityIndex
+     * @return void
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/31/14:20
+     */
     void insertValPosition(SecurityIndex securityIndex);
 }

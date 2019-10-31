@@ -23,13 +23,39 @@ import lombok.Data;
  */
 @Data
 public class CalculationValClass implements Comparable<CalculationValClass>{
+    /**
+     * 产品
+     */
     private String fundNo;
+    /**
+     * 计算项
+     */
     private String classCode;
+    /**
+     * 计算方法
+     */
     private String methodCode;
+    /**
+     * 计算方式
+     */
     private int calType;
+    /**
+     * 计算模块 classpath
+     */
     private String calModel;
+    /**
+     * 计算顺序
+     */
     private int calOrder;
-
+    /**
+     * @Title: compareTo
+     * @Description 计算项，计算排序,根据缓存中calOrder字段排序
+     * @param other
+     * @return int
+     * @throws
+     * @author wanglei
+     * @Date 2019/10/31/14:25
+     */
     @Override
     public int compareTo(CalculationValClass other) {
         return this.calOrder - other.calOrder;

@@ -85,8 +85,11 @@ public class FlinkKafKaConsumerTask {
                 })
                 // 开始计算
                 .flatMap(new SecurityIndexFunction()).setParallelism(1);
+        //数据持久化到mysql
         streamOperator.addSink(new MysqlSinkFunction());
+        //指标输入到redis缓存
         streamOperator.addSink(new RedisSinkFunction());
+        //指标结果调用第三方api服务，直接发送给交易系统
         streamOperator.addSink(new ApiSinkFunction(kproperties.getProperty("apiUrl")));
         try {
             env.execute();

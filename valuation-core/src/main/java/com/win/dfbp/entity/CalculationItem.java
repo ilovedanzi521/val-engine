@@ -23,6 +23,12 @@ import lombok.Data;
  */
 @Data
 public class CalculationItem {
+    /**
+     * 计算因子
+     */
     private String calItem;
+    /**
+     * 计算因子表达式
+     */
     private String calFormula;
 }
