@@ -12,7 +12,7 @@
 
 package com.win.dfbp.cal.strategy.fairprice.impl;
 
-import com.win.dfbp.cal.strategy.fairprice.AbsCalFairPrice;
+import com.win.dfbp.cal.strategy.fairprice.AbstractCalFairPrice;
 import com.win.dfbp.entity.SecurityParam;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ import java.math.RoundingMode;
  * 创建时间：2019/10/16/13:20
  */
 @Service
-public class CalFairPriceOnFullPrice extends AbsCalFairPrice {
+public class CalFairPriceOnFullPrice extends AbstractCalFairPrice {
     @Override
     public BigDecimal cal(SecurityParam securityParam) {
         //公允价= round（公共行情[估值全价]，N）

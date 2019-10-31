@@ -28,26 +28,38 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class FairPriceFactory {
-    //净价 公允价计算
+    /**
+     * 净价 公允价计算
+     */
     @Autowired
     private CalFairPriceOnNetPrice calFairPriceOnNetPrice;
-    //净价加税百元利息 公允价计算
+    /**
+     *  净价加税百元利息 公允价计算
+     */
     @Autowired
     private CalFairPriceOnNetPriceAndRates calFairPriceOnNetPriceAndRates;
-    //全价 公允价计算
+    /**
+    *   全价 公允价计算
+    */
     @Autowired
     private CalFairPriceOnFullPrice calFairPriceOnFullPrice;
-    //全价减税前百元利息 公允价计算
+    /**
+     *  全价减税前百元利息 公允价计算
+     */
     @Autowired
     private CalFairPriceOnFullPriceSubBefRates calFairPriceOnFullPriceSubBefRates;
-    //全价减税后百元利息 公允价计算
+    /**
+     * 全价减税后百元利息 公允价计算
+     */
     @Autowired
     private CalFairPriceOnFullPriceSubAfterRates calFairPriceOnFullPriceSubAfterRates;
-    //成本 公允价计算
+    /**
+     * 成本 公允价计算
+     */
     @Autowired
     private CalFairPriceOnCostPrice calFairPriceOnCostPrice;
 
-    public AbsCalFairPrice getInstance(String type){
+    public AbstractCalFairPrice getInstance(String type){
         switch (type){
             case TradeRuleConstant.VAL_CRITERIA_P001:
                 return calFairPriceOnNetPrice;

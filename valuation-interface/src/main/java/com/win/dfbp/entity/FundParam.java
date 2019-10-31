@@ -23,7 +23,7 @@ import lombok.Data;
  */
 @Data
 public class FundParam {
-    private String FundNo;
+    private String fundNo;
     private String paramCode;
     private String methodCode;
 }

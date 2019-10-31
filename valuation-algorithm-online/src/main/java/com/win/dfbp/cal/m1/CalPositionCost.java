@@ -41,11 +41,11 @@ import java.math.BigDecimal;
  */
 @Slf4j
 public class CalPositionCost implements ISecurityCalculation {
-    private static final String clz = CalPositionCost.class.getName();
+    private static final String CLZ = CalPositionCost.class.getName();
     private PositionCostFactory positionCostFactory = SpringContextUtil.getBean(PositionCostFactory.class);
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
-        if(clz.equals(algorithm)){
+        if(CLZ.equals(algorithm)){
             return true;
         }
         return false;

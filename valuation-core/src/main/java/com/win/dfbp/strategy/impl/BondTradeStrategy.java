@@ -68,7 +68,6 @@ public class BondTradeStrategy extends BaseStrategy {
         for (Map.Entry<String, Object> entry : context.entrySet()) {
             calModel=calModel.replaceAll(entry.getKey(), String.valueOf(entry.getValue()));
         }
-//        log.info("计算公式:{}",calModel);
         MathExpress me = new MathExpress(calModel,5,RoundingMode.HALF_EVEN);
         return new BigDecimal(me.caculate());
     }
@@ -82,7 +81,6 @@ public class BondTradeStrategy extends BaseStrategy {
                 securityIndex.getStockSettleAmount(),securityIndex.getTradeDirection());
         securityParam.setPositionAmount(positionAmount);
         //持仓成本
-//        securityParam.setPositionCost(securityIndex.getCashSettleBalance().add(oldIndex.getIndexVO().getPositionCost()));
         return calIndex(oldIndex,securityParam,false);
     }
 

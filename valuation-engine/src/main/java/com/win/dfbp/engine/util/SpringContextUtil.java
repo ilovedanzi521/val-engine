@@ -52,6 +52,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @author wanglei
      * @Date 2019/10/12/9:26
      */
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringContextUtil.applicationContext = applicationContext;
     }

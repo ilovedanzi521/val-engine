@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author huhe    
+ * 创建人: @author huhe
  * 创建时间: 2019-10-9/17:41
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValFundStatusController.java
@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "估值产品状态controller", tags = {"估值产品状态接口"})
 public class ValFundStatusController {
     @Autowired
-    private ValFundStatusService ValFundStatusService;
+    private ValFundStatusService valFundStatusService;
 
     @ApiOperation(value = "估值产品状态列表")
     @PostMapping("/list")
  	public WinResponseData getValFundStatus() {
- 		return WinResponseData.handleSuccess(ValFundStatusService.getValFundStatusList());
+ 		return WinResponseData.handleSuccess(valFundStatusService.getValFundStatusList());
  	}
 }

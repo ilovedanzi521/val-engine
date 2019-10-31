@@ -31,7 +31,9 @@ public class KafkaUtils {
                 adminClient.createTopics(newTopicList);
             }
         } finally {
-            if(adminClient != null) adminClient.close();
+            if(adminClient != null) {
+                adminClient.close();
+            }
         }
         return topic;
     }
@@ -47,7 +49,9 @@ public class KafkaUtils {
                 Collection<TopicListing> list = result.listings().get();
                 for (TopicListing tl:list) {
                     String name = tl.name();
-                    if(topic.equals(name)) return true;
+                    if(topic.equals(name)){
+                        return true;
+                    }
                 }
             }
         } catch (InterruptedException e) {
@@ -55,15 +59,14 @@ public class KafkaUtils {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }finally {
-            if(adminClient != null) adminClient.close();
+            if(adminClient != null) {
+                adminClient.close();
+            }
         }
         return false;
     }
 
     public static void writeToKafka(KafkaProperties kafkaProperties,String topic,String data) throws InterruptedException {
-//        if (!topicExists(kafkaConfig,topic)){
-//            createTopic(kafkaConfig,topic);
-//        }
         Properties props = new Properties();
         props.put("bootstrap.servers", kafkaProperties.getBootstrapServers());
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");

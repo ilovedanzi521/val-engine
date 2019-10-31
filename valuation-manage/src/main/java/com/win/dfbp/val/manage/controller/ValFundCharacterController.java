@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author huhe    
+ * 创建人: @author huhe
  * 创建时间: 2019-10-9/17:41
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValFundCharacterController.java
@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "估值产品性质controller", tags = {"估值产品性质接口"})
 public class ValFundCharacterController {
     @Autowired
-    private ValFundCharacterService ValFundCharacterService;
+    private ValFundCharacterService valFundCharacterService;
 
     @ApiOperation(value = "估值产品性质列表")
     @PostMapping("/list")
  	public WinResponseData getValCalculationItems() {
- 		return WinResponseData.handleSuccess(ValFundCharacterService.getValFundCharacterList());
+ 		return WinResponseData.handleSuccess(valFundCharacterService.getValFundCharacterList());
  	}
 }

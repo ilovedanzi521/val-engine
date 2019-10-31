@@ -72,9 +72,9 @@ public class WriteIntoKafka {
 
         @Override
         public void run(SourceContext<String> ctx) throws Exception {
-            for (int i=0;i<1;i++) {
+            for (int i=0;i<10000;i++) {
                 ctx.collect(prouderJson());
-                Thread.sleep(10);
+                Thread.sleep(2);
             }
         }
 
@@ -90,7 +90,7 @@ public class WriteIntoKafka {
                     "  \"investFlag\": \"J\",\n" +
                     "  \"cashSettleBalance\": \"100\",\n" +
                     "  \"stockSettleAmount\": \"10\",\n" +
-                    "  \"tradeDirection\": \"2\"\n" +
+                    "  \"tradeDirection\": \"1\"\n" +
                     "}";
         }
 

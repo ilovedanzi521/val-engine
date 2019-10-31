@@ -1,9 +1,9 @@
 /****************************************************
- * 创建人: @author zoujian    
+ * 创建人: @author zoujian
  * 创建时间: 2019-10-9/15:31
  * 项目名称: dfbp-fa-engine
  * 文件名称: ReadFileUtil.java
- * 文件描述: @Description: 
+ * 文件描述: @Description:
  *
  * All rights Reserved, Designed By 投资交易团队
  * @Copyright:2016-2019
@@ -12,8 +12,6 @@
 package com.win.dfbp.engine.util;
 
 
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFReader;
 import com.win.dfbp.engine.constant.ValMarketConstant;
 import com.win.dfbp.engine.constant.ValMarketIntegratedConstant;
 import com.win.dfbp.engine.constant.ValMarketZWConstant;
@@ -137,77 +135,10 @@ public class ReadFileUtil {
         InputStream fis = null;
         try {
             // 读取文件的输入流
-            fis = new FileInputStream(filePath);
-            // 根据输入流初始化一个DBFReader实例，用来读取DBF文件信息
-            DBFReader reader = new DBFReader(fis);
-            reader.setCharactersetName("GBK");
-            // 调用DBFReader对实例方法得到path文件中字段的个数
-            int fieldsCount = reader.getFieldCount();
-            // 取出字段信息
-            Map fieldMap = new HashMap<Integer,String>(50);
-            for (int i = 0; i < fieldsCount; i++) {
-                DBFField field = reader.getField(i);
-                fieldMap.put(i, field.getName());
-            }
+
             Object[] rowValues;
             // 一条条取出path文件中记录
-            while ((rowValues = reader.nextRecord()) != null) {
-                ValMarket valMarket =  ValMarket.getValMarket();
-                for (int i = 0; i < rowValues.length; i++) {
-                    if(isIntegratedData){
-                        if(ValMarketIntegratedConstant.SECURITY_CODE.equals(fieldMap.get(i))){
-                            valMarket.setSecurityCode(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketIntegratedConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
-                            valMarket.setSecurityShortName(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketIntegratedConstant.VALUATION_DATE.equals(fieldMap.get(i))){
-                            valMarket.setValuationDate(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketIntegratedConstant.FULL_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setFullPrice(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketIntegratedConstant.NET_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setNetPrice(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketIntegratedConstant.MARKET_CODE.equals(fieldMap.get(i))){
-                            valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));
-                        }
-                        if(ValMarketIntegratedConstant.RECOMMEND.equals(fieldMap.get(i))){
-                            valMarket.setRecommend(DicEnum.RecommendEnum.getCode(rowValues[i].toString().trim()));
-                        }
-                    }else{
-                        if(ValMarketConstant.SECURITY_CODE.equals(fieldMap.get(i))){
-                            valMarket.setSecurityCode(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketConstant.SECURITY_SHORT_NAME.equals(fieldMap.get(i))){
-                            valMarket.setSecurityShortName(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketConstant.VALUATION_DATE.equals(fieldMap.get(i))){
-                            valMarket.setValuationDate(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketConstant.FULL_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setFullPrice(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketConstant.NET_PRICE.equals(fieldMap.get(i))){
-                            valMarket.setNetPrice(rowValues[i].toString().trim());
-                        }
-                        if(ValMarketConstant.MARKET_CODE.equals(fieldMap.get(i))){
-                            valMarket.setMarketCode(DicEnum.MarketEnum.getMarketCode(rowValues[i].toString().trim()));
-                        }
-                        if(ValMarketConstant.RECOMMEND.equals(fieldMap.get(i))){
-                            valMarket.setRecommend(DicEnum.RecommendEnum.getCode(rowValues[i].toString().trim()));
-                        }
-                    }
-                    valMarket.setDataSource("ZG");
-                    valMarket.setFileTimestamp(new Date());
-                }
-                // 排除交易市场为柜台和其他的数据
-                if(valMarket.getSecurityCode() != null && !"".equals(valMarket.getSecurityCode().trim())
-                        && !"GT".equals(valMarket.getMarketCode()) && !"QT".equals(valMarket.getMarketCode())){
-                    marketList.add(valMarket);
-                }
-            }
+
             fis.close();
             // 去除同一证券代码中有多条数据  取推荐的数据
             if(marketList != null && marketList.size() > 1){

@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author huhe    
+ * 创建人: @author huhe
  * 创建时间: 2019-10-9/17:41
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValMethodController.java
@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "估值方法controller", tags = {"估值方法接口"})
 public class ValMethodController {
     @Autowired
-    private ValMethodService ValMethodService;
+    private ValMethodService valMethodService;
 
     @ApiOperation(value = "估值方法列表")
     @PostMapping("/list")
  	public WinResponseData getValMethods() {
- 		return WinResponseData.handleSuccess(ValMethodService.getValMethodList());
+ 		return WinResponseData.handleSuccess(valMethodService.getValMethodList());
  	}
 }

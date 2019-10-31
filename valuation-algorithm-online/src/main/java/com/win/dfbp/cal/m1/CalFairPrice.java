@@ -33,10 +33,10 @@ import java.math.BigDecimal;
 public class CalFairPrice implements ISecurityCalculation {
     private FairPriceFactory fairPriceFactory = SpringContextUtil.getBean(FairPriceFactory.class);
 
-    private static final String clz = CalFairPrice.class.getName();
+    private static final String CLZ = CalFairPrice.class.getName();
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
-        if(clz.equals(algorithm)){
+        if(CLZ.equals(algorithm)){
             return true;
         }
         return false;

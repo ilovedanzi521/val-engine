@@ -12,7 +12,7 @@
 
 package com.win.dfbp.cal.strategy.fairprice.impl;
 
-import com.win.dfbp.cal.strategy.fairprice.AbsCalFairPrice;
+import com.win.dfbp.cal.strategy.fairprice.AbstractCalFairPrice;
 import com.win.dfbp.entity.SecurityParam;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
  * 创建时间：2019/10/16/13:21
  */
 @Service
-public class CalFairPriceOnCostPrice extends AbsCalFairPrice {
+public class CalFairPriceOnCostPrice extends AbstractCalFairPrice {
     @Override
     public BigDecimal cal(SecurityParam securityParam) {
         //公允价=持仓数量/持仓成本

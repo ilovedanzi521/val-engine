@@ -1,5 +1,5 @@
 /****************************************************
- * 创建人: @author huhe    
+ * 创建人: @author huhe
  * 创建时间: 2019-10-9/17:41
  * 项目名称: dfbp-fa-engine
  * 文件名称: ValParamDictionaryController.java
@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "估值参数controller", tags = {"估值产品参数接口"})
 public class ValParamDictionaryController {
     @Autowired
-    private ValParamDictionaryService ValParamDictionaryService;
+    private ValParamDictionaryService valParamDictionaryService;
 
     @ApiOperation(value = "估值参数列表")
     @PostMapping("/list")
  	public WinResponseData getValParamDictionaries() {
- 		return WinResponseData.handleSuccess(ValParamDictionaryService.getValParamDictionaryList());
- 	}      
+ 		return WinResponseData.handleSuccess(valParamDictionaryService.getValParamDictionaryList());
+ 	}
 }

@@ -38,13 +38,21 @@ import static com.win.dfbp.constant.TradeRuleConstant.*;
 @Data
 @Slf4j
 public class SecurityParam {
-    //入参产品
+    /**
+     * 入参:产品
+     */
     private String fundNo;
-    //新增投资标志
+    /**
+     *  新增投资标志
+     */
     private String investFlag;
-
+    /**
+     * 组合
+     */
     private String  portfNo;
-    //入参：资产类别
+    /**
+     * 入参：资产类别
+     */
     private String assetType;
     /**
      *入参：证券类别
@@ -198,8 +206,10 @@ public class SecurityParam {
             case LEVEL_SIX:{
                 return assetType+marketCode;
             }
+            default:{
+                return "";
+            }
         }
-        return "";
     }
     /**
      * @Title: calFairPrice
@@ -318,8 +328,10 @@ public class SecurityParam {
             case TradeRuleConstant.VAL_CAL_ITEM_I004:{
                 return this.getPositionAmount();
             }
+            default:{
+                return BigDecimal.ONE;
+            }
         }
-        return null;
     }
 
 }

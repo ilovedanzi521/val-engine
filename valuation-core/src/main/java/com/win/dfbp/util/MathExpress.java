@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
  * 负数必须出现在'('后,即：用括号括起来。比如：-3+(-2+1)*10或-3+((-2)+1)*10或(-3)+(-2+1)*10或(-3)+((-2)+1)*10
  */
 public class MathExpress {
+    private static final Pattern REXG_NUMBER = Pattern.compile("^(-?\\d+)(\\.\\d+)?$");
+    private static final Pattern REXGB_RACKETS = Pattern.compile("^\\([\\s\\S]*\\)$");
     /**
      * +
      */
@@ -277,8 +279,7 @@ public class MathExpress {
      * @return
      */
     private boolean isNumber(String str) {
-        Pattern p = Pattern.compile("^(-?\\d+)(\\.\\d+)?$");
-        Matcher m = p.matcher(str);
+        Matcher m = REXG_NUMBER.matcher(str);
         boolean isNumber = m.matches();
         return isNumber;
     }
@@ -436,12 +437,12 @@ public class MathExpress {
         boolean reBoolean = false;
         boolean isParentheses = false;//标记是否有()括上整个字符串
         String str = initExpress(strParm);
-        Pattern p = Pattern.compile("^\\([\\s\\S]*\\)$");
-        Matcher m = p.matcher(str);
+        Matcher m = REXGB_RACKETS.matcher(str);
         isParentheses = m.matches();
         if (-1 == str.indexOf(">=") && -1 == str.indexOf("<=") && -1 == str.indexOf("==") && -1 == str.indexOf("!=")) {
-            if (-1 == str.indexOf(">") && -1 == str.indexOf("<"))
+            if (-1 == str.indexOf(">") && -1 == str.indexOf("<")){
                 throw new IllegalArgumentException("异常:条件表达式不正确!");
+            }
         }
         if (-1 != str.indexOf(">=")) {
             String[] strTemps = str.split(">=");

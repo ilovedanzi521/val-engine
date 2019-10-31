@@ -85,7 +85,6 @@ public class FlinkKafKaConsumerTask {
                 })
                 // 开始计算
                 .flatMap(new SecurityIndexFunction()).setParallelism(1);
-//        streamOperator.addSink(new RedisSinkFunction());
         streamOperator.addSink(new MysqlSinkFunction());
         streamOperator.addSink(new RedisSinkFunction());
         streamOperator.addSink(new ApiSinkFunction(kproperties.getProperty("apiUrl")));

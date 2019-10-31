@@ -26,10 +26,10 @@ import java.math.BigDecimal;
  * 创建时间：2019/10/24/11:37
  */
 public class CalPositionCost implements ISecurityCalculation {
-    private static final String clz = CalPositionCost.class.getName();
+    private static final String CLZ = CalPositionCost.class.getName();
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
-        if(clz.equals(algorithm)){
+        if(CLZ.equals(algorithm)){
             return true;
         }
         return false;

@@ -31,10 +31,10 @@ import java.math.BigDecimal;
  */
 public class CalPositionMarketValue implements ISecurityCalculation {
     private PositionMarketValueFactory positionMarketValueFactory = SpringContextUtil.getBean(PositionMarketValueFactory.class);
-    private static final String clz = CalPositionMarketValue.class.getName();
+    private static final String CLZ = CalPositionMarketValue.class.getName();
     @Override
     public boolean isAlgorithmSupported(String algorithm) {
-        if(clz.equals(algorithm)){
+        if(CLZ.equals(algorithm)){
             return true;
         }
         return false;

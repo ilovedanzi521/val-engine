@@ -37,7 +37,6 @@ public class ValInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        flinkFileReadTask.run();
         consumerTask.run();
     }
 }
