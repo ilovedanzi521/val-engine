@@ -1,0 +1,1 @@
+com.win.dfbp.val.core.cal.ISecurityCalculation=com.win.dfbp.val.cal.m1.CalFairPrice,com.win.dfbp.val.cal.m1.CalPositionCost,com.win.dfbp.val.cal.m1.CalPositionMarketValue,com.win.dfbp.val.cal.m2.CalPositionCost
