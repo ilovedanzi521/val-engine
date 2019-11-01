@@ -15,7 +15,7 @@ package com.win.dfbp.val.manage.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.win.dfas.common.util.ObjectUtils;
-import com.win.dfbp.val.core.constant.TradeRuleConstant;
+import com.win.dfbp.val.common.constant.TradeRuleConstant;
 import com.win.dfbp.val.manage.dao.ValFundConfigureMapper;
 import com.win.dfbp.val.manage.dao.ValMethodConfigureMapper;
 import com.win.dfbp.val.manage.dao.ValParamConfigureMapper;

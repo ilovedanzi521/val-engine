@@ -12,7 +12,7 @@
 
 package com.win.dfbp.val.manage.service.impl;
 
-import com.win.dfbp.val.core.constant.TradeRuleConstant;
+import com.win.dfbp.val.common.constant.TradeRuleConstant;
 import com.win.dfbp.val.manage.dao.ValParamMethodConfigureMapper;
 import com.win.dfbp.val.manage.entity.ValParamMethodConfigure;
 import com.win.dfbp.val.manage.service.ValParamMethodConfigureService;
