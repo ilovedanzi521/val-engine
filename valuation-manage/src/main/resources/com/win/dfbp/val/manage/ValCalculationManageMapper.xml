@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.win.dfbp.val.manage.dao.ValCalculationManageMapper">
+
+    <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValCalculationManage">
+		<result column="cal_class" property="valClass" />
+		<result column="cal_method" property="valMethod" />
+		<result column="cal_formula" property="calFormula" />
+		<result column="cal_type" property="calType" />
+		<result column="cal_model_classpath" property="calModelClasspath" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cal_class, cal_method, cal_formula,cal_type, cal_model_classpath
+    </sql>
+
+    <select id="getValCalculationManages" resultType="com.win.dfbp.val.manage.vo.respone.ValCalculationManageRepVO" parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO">
+		SELECT
+			 cm.val_class AS valClass, cm.val_method AS valMethod,
+			 cm.cal_formula AS calFormula, cm.cal_type AS calType, m.method_name AS methodName
+		FROM
+			val_cal_manage cm
+		INNER JOIN val_method m ON m.method_code = cm.val_method
+		<where>
+			<if test="valMethod != null">
+				and m.method_name LIKE CONCAT('%',#{valMethod},'%')
+			</if>
+		</where>
+    </select>
+     <select id="getMethodByClass" resultType="com.win.dfbp.val.manage.vo.respone.ValClassMethodConfigureReqVO">
+		SELECT
+			 cm.val_class AS classCode,
+			 cm.val_method AS methodCode,
+			 m.method_name AS methodName
+		FROM
+			val_cal_manage cm
+		INNER JOIN val_method m ON m.method_code = cm.val_method
+    </select>
+
+    <update id="updataCalculationManage" parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationManageQueryVO">
+    	updata val_cal_manage
+    	<set>
+    		<if test="calFormula != null">
+    			cal_formula = #{calFormla}
+    		</if>
+    	</set>
+    	WHERE calMethod = #{cal_method}
+    </update>
+</mapper>

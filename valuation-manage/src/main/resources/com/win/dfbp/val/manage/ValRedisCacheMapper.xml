@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.win.dfbp.val.core.val.manage.cache.dao.ValRedisCacheMapper">
+<mapper namespace="com.win.dfbp.val.manage.cache.dao.ValRedisCacheMapper">
 
     <resultMap id="SysRedisCacheMap" type="com.win.dfas.common.entity.SysRedisCache">
     	<id property="id" column="id" />

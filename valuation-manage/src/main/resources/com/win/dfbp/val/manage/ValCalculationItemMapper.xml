@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.win.dfbp.val.core.val.manage.dao.ValCalculationItemMapper">
+<mapper namespace="com.win.dfbp.val.manage.dao.ValCalculationItemMapper">
 
-    <resultMap id="BaseResultMap" type="com.win.dfbp.val.core.val.manage.entity.ValCalculationItem">
+    <resultMap id="BaseResultMap" type="com.win.dfbp.val.manage.entity.ValCalculationItem">
         <result column="cal_item" property="calItem" />
         <result column="cal_formula" property="calFormula" />
     </resultMap>
@@ -12,7 +12,7 @@
         cal_item, cal_formula
     </sql>
 
-    <select id="getValCalculationItems" resultType="com.win.dfbp.val.core.val.manage.vo.respone.ValCalculationItemRepVO" parameterType="com.win.dfbp.val.core.val.manage.vo.query.ValCalculationItemQueryVO">
+    <select id="getValCalculationItems" resultType="com.win.dfbp.val.manage.vo.respone.ValCalculationItemRepVO" parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationItemQueryVO">
 		SELECT
 			c.cal_item AS calItem,
 			i.item_name AS itemName,
@@ -27,7 +27,7 @@
 		</where>
     </select>
 
-    <update id="updataCalculationItem" parameterType="com.win.dfbp.val.core.val.manage.vo.query.ValCalculationItemQueryVO">
+    <update id="updataCalculationItem" parameterType="com.win.dfbp.val.manage.vo.query.ValCalculationItemQueryVO">
     	updata val_cal_item
     	<set>
     		<if test="calItem != null">
