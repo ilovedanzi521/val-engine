@@ -4,6 +4,12 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>com.win.parent</groupId>
+		<artifactId>win-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<groupId>com.win.dfbp</groupId>
 	<artifactId>dfbp-fa-engine</artifactId>
 	<version>1.0-SNAPSHOT</version>
@@ -37,11 +43,7 @@
 		<module>valuation-interface</module>
 	</modules>
 
-	<parent>
-		<groupId>com.win.parent</groupId>
-		<artifactId>win-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

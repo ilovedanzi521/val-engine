@@ -47,9 +47,7 @@ public class ApiSinkFunction  extends RichSinkFunction<SecurityIndex> {
                     .encoder(new GsonEncoder())
                     .decoder(new GsonDecoder())
                     .target(ApiProvide.class, url);
-            List<SecurityIndex> list = new ArrayList<>();
-            list.add(securityIndex);
-            Object object = apiProvide.put(list);
+            Object object = apiProvide.put(securityIndex);
             log.info("Data write Api Server Success!Return:{}",object);
         }catch (Throwable e){
             log.error("api异常{}",e);
