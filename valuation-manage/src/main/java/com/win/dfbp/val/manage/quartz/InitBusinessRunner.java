@@ -33,8 +33,11 @@ public class InitBusinessRunner implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         HashMap<String,Object> map = new HashMap<>();
-        map.put("name",1);
-        quartzService.deleteJob("job", "test");
-        quartzService.addJob(InitBusinessJob.class, "job", "test", "0 * * * * ?", map);
+        //新增定时任务 1
+        map.put("name","initBusinessJob");
+        quartzService.deleteJob("initBusinessJob", "init");
+        quartzService.addJob(InitBusinessJob.class, "initBusinessJob", "init", "0 * * * * ?", map);
+
+
     }
 }
